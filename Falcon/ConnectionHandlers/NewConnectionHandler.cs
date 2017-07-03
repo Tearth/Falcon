@@ -4,13 +4,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Falcon.Clients
+namespace Falcon.ConnectionHandlers
 {
-    class ClientsManager
+    class NewConnectionHandler
     {
-        public ClientsManager()
-        {
-
-        }
     }
 }

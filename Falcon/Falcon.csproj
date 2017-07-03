@@ -40,7 +40,12 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Clients\Client.cs" />
+    <Compile Include="Clients\ClientsManager.cs" />
     <Compile Include="Connection.cs" />
+    <Compile Include="ConnectionHandlers\NewConnectionHandler.cs" />
+    <Compile Include="ConnectionHandlers\ReceiveDataHandler.cs" />
+    <Compile Include="ConnectionHandlers\SendDataHandler.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="WebSocketServer.cs" />
   </ItemGroup>

@@ -8,5 +8,9 @@ namespace Falcon.Clients
 {
     class Client
     {
+        public Client()
+        {
+
+        }
     }
 }
