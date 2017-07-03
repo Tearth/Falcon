@@ -11,7 +11,7 @@ using System.Threading.Tasks;
 
 namespace Falcon
 {
-    class Connection
+    class ServerListener
     {
         Socket socket;
         Task loop;
@@ -24,7 +24,7 @@ namespace Falcon
 
         public bool Shutdown { get; private set; }
 
-        public Connection()
+        public ServerListener()
         {
             socket = new Socket(AddressFamily.InterNetwork, SocketType.Stream, ProtocolType.Tcp);
             loop = new Task(Loop);

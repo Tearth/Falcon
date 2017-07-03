@@ -9,11 +9,11 @@ namespace Falcon
 {
     public class WebSocketServer
     {
-        Connection server;
+        ServerListener server;
 
         public WebSocketServer()
         {
-            server = new Connection();
+            server = new ServerListener();
         }
 
         public void Open(IPAddress address, int port)
