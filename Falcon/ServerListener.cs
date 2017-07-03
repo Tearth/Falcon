@@ -16,6 +16,7 @@ namespace Falcon
         Socket socket;
         Task loop;
 
+        ClientsManager clientsManager;
         NewConnectionHandler newConnectionHandler;
         ReceiveDataHandler receiveDataHandler;
         SendDataHandler sendDataHandler;
@@ -30,11 +31,13 @@ namespace Falcon
             loop = new Task(Loop);
             loopEvent = new ManualResetEvent(false);
 
+            clientsManager = new ClientsManager();
             newConnectionHandler = new NewConnectionHandler();
             receiveDataHandler = new ReceiveDataHandler();
             sendDataHandler = new SendDataHandler();
 
             newConnectionHandler.OnNewClientConnection += OnNewClientConnection;
+            receiveDataHandler.OnNewDataReceived += OnNewDataReceived;
 
             Shutdown = true;
         }
@@ -65,6 +68,13 @@ namespace Falcon
         }
 
         void OnNewClientConnection(object sender, Client client)
+        {
+            clientsManager.Add(client);
+
+            receiveDataHandler.ReceiveData(client);
+        }
+
+        private void OnNewDataReceived(object sender, Client client)
         {
             throw new NotImplementedException();
         }
