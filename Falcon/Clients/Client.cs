@@ -9,7 +9,8 @@ namespace Falcon.Clients
 {
     class Client
     {
-        Socket socket;
+        public String ID { get; set; }
+        public Socket Socket { get; private set; }
 
         public Client()
         {
@@ -18,7 +19,9 @@ namespace Falcon.Clients
 
         public void Bind(Socket socket)
         {
-            this.socket = socket;
+            this.Socket = socket;
+
+            this.ID = Guid.NewGuid().ToString();
         }
     }
 }
