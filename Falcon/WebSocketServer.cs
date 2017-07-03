@@ -16,7 +16,7 @@ namespace Falcon
             server = new Connection();
         }
 
-        public void Open(IPAddress address, short port)
+        public void Open(IPAddress address, int port)
         {
             var endPoint = new IPEndPoint(address, port);
             server.StartListening(endPoint);

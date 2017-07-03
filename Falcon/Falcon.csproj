@@ -44,6 +44,7 @@
     <Compile Include="Clients\ClientsManager.cs" />
     <Compile Include="Connection.cs" />
     <Compile Include="ConnectionHandlers\NewConnectionHandler.cs" />
+    <Compile Include="ConnectionHandlers\OnClientActionHandler.cs" />
     <Compile Include="ConnectionHandlers\ReceiveDataHandler.cs" />
     <Compile Include="ConnectionHandlers\SendDataHandler.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
