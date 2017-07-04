@@ -71,7 +71,6 @@ namespace Falcon
         void OnNewClientConnection(object sender, Client client)
         {
             clientsManager.Add(client);
-
             receiveDataHandler.ReceiveData(client);
         }
 
