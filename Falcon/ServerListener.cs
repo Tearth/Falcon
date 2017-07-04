@@ -38,6 +38,7 @@ namespace Falcon
 
             newConnectionHandler.OnNewClientConnection += OnNewClientConnection;
             receiveDataHandler.OnNewDataReceived += OnNewDataReceived;
+            sendDataHandler.OnDataSent += OnDataSent;
 
             Shutdown = true;
         }
@@ -75,6 +76,11 @@ namespace Falcon
         }
 
         private void OnNewDataReceived(object sender, Client client)
+        {
+            throw new NotImplementedException();
+        }
+
+        private void OnDataSent(object sender, Client client)
         {
             throw new NotImplementedException();
         }
