@@ -11,9 +11,10 @@ namespace Falcon.WebSocketHandlers
         public String ClientID { get; set; }
         public byte[] Data { get; set; }
 
-        public ClientData()
+        public ClientData(String clientID, byte[] data)
         {
-            ClientID = String.Empty;
+            this.ClientID = clientID;
+            this.Data = data;
         }
     }
 }

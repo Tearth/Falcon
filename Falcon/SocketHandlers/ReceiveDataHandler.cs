@@ -27,8 +27,9 @@ namespace Falcon.SocketHandlers
         void AcceptNewData(IAsyncResult ar)
         {
             var client = (Client)ar.AsyncState;
-            client.Socket.EndReceive(ar);
+            var bytes = client.Socket.EndReceive(ar);
 
+            client.ReceivedData = client.Buffer.Take(bytes).ToArray();
             OnNewDataReceived(this, client);
         }
     }

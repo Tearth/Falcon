@@ -1,5 +1,6 @@
 ﻿using Falcon.Clients;
 using Falcon.SocketHandlers;
+using Falcon.WebSocketHandlers;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -23,6 +24,9 @@ namespace Falcon
 
         static ManualResetEvent loopEvent;
 
+        public event OnWebSocketNewConnectionHandler OnWebSocketNewConnection;
+        public event OnWebSocketNewDataHandler OnWebSocketNewData;
+        public event OnWebSocketDataSentHandler OnWebSocketDataSent;
         public bool Shutdown { get; private set; }
 
         public ServerListener()
@@ -72,11 +76,14 @@ namespace Falcon
         {
             clientsManager.Add(client);
             receiveDataHandler.ReceiveData(client);
+
+            OnWebSocketNewConnection(this, client.ID);
         }
 
         private void OnNewDataReceived(object sender, Client client)
         {
-            throw new NotImplementedException();
+            var clientData = new ClientData(client.ID, client.ReceivedData);
+            OnWebSocketNewData(this, clientData);
         }
 
         private void OnDataSent(object sender, Client client)

@@ -14,7 +14,11 @@ namespace Falcon
         public WebSocketServer()
         {
             server = new ServerListener();
-        }
+
+            server.OnWebSocketNewConnection += OnWebSocketNewConnection;
+            server.OnWebSocketNewData += OnWebSocketNewData;
+            server.OnWebSocketDataSent += OnWebSocketDataSent;
+        }   
 
         public void Open(IPAddress address, int port)
         {
@@ -25,6 +29,21 @@ namespace Falcon
         public void Close()
         {
             server.StopListening();
+        }
+
+        void OnWebSocketNewConnection(object sender, string clientID)
+        {
+            throw new NotImplementedException();
+        }
+
+        void OnWebSocketNewData(object sender, WebSocketHandlers.ClientData clientData)
+        {
+            throw new NotImplementedException();
+        }
+
+        void OnWebSocketDataSent(object sender, string clientID)
+        {
+            throw new NotImplementedException();
         }
     }
 }
