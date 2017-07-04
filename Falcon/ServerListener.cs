@@ -28,6 +28,7 @@ namespace Falcon
         public event EventHandler<WebSocketNewConnectionArgs> OnWebSocketNewConnection;
         public event EventHandler<WebSocketReceivedDataArgs> OnWebSocketDataReceived;
         public event EventHandler<WebSocketSentDataArgs> OnWebSocketDataSent;
+        public event EventHandler<WebSocketDisconnectArgs> OnWebSocketDisconnect;
         public bool Shutdown { get; private set; }
 
         public ServerListener()

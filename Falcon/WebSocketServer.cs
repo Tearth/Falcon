@@ -19,7 +19,8 @@ namespace Falcon
             server.OnWebSocketNewConnection += OnWebSocketNewConnection;
             server.OnWebSocketDataReceived += OnWebSocketDataReceived;
             server.OnWebSocketDataSent += OnWebSocketDataSent;
-        }   
+            server.OnWebSocketDisconnect += OnWebSockeyDisconnect;
+        }
 
         public void Open(IPAddress address, int port)
         {
@@ -34,17 +35,22 @@ namespace Falcon
 
         void OnWebSocketNewConnection(object sender, WebSocketNewConnectionArgs args)
         {
-            throw new NotImplementedException();
+            
         }
 
         void OnWebSocketDataReceived(object sender, WebSocketReceivedDataArgs args)
         {
-            throw new NotImplementedException();
+            
         }
 
         void OnWebSocketDataSent(object sender, WebSocketSentDataArgs args)
         {
-            throw new NotImplementedException();
+            
+        }
+
+        void OnWebSockeyDisconnect(object sender, WebSocketDisconnectArgs args)
+        {
+            
         }
     }
 }

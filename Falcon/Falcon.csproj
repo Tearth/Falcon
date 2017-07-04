@@ -50,6 +50,7 @@
     <Compile Include="SocketServices\ReceiveDataService.cs" />
     <Compile Include="SocketServices\SendDataService.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="WebSocketEventArguments\WebSocketDisconnectArgs.cs" />
     <Compile Include="WebSocketEventArguments\WebSocketNewConnectionArgs.cs" />
     <Compile Include="WebSocketEventArguments\WebSocketReceivedDataArgs.cs" />
     <Compile Include="WebSocketEventArguments\WebSocketSentDataArgs.cs" />
