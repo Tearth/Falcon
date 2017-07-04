@@ -9,12 +9,12 @@ using System.Threading.Tasks;
 
 namespace Falcon.SocketServices
 {
-    class NewConnectionHandler
+    class ConnectingService
     {
-        public event EventHandler<NewConnectionArgs> OnNewClientConnection;
-        public event EventHandler<DisconnectArgs> OnDisconnect;
+        public event EventHandler<ConnectedEventArgs> Connected;
+        public event EventHandler<DisconnectedEventArgs> Disconnect;
 
-        public NewConnectionHandler()
+        public ConnectingService()
         {
 
         }
@@ -41,8 +41,7 @@ namespace Falcon.SocketServices
             var client = new Client();
             client.Bind(clientSocket);
 
-            var connectionArgs = new NewConnectionArgs(client);
-            OnNewClientConnection(this, connectionArgs);
+            Connected(this, new ConnectedEventArgs(client));
         }
     }
 }

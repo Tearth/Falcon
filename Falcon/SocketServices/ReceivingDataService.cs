@@ -9,12 +9,12 @@ using System.Threading.Tasks;
 
 namespace Falcon.SocketServices
 {
-    class ReceiveDataHandler
+    class ReceivingDataService
     {
-        public event EventHandler<ReceivedDataArgs> OnDataReceived;
-        public event EventHandler<DisconnectArgs> OnDisconnect;
+        public event EventHandler<DataReceivedEventArgs> ReceivedData;
+        public event EventHandler<DisconnectedEventArgs> Disconnected;
 
-        public ReceiveDataHandler()
+        public ReceivingDataService()
         {
 
         }
@@ -30,7 +30,7 @@ namespace Falcon.SocketServices
             }
             catch
             {
-                OnDisconnect(this, new DisconnectArgs(client, true));
+                Disconnected(this, new DisconnectedEventArgs(client, true));
                 return;
             }
         }
@@ -46,14 +46,14 @@ namespace Falcon.SocketServices
             }
             catch
             {
-                OnDisconnect(this, new DisconnectArgs(client, true));
+                Disconnected(this, new DisconnectedEventArgs(client, true));
                 return;
             }
 
             if (receivedBytes == 0)
-                OnDisconnect(this, new DisconnectArgs(client, false));
+                Disconnected(this, new DisconnectedEventArgs(client, false));
             else
-                OnDataReceived(this, new ReceivedDataArgs(client, receivedBytes));
+                ReceivedData(this, new DataReceivedEventArgs(client, receivedBytes));
         }
     }
 }

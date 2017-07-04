@@ -43,18 +43,18 @@
     <Compile Include="Clients\Client.cs" />
     <Compile Include="Clients\ClientsManager.cs" />
     <Compile Include="ServerListener.cs" />
-    <Compile Include="SocketServices\EventArguments\DisconnectArgs.cs" />
-    <Compile Include="SocketServices\EventArguments\NewConnectionArgs.cs" />
-    <Compile Include="SocketServices\EventArguments\ReceivedDataArgs.cs" />
-    <Compile Include="SocketServices\EventArguments\SentDataArgs.cs" />
-    <Compile Include="SocketServices\NewConnectionService.cs" />
-    <Compile Include="SocketServices\ReceiveDataService.cs" />
-    <Compile Include="SocketServices\SendDataService.cs" />
+    <Compile Include="SocketServices\EventArguments\DisconnectedEventArgs.cs" />
+    <Compile Include="SocketServices\EventArguments\ConnectedEventArgs.cs" />
+    <Compile Include="SocketServices\EventArguments\DataReceivedEventArgs.cs" />
+    <Compile Include="SocketServices\EventArguments\DataSentEventArgs.cs" />
+    <Compile Include="SocketServices\ConnectingService.cs" />
+    <Compile Include="SocketServices\ReceivingDataService.cs" />
+    <Compile Include="SocketServices\SendingDataService.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="WebSocketEventArguments\WebSocketDisconnectArgs.cs" />
-    <Compile Include="WebSocketEventArguments\WebSocketNewConnectionArgs.cs" />
-    <Compile Include="WebSocketEventArguments\WebSocketReceivedDataArgs.cs" />
-    <Compile Include="WebSocketEventArguments\WebSocketSentDataArgs.cs" />
+    <Compile Include="WebSocketEventArguments\WebSocketDisconnectedEventArgs.cs" />
+    <Compile Include="WebSocketEventArguments\WebSocketConnectedEventArgs.cs" />
+    <Compile Include="WebSocketEventArguments\WebSocketDataReceivedEventArgs.cs" />
+    <Compile Include="WebSocketEventArguments\WebSocketDataSentEventArgs.cs" />
     <Compile Include="WebSocketServer.cs" />
   </ItemGroup>
   <ItemGroup />

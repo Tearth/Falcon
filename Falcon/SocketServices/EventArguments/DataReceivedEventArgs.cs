@@ -7,13 +7,15 @@ using System.Threading.Tasks;
 
 namespace Falcon.SocketServices.EventArguments
 {
-    class NewConnectionArgs : EventArgs
+    class DataReceivedEventArgs : EventArgs
     {
         public Client Client { get; private set; }
+        public int BytesReceived { get; private set; }
 
-        public NewConnectionArgs(Client client)
+        public DataReceivedEventArgs(Client client, int bytesReceived)
         {
             this.Client = client;
+            this.BytesReceived = bytesReceived;
         }
     }
 }

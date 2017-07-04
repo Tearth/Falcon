@@ -6,15 +6,15 @@ using System.Threading.Tasks;
 
 namespace Falcon.WebSocketEventArguments
 {
-    class WebSocketReceivedDataArgs : EventArgs
+    class WebSocketDataSentEventArgs : EventArgs
     {
         public String ClientID { get; private set; }
-        public byte[] Data { get; private set; }
+        public int SentBytes { get; private set; }
 
-        public WebSocketReceivedDataArgs(String clientID, byte[] data)
+        public WebSocketDataSentEventArgs(String clientID, int sentBytes)
         {
             this.ClientID = clientID;
-            this.Data = data;
+            this.SentBytes = sentBytes;
         }
     }
 }

@@ -16,10 +16,10 @@ namespace Falcon
         {
             server = new ServerListener();
 
-            server.OnWebSocketNewConnection += OnWebSocketNewConnection;
-            server.OnWebSocketDataReceived += OnWebSocketDataReceived;
-            server.OnWebSocketDataSent += OnWebSocketDataSent;
-            server.OnWebSocketDisconnect += OnWebSocketDisconnect;
+            server.WebSocketConnected += OnWebSocketConnected;
+            server.WebSocketDataReceived += OnWebSocketDataReceived;
+            server.WebSocketDataSent += OnWebSocketDataSent;
+            server.WebSocketDisconnected += OnWebSocketDisconnected;
         }
 
         public void Open(IPAddress address, int port)
@@ -33,22 +33,22 @@ namespace Falcon
             server.StopListening();
         }
 
-        void OnWebSocketNewConnection(object sender, WebSocketNewConnectionArgs args)
+        void OnWebSocketConnected(object sender, WebSocketConnectedEventArgs args)
         {
             
         }
 
-        void OnWebSocketDataReceived(object sender, WebSocketReceivedDataArgs args)
+        void OnWebSocketDataReceived(object sender, WebSocketDataReceivedEventArgs args)
         {
             
         }
 
-        void OnWebSocketDataSent(object sender, WebSocketSentDataArgs args)
+        void OnWebSocketDataSent(object sender, WebSocketDataSentEventArgs args)
         {
             
         }
 
-        void OnWebSocketDisconnect(object sender, WebSocketDisconnectArgs args)
+        void OnWebSocketDisconnected(object sender, WebSocketDisconnectedEventArgs args)
         {
             
         }

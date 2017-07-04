@@ -8,12 +8,12 @@ using System.Threading.Tasks;
 
 namespace Falcon.SocketServices
 {
-    class SendDataHandler
+    class SendingDataService
     {
-        public event EventHandler<SentDataArgs> OnDataSent;
-        public event EventHandler<DisconnectArgs> OnDisconnect;
+        public event EventHandler<DataSentEventArgs> SentData;
+        public event EventHandler<DisconnectedEventArgs> Disconnected;
 
-        public SendDataHandler()
+        public SendingDataService()
         {
 
         }
@@ -28,7 +28,7 @@ namespace Falcon.SocketServices
             }
             catch
             {
-                OnDisconnect(this, new DisconnectArgs(client, true));
+                Disconnected(this, new DisconnectedEventArgs(client, true));
                 return;
             }
         }
@@ -44,12 +44,11 @@ namespace Falcon.SocketServices
             }
             catch
             {
-                OnDisconnect(this, new DisconnectArgs(client, true));
+                Disconnected(this, new DisconnectedEventArgs(client, true));
                 return;
             }
 
-            var sentDataArgs = new SentDataArgs(client, sentBytes);
-            OnDataSent(this, sentDataArgs);
+            SentData(this, new DataSentEventArgs(client, sentBytes));
         }
     }
 }

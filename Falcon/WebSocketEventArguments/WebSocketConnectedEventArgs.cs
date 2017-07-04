@@ -6,15 +6,13 @@ using System.Threading.Tasks;
 
 namespace Falcon.WebSocketEventArguments
 {
-    class WebSocketDisconnectArgs : EventArgs
+    class WebSocketConnectedEventArgs : EventArgs
     {
         public String ClientID { get; private set; }
-        public bool Unexpected { get; private set; }
 
-        public WebSocketDisconnectArgs(String clientID, bool unexpected)
+        public WebSocketConnectedEventArgs(String clientID)
         {
             this.ClientID = clientID;
-            this.Unexpected = unexpected;
         }
     }
 }
