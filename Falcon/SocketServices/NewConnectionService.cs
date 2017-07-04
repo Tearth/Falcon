@@ -12,6 +12,7 @@ namespace Falcon.SocketServices
     class NewConnectionHandler
     {
         public event EventHandler<NewConnectionArgs> OnNewClientConnection;
+        public event EventHandler<DisconnectArgs> OnDisconnect;
 
         public NewConnectionHandler()
         {

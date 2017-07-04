@@ -43,6 +43,7 @@
     <Compile Include="Clients\Client.cs" />
     <Compile Include="Clients\ClientsManager.cs" />
     <Compile Include="ServerListener.cs" />
+    <Compile Include="SocketServices\EventArguments\DisconnectArgs.cs" />
     <Compile Include="SocketServices\EventArguments\NewConnectionArgs.cs" />
     <Compile Include="SocketServices\EventArguments\ReceivedDataArgs.cs" />
     <Compile Include="SocketServices\EventArguments\SentDataArgs.cs" />

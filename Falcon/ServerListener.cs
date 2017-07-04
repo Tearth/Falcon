@@ -43,8 +43,13 @@ namespace Falcon
             sendDataHandler = new SendDataHandler();
 
             newConnectionHandler.OnNewClientConnection += OnNewClientConnection;
+            newConnectionHandler.OnDisconnect += OnDisconnect;
+
             receiveDataHandler.OnDataReceived += OnNewDataReceived;
+            receiveDataHandler.OnDisconnect += OnDisconnect;
+
             sendDataHandler.OnDataSent += OnDataSent;
+            sendDataHandler.OnDisconnect += OnDisconnect;
 
             Shutdown = true;
         }
@@ -96,10 +101,14 @@ namespace Falcon
 
         private void OnDataSent(object sender, SentDataArgs args)
         {
-            var client = args.Client;
-
-            var sentDataArgs = new WebSocketSentDataArgs(client.ID, args.BytesSent);
+            var sentDataArgs = new WebSocketSentDataArgs(args.Client.ID, args.BytesSent);
             OnWebSocketDataSent(this, sentDataArgs);
+        }
+
+        private void OnDisconnect(object sender, DisconnectArgs args)
+        {
+            var disconnectArgs = new WebSocketDisconnectArgs(args.Client.ID, args.Unexpected);
+            OnWebSocketDisconnect(this, disconnectArgs);
         }
     }
 }

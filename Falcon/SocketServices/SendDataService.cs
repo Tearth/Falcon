@@ -11,6 +11,7 @@ namespace Falcon.SocketServices
     class SendDataHandler
     {
         public event EventHandler<SentDataArgs> OnDataSent;
+        public event EventHandler<DisconnectArgs> OnDisconnect;
 
         public SendDataHandler()
         {

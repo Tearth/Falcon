@@ -12,6 +12,7 @@ namespace Falcon.SocketServices
     class ReceiveDataHandler
     {
         public event EventHandler<ReceivedDataArgs> OnDataReceived;
+        public event EventHandler<DisconnectArgs> OnDisconnect;
 
         public ReceiveDataHandler()
         {
