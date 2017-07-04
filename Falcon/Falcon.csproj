@@ -43,14 +43,16 @@
     <Compile Include="Clients\Client.cs" />
     <Compile Include="Clients\ClientsManager.cs" />
     <Compile Include="ServerListener.cs" />
-    <Compile Include="ConnectionHandlers\NewConnectionHandler.cs" />
-    <Compile Include="ConnectionHandlers\OnClientActionHandler.cs" />
-    <Compile Include="ConnectionHandlers\ReceiveDataHandler.cs" />
-    <Compile Include="ConnectionHandlers\SendDataHandler.cs" />
+    <Compile Include="SocketHandlers\NewConnectionHandler.cs" />
+    <Compile Include="SocketHandlers\OnClientActionHandler.cs" />
+    <Compile Include="SocketHandlers\ReceiveDataHandler.cs" />
+    <Compile Include="SocketHandlers\SendDataHandler.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="WebSocketServer.cs" />
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <Folder Include="WebSocketHandlers\" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

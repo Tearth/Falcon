@@ -5,7 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Falcon.ConnectionHandlers
+namespace Falcon.SocketHandlers
 {
     delegate void OnClientActionHandler(object sender, Client client);
 }
