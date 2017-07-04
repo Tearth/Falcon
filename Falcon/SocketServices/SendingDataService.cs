@@ -26,9 +26,9 @@ namespace Falcon.SocketServices
             {
                 clientSocket.BeginSend(data, 0, data.Length, 0, new AsyncCallback(EndSendData), client);
             }
-            catch
+            catch(Exception ex)
             {
-                Disconnected(this, new DisconnectedEventArgs(client, true));
+                Disconnected(this, new DisconnectedEventArgs(client, ex));
                 return;
             }
         }
@@ -42,9 +42,9 @@ namespace Falcon.SocketServices
             {
                 sentBytes = client.Socket.EndSend(ar);
             }
-            catch
+            catch(Exception ex)
             {
-                Disconnected(this, new DisconnectedEventArgs(client, true));
+                Disconnected(this, new DisconnectedEventArgs(client, ex));
                 return;
             }
 

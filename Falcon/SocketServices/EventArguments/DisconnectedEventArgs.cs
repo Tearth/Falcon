@@ -10,12 +10,17 @@ namespace Falcon.SocketServices.EventArguments
     class DisconnectedEventArgs : EventArgs
     {
         public Client Client { get; private set; }
-        public bool Unexpected { get; private set; }
+        public bool Unexpected { get { return Exception != null; } }
+        public Exception Exception { get; private set; }
 
-        public DisconnectedEventArgs(Client client, bool unexpected)
+        public DisconnectedEventArgs(Client client)
         {
             this.Client = client;
-            this.Unexpected = unexpected;
+        }
+
+        public DisconnectedEventArgs(Client client, Exception exception) : this(client)
+        {
+            this.Exception = exception;
         }
     }
 }

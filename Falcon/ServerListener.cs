@@ -43,7 +43,7 @@ namespace Falcon
             sendDataService = new SendingDataService();
 
             newConnectionService.Connected += OnConnected;
-            newConnectionService.Disconnect += OnDisconnected;
+            newConnectionService.Disconnected += OnDisconnected;
 
             receiveDataService.ReceivedData += OnReceivedData;
             receiveDataService.Disconnected += OnDisconnected;
@@ -109,7 +109,7 @@ namespace Falcon
         {
             clientsManager.Remove(args.Client);
 
-            var disconnectArgs = new WebSocketDisconnectedEventArgs(args.Client.ID, args.Unexpected);
+            var disconnectArgs = new WebSocketDisconnectedEventArgs(args.Client.ID, args.Exception);
             WebSocketDisconnected(this, disconnectArgs);
         }
     }

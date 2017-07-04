@@ -12,7 +12,7 @@ namespace Falcon.SocketServices
     class ConnectingService
     {
         public event EventHandler<ConnectedEventArgs> Connected;
-        public event EventHandler<DisconnectedEventArgs> Disconnect;
+        public event EventHandler<DisconnectedEventArgs> Disconnected;
 
         public ConnectingService()
         {
@@ -21,7 +21,14 @@ namespace Falcon.SocketServices
 
         public void BeginConnection(Socket server)
         {
-            server.BeginAccept(new AsyncCallback(AcceptNewConnection), server);
+            try
+            {
+                server.BeginAccept(new AsyncCallback(AcceptNewConnection), server);
+            }
+            catch(Exception ex)
+            {
+                Disconnected(this, new DisconnectedEventArgs(null, ex));
+            }
         }
 
         void AcceptNewConnection(IAsyncResult ar)
@@ -33,8 +40,9 @@ namespace Falcon.SocketServices
             {
                 clientSocket = server.EndAccept(ar);
             }
-            catch
+            catch(Exception ex)
             {
+                Disconnected(this, new DisconnectedEventArgs(null, ex));
                 return;
             }
 

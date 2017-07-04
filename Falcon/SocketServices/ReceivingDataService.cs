@@ -28,9 +28,9 @@ namespace Falcon.SocketServices
                 clientSocket.BeginReceive(client.Buffer, 0, client.BufferSize, 0,
                                           new AsyncCallback(AcceptNewData), client);
             }
-            catch
+            catch(Exception ex)
             {
-                Disconnected(this, new DisconnectedEventArgs(client, true));
+                Disconnected(this, new DisconnectedEventArgs(client, ex));
                 return;
             }
         }
@@ -44,14 +44,14 @@ namespace Falcon.SocketServices
             {
                 receivedBytes = client.Socket.EndReceive(ar);
             }
-            catch
+            catch(Exception ex)
             {
-                Disconnected(this, new DisconnectedEventArgs(client, true));
+                Disconnected(this, new DisconnectedEventArgs(client, ex));
                 return;
             }
 
             if (receivedBytes == 0)
-                Disconnected(this, new DisconnectedEventArgs(client, false));
+                Disconnected(this, new DisconnectedEventArgs(client));
             else
                 ReceivedData(this, new DataReceivedEventArgs(client, receivedBytes));
         }
