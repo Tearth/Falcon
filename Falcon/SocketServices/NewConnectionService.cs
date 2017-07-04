@@ -27,10 +27,19 @@ namespace Falcon.SocketServices
         void AcceptNewConnection(IAsyncResult ar)
         {
             var server = (Socket)ar.AsyncState;
-            var socket = server.EndAccept(ar);
+            Socket clientSocket = null;
+
+            try
+            {
+                clientSocket = server.EndAccept(ar);
+            }
+            catch
+            {
+                return;
+            }
 
             var client = new Client();
-            client.Bind(socket);
+            client.Bind(clientSocket);
 
             var connectionArgs = new NewConnectionArgs(client);
             OnNewClientConnection(this, connectionArgs);

@@ -19,7 +19,7 @@ namespace Falcon
             server.OnWebSocketNewConnection += OnWebSocketNewConnection;
             server.OnWebSocketDataReceived += OnWebSocketDataReceived;
             server.OnWebSocketDataSent += OnWebSocketDataSent;
-            server.OnWebSocketDisconnect += OnWebSockeyDisconnect;
+            server.OnWebSocketDisconnect += OnWebSocketDisconnect;
         }
 
         public void Open(IPAddress address, int port)
@@ -48,7 +48,7 @@ namespace Falcon
             
         }
 
-        void OnWebSockeyDisconnect(object sender, WebSocketDisconnectArgs args)
+        void OnWebSocketDisconnect(object sender, WebSocketDisconnectArgs args)
         {
             
         }

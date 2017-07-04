@@ -107,6 +107,8 @@ namespace Falcon
 
         private void OnDisconnect(object sender, DisconnectArgs args)
         {
+            clientsManager.Remove(args.Client);
+
             var disconnectArgs = new WebSocketDisconnectArgs(args.Client.ID, args.Unexpected);
             OnWebSocketDisconnect(this, disconnectArgs);
         }

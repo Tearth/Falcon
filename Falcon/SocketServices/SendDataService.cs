@@ -21,13 +21,32 @@ namespace Falcon.SocketServices
         public void SendData(Client client, byte[] data)
         {
             var clientSocket = client.Socket;
-            clientSocket.BeginSend(data, 0, data.Length, 0, new AsyncCallback(EndSendData), client);
+
+            try
+            {
+                clientSocket.BeginSend(data, 0, data.Length, 0, new AsyncCallback(EndSendData), client);
+            }
+            catch
+            {
+                OnDisconnect(this, new DisconnectArgs(client, true));
+                return;
+            }
         }
 
         void EndSendData(IAsyncResult ar)
         {
             var client = (Client)ar.AsyncState;
-            var sentBytes = client.Socket.EndSend(ar);
+            var sentBytes = 0;
+
+            try
+            {
+                sentBytes = client.Socket.EndSend(ar);
+            }
+            catch
+            {
+                OnDisconnect(this, new DisconnectArgs(client, true));
+                return;
+            }
 
             var sentDataArgs = new SentDataArgs(client, sentBytes);
             OnDataSent(this, sentDataArgs);

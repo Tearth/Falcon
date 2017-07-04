@@ -22,17 +22,38 @@ namespace Falcon.SocketServices
         public void ReceiveData(Client client)
         {
             var clientSocket = client.Socket;
-            clientSocket.BeginReceive(client.Buffer, 0, client.BufferSize, 0, 
-                                      new AsyncCallback(AcceptNewData), client);
+
+            try
+            {
+                clientSocket.BeginReceive(client.Buffer, 0, client.BufferSize, 0,
+                                          new AsyncCallback(AcceptNewData), client);
+            }
+            catch
+            {
+                OnDisconnect(this, new DisconnectArgs(client, true));
+                return;
+            }
         }
 
         void AcceptNewData(IAsyncResult ar)
         {
             var client = (Client)ar.AsyncState;
-            var receivedBytes = client.Socket.EndReceive(ar);
+            var receivedBytes = 0;
 
-            var receivedDataArgs = new ReceivedDataArgs(client, receivedBytes);
-            OnDataReceived(this, receivedDataArgs);
+            try
+            {
+                receivedBytes = client.Socket.EndReceive(ar);
+            }
+            catch
+            {
+                OnDisconnect(this, new DisconnectArgs(client, true));
+                return;
+            }
+
+            if (receivedBytes == 0)
+                OnDisconnect(this, new DisconnectArgs(client, false));
+            else
+                OnDataReceived(this, new ReceivedDataArgs(client, receivedBytes));
         }
     }
 }
