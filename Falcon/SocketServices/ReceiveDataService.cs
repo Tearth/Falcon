@@ -1,4 +1,5 @@
 ﻿using Falcon.Clients;
+using Falcon.SocketServices.EventArguments;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -6,11 +7,11 @@ using System.Net.Sockets;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Falcon.SocketHandlers
+namespace Falcon.SocketServices
 {
     class ReceiveDataHandler
     {
-        public event OnClientActionHandler OnNewDataReceived;
+        public event EventHandler<ReceivedDataArgs> OnDataReceived;
 
         public ReceiveDataHandler()
         {
@@ -27,10 +28,10 @@ namespace Falcon.SocketHandlers
         void AcceptNewData(IAsyncResult ar)
         {
             var client = (Client)ar.AsyncState;
-            var bytes = client.Socket.EndReceive(ar);
+            var receivedBytes = client.Socket.EndReceive(ar);
 
-            client.ReceivedData = client.Buffer.Take(bytes).ToArray();
-            OnNewDataReceived(this, client);
+            var receivedDataArgs = new ReceivedDataArgs(client, receivedBytes);
+            OnDataReceived(this, receivedDataArgs);
         }
     }
 }

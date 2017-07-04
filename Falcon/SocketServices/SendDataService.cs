@@ -1,15 +1,16 @@
 ﻿using Falcon.Clients;
+using Falcon.SocketServices.EventArguments;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Falcon.SocketHandlers
+namespace Falcon.SocketServices
 {
     class SendDataHandler
     {
-        public event OnClientActionHandler OnDataSent;
+        public event EventHandler<SentDataArgs> OnDataSent;
 
         public SendDataHandler()
         {
@@ -25,9 +26,10 @@ namespace Falcon.SocketHandlers
         void EndSendData(IAsyncResult ar)
         {
             var client = (Client)ar.AsyncState;
-            client.Socket.EndSend(ar);
+            var sentBytes = client.Socket.EndSend(ar);
 
-            OnDataSent(this, client);
+            var sentDataArgs = new SentDataArgs(client, sentBytes);
+            OnDataSent(this, sentDataArgs);
         }
     }
 }

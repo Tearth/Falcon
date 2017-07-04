@@ -1,4 +1,5 @@
 ﻿using Falcon.Clients;
+using Falcon.SocketServices.EventArguments;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -6,11 +7,11 @@ using System.Net.Sockets;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Falcon.SocketHandlers
+namespace Falcon.SocketServices
 {
     class NewConnectionHandler
     {
-        public event OnClientActionHandler OnNewClientConnection;
+        public event EventHandler<NewConnectionArgs> OnNewClientConnection;
 
         public NewConnectionHandler()
         {
@@ -30,7 +31,8 @@ namespace Falcon.SocketHandlers
             var client = new Client();
             client.Bind(socket);
 
-            OnNewClientConnection(this, client);
+            var connectionArgs = new NewConnectionArgs(client);
+            OnNewClientConnection(this, connectionArgs);
         }
     }
 }

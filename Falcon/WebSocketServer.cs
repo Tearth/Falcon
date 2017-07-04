@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Falcon.WebSocketEventArguments;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Net;
@@ -16,7 +17,7 @@ namespace Falcon
             server = new ServerListener();
 
             server.OnWebSocketNewConnection += OnWebSocketNewConnection;
-            server.OnWebSocketNewData += OnWebSocketNewData;
+            server.OnWebSocketDataReceived += OnWebSocketDataReceived;
             server.OnWebSocketDataSent += OnWebSocketDataSent;
         }   
 
@@ -31,17 +32,17 @@ namespace Falcon
             server.StopListening();
         }
 
-        void OnWebSocketNewConnection(object sender, string clientID)
+        void OnWebSocketNewConnection(object sender, WebSocketNewConnectionArgs args)
         {
             throw new NotImplementedException();
         }
 
-        void OnWebSocketNewData(object sender, WebSocketHandlers.ClientData clientData)
+        void OnWebSocketDataReceived(object sender, WebSocketReceivedDataArgs args)
         {
             throw new NotImplementedException();
         }
 
-        void OnWebSocketDataSent(object sender, string clientID)
+        void OnWebSocketDataSent(object sender, WebSocketSentDataArgs args)
         {
             throw new NotImplementedException();
         }

@@ -43,15 +43,16 @@
     <Compile Include="Clients\Client.cs" />
     <Compile Include="Clients\ClientsManager.cs" />
     <Compile Include="ServerListener.cs" />
-    <Compile Include="SocketHandlers\NewConnectionHandler.cs" />
-    <Compile Include="SocketHandlers\OnClientActionHandler.cs" />
-    <Compile Include="SocketHandlers\ReceiveDataHandler.cs" />
-    <Compile Include="SocketHandlers\SendDataHandler.cs" />
+    <Compile Include="SocketServices\EventArguments\NewConnectionArgs.cs" />
+    <Compile Include="SocketServices\EventArguments\ReceivedDataArgs.cs" />
+    <Compile Include="SocketServices\EventArguments\SentDataArgs.cs" />
+    <Compile Include="SocketServices\NewConnectionService.cs" />
+    <Compile Include="SocketServices\ReceiveDataService.cs" />
+    <Compile Include="SocketServices\SendDataService.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="WebSocketHandlers\ClientData.cs" />
-    <Compile Include="WebSocketHandlers\OnWebSocketDataSentHandler.cs" />
-    <Compile Include="WebSocketHandlers\OnWebSocketNewConnectionHandler.cs" />
-    <Compile Include="WebSocketHandlers\OnWebSocketNewDataHandler.cs" />
+    <Compile Include="WebSocketEventArguments\WebSocketNewConnectionArgs.cs" />
+    <Compile Include="WebSocketEventArguments\WebSocketReceivedDataArgs.cs" />
+    <Compile Include="WebSocketEventArguments\WebSocketSentDataArgs.cs" />
     <Compile Include="WebSocketServer.cs" />
   </ItemGroup>
   <ItemGroup />

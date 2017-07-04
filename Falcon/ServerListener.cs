@@ -1,6 +1,7 @@
 ﻿using Falcon.Clients;
-using Falcon.SocketHandlers;
-using Falcon.WebSocketHandlers;
+using Falcon.SocketServices;
+using Falcon.SocketServices.EventArguments;
+using Falcon.WebSocketEventArguments;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -24,9 +25,9 @@ namespace Falcon
 
         static ManualResetEvent loopEvent;
 
-        public event OnWebSocketNewConnectionHandler OnWebSocketNewConnection;
-        public event OnWebSocketNewDataHandler OnWebSocketNewData;
-        public event OnWebSocketDataSentHandler OnWebSocketDataSent;
+        public event EventHandler<WebSocketNewConnectionArgs> OnWebSocketNewConnection;
+        public event EventHandler<WebSocketReceivedDataArgs> OnWebSocketDataReceived;
+        public event EventHandler<WebSocketSentDataArgs> OnWebSocketDataSent;
         public bool Shutdown { get; private set; }
 
         public ServerListener()
@@ -41,7 +42,7 @@ namespace Falcon
             sendDataHandler = new SendDataHandler();
 
             newConnectionHandler.OnNewClientConnection += OnNewClientConnection;
-            receiveDataHandler.OnNewDataReceived += OnNewDataReceived;
+            receiveDataHandler.OnDataReceived += OnNewDataReceived;
             sendDataHandler.OnDataSent += OnDataSent;
 
             Shutdown = true;
@@ -72,23 +73,32 @@ namespace Falcon
             }    
         }
 
-        void OnNewClientConnection(object sender, Client client)
+        void OnNewClientConnection(object sender, NewConnectionArgs args)
         {
+            var client = args.Client;
+
             clientsManager.Add(client);
             receiveDataHandler.ReceiveData(client);
 
-            OnWebSocketNewConnection(this, client.ID);
+            var connectionArgs = new WebSocketNewConnectionArgs(client.ID);
+            OnWebSocketNewConnection(this, connectionArgs);
         }
 
-        private void OnNewDataReceived(object sender, Client client)
+        private void OnNewDataReceived(object sender, ReceivedDataArgs args)
         {
-            var clientData = new ClientData(client.ID, client.ReceivedData);
-            OnWebSocketNewData(this, clientData);
+            var client = args.Client;
+            var receivedData = client.Buffer.Take(args.BytesReceived).ToArray();
+
+            var receivedDataArgs = new WebSocketReceivedDataArgs(client.ID, receivedData);
+            OnWebSocketDataReceived(this, receivedDataArgs);
         }
 
-        private void OnDataSent(object sender, Client client)
+        private void OnDataSent(object sender, SentDataArgs args)
         {
-            throw new NotImplementedException();
+            var client = args.Client;
+
+            var sentDataArgs = new WebSocketSentDataArgs(client.ID, args.BytesSent);
+            OnWebSocketDataSent(this, sentDataArgs);
         }
     }
 }

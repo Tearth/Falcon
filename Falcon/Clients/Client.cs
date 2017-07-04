@@ -13,12 +13,10 @@ namespace Falcon.Clients
         public Socket Socket { get; private set; }
 
         public int BufferSize { get; private set; }
-        public byte[] ReceivedData { get; set; }
-        public byte[] Buffer { get; set; }
+        public byte[] Buffer { get; private set; }
 
         public Client()
         {
-            this.ID = String.Empty;
             this.BufferSize = 8 * 1024;
             this.Buffer = new byte[this.BufferSize];
         }
@@ -26,7 +24,6 @@ namespace Falcon.Clients
         public void Bind(Socket socket)
         {
             this.Socket = socket;
-
             this.ID = Guid.NewGuid().ToString();
         }
     }
