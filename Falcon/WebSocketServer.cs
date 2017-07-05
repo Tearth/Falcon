@@ -46,13 +46,18 @@ namespace Falcon
             server.StopListening();
         }
 
-        public bool SendData(String clientID, byte[] data)
+        /*public bool SendData(String clientID, byte[] data)
         {
             if (!webSocketClientsManager.Exists(clientID))
                 return false;
             
             server.SendData(clientID, data);
             return true;
+        }*/
+
+        void SendRawData(String clientID, byte[] data)
+        {
+            server.SendData(clientID, data);
         }
 
         void OnWebSocketConnected(object sender, WebSocketConnectedEventArgs args)
@@ -65,12 +70,14 @@ namespace Falcon
 
         void OnWebSocketDataReceived(object sender, WebSocketDataReceivedEventArgs args)
         {
-            
+            var client = webSocketClientsManager.Get(args.ClientID);
+            if (!client.HandshakeDone)
+                DoHandshake(client, args.Data);
         }
 
         void OnWebSocketDataSent(object sender, WebSocketDataSentEventArgs args)
         {
-            
+            WebSocketDataSent(this, args);
         }
 
         void OnWebSocketDisconnected(object sender, WebSocketDisconnectedEventArgs args)
@@ -79,6 +86,16 @@ namespace Falcon
             webSocketClientsManager.Remove(webSocketClient);
 
             WebSocketDisconnected(this, args);
+        }
+
+        void DoHandshake(WebSocketClient client, byte[] data)
+        {
+            var response = handshakeResponseGenerator.GetResponse(data);
+            if (response != null)
+            {
+                SendRawData(client.ID, response);
+                client.HandshakeDone = true;
+            }
         }
     }
 }

@@ -27,7 +27,7 @@ namespace Falcon.Protocol.Handshake
             var response = String.Format("HTTP/1.1 101 Switching Protocols\r\n" +
                                          "Upgrade: websocket\r\n" +
                                          "Connection: Upgrade\r\n" +
-                                         "Sec-WebSocket-Accept: {0}\r\n" +
+                                         "Sec-WebSocket-Accept: {0}" +
                                          "{1}",
                                           responseKey, endSequence);
             return ASCIIEncoding.UTF8.GetBytes(response);
