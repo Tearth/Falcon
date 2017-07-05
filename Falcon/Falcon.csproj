@@ -42,6 +42,7 @@
   <ItemGroup>
     <Compile Include="Clients\Client.cs" />
     <Compile Include="Clients\ClientsManager.cs" />
+    <Compile Include="Protocol\Handshake\HandshakeResponseGenerator.cs" />
     <Compile Include="ServerListener.cs" />
     <Compile Include="SocketServices\EventArguments\DisconnectedEventArgs.cs" />
     <Compile Include="SocketServices\EventArguments\ConnectedEventArgs.cs" />
@@ -57,7 +58,9 @@
     <Compile Include="WebSocketEventArguments\WebSocketDataSentEventArgs.cs" />
     <Compile Include="WebSocketServer.cs" />
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <Folder Include="Protocol\Frame\" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.
