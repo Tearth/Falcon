@@ -97,6 +97,8 @@ namespace Falcon
 
             var receivedDataArgs = new WebSocketDataReceivedEventArgs(client.ID, receivedData);
             WebSocketDataReceived(this, receivedDataArgs);
+
+            receiveDataService.ReceiveData(client);
         }
 
         private void OnSentData(object sender, DataSentEventArgs args)
