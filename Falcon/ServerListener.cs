@@ -23,6 +23,7 @@ namespace Falcon
         ReceivingDataService receiveDataService;
         SendingDataService sendDataService;
 
+        int bufferSize;
         static ManualResetEvent loopEvent;
 
         public event EventHandler<WebSocketConnectedEventArgs> WebSocketConnected;
@@ -31,8 +32,10 @@ namespace Falcon
         public event EventHandler<WebSocketDisconnectedEventArgs> WebSocketDisconnected;
         public bool Shutdown { get; private set; }
 
-        public ServerListener()
+        public ServerListener(int bufferSize)
         {
+            this.bufferSize = bufferSize;
+
             socket = new Socket(AddressFamily.InterNetwork, SocketType.Stream, ProtocolType.Tcp);
             loop = new Task(Loop);
             loopEvent = new ManualResetEvent(false);
@@ -81,7 +84,7 @@ namespace Falcon
 
         void OnConnected(object sender, ConnectedEventArgs args)
         {
-            var client = args.Client;
+            var client = new Client(args.ClientSocket, bufferSize);
 
             clientsManager.Add(client);
             receiveDataService.ReceiveData(client);

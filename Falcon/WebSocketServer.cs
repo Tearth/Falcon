@@ -14,6 +14,8 @@ namespace Falcon
         ServerListener server;
         WebSocketClientsManager webSocketClientsManager;
 
+        int bufferSize = 8192;
+
         public event EventHandler<WebSocketConnectedEventArgs> WebSocketConnected;
         public event EventHandler<WebSocketDataReceivedEventArgs> WebSocketDataReceived;
         public event EventHandler<WebSocketDataSentEventArgs> WebSocketDataSent;
@@ -21,7 +23,7 @@ namespace Falcon
 
         public WebSocketServer()
         {
-            server = new ServerListener();
+            server = new ServerListener(bufferSize);
             webSocketClientsManager = new WebSocketClientsManager();
 
             server.WebSocketConnected += OnWebSocketConnected;
@@ -43,7 +45,7 @@ namespace Falcon
 
         void OnWebSocketConnected(object sender, WebSocketConnectedEventArgs args)
         {
-            var webSocketClient = new WebSocketClient(args.ClientID);
+            var webSocketClient = new WebSocketClient(args.ClientID, bufferSize);
             webSocketClientsManager.Add(webSocketClient);
 
             WebSocketConnected(this, args);

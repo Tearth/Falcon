@@ -25,7 +25,7 @@ namespace Falcon.SocketServices
 
             try
             {
-                clientSocket.BeginReceive(client.Buffer, 0, client.BufferSize, 0,
+                clientSocket.BeginReceive(client.Buffer, 0, client.Buffer.Length, 0,
                                           new AsyncCallback(AcceptNewData), client);
             }
             catch(Exception ex)
