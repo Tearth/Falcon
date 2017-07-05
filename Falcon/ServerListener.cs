@@ -72,6 +72,12 @@ namespace Falcon
             socket.Close();
         }
 
+        public void SendData(String clientID, byte[] data)
+        {
+            var client = clientsManager.Get(clientID);
+            sendDataService.SendData(client, data);
+        }
+
         void Loop()
         {
             while(!Shutdown)
@@ -95,7 +101,7 @@ namespace Falcon
             loopEvent.Set();
         }
 
-        private void OnReceivedData(object sender, DataReceivedEventArgs args)
+        void OnReceivedData(object sender, DataReceivedEventArgs args)
         {
             var client = args.Client;
             var receivedData = client.Buffer.Take(args.BytesReceived).ToArray();
@@ -106,13 +112,13 @@ namespace Falcon
             receiveDataService.ReceiveData(client);
         }
 
-        private void OnSentData(object sender, DataSentEventArgs args)
+        void OnSentData(object sender, DataSentEventArgs args)
         {
             var sentDataArgs = new WebSocketDataSentEventArgs(args.Client.ID, args.BytesSent);
             WebSocketDataSent(this, sentDataArgs);
         }
 
-        private void OnDisconnected(object sender, DisconnectedEventArgs args)
+        void OnDisconnected(object sender, DisconnectedEventArgs args)
         {
             clientsManager.Remove(args.Client);
 

@@ -46,6 +46,15 @@ namespace Falcon
             server.StopListening();
         }
 
+        public bool SendData(String clientID, byte[] data)
+        {
+            if (!webSocketClientsManager.Exists(clientID))
+                return false;
+            
+            server.SendData(clientID, data);
+            return true;
+        }
+
         void OnWebSocketConnected(object sender, WebSocketConnectedEventArgs args)
         {
             var webSocketClient = new WebSocketClient(args.ClientID, bufferSize);
@@ -66,7 +75,7 @@ namespace Falcon
 
         void OnWebSocketDisconnected(object sender, WebSocketDisconnectedEventArgs args)
         {
-            var webSocketClient = webSocketClientsManager.GetByID(args.ClientID);
+            var webSocketClient = webSocketClientsManager.Get(args.ClientID);
             webSocketClientsManager.Remove(webSocketClient);
 
             WebSocketDisconnected(this, args);

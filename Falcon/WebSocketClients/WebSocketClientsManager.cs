@@ -25,9 +25,14 @@ namespace Falcon.WebSocketClients
             webSocketClients.Remove(client);
         }
 
-        public WebSocketClient GetByID(String id)
+        public WebSocketClient Get(String id)
         {
             return webSocketClients.FirstOrDefault(p => p.ID == id);
+        }
+
+        public bool Exists(String id)
+        {
+            return webSocketClients.Exists(p => p.ID == id);
         }
     }
 }

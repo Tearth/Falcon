@@ -25,9 +25,14 @@ namespace Falcon.SocketClients
             clients.Remove(client);
         }
 
-        public Client GetByID(String id)
+        public Client Get(String id)
         {
             return clients.FirstOrDefault(p => p.ID == id);
+        }
+
+        public bool Exists(String id)
+        {
+            return clients.Exists(p => p.ID == id);
         }
     }
 }
