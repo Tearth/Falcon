@@ -1,4 +1,4 @@
-﻿using Falcon.Clients;
+﻿using Falcon.SocketClients;
 using Falcon.SocketServices;
 using Falcon.SocketServices.EventArguments;
 using Falcon.WebSocketEventArguments;

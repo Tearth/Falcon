@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Falcon.Clients
+namespace Falcon.SocketClients
 {
     class ClientsManager
     {

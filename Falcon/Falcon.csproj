@@ -40,8 +40,8 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Clients\Client.cs" />
-    <Compile Include="Clients\ClientsManager.cs" />
+    <Compile Include="SocketServices\SocketClients\Client.cs" />
+    <Compile Include="SocketServices\SocketClients\ClientsManager.cs" />
     <Compile Include="Protocol\Handshake\HandshakeResponseGenerator.cs" />
     <Compile Include="ServerListener.cs" />
     <Compile Include="SocketServices\EventArguments\DisconnectedEventArgs.cs" />
