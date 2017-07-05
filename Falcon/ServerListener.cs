@@ -88,6 +88,8 @@ namespace Falcon
 
             var connectionArgs = new WebSocketConnectedEventArgs(client.ID);
             WebSocketConnected(this, connectionArgs);
+
+            loopEvent.Set();
         }
 
         private void OnReceivedData(object sender, DataReceivedEventArgs args)
