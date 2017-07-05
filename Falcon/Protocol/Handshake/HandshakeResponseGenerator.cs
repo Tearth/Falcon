@@ -13,21 +13,24 @@ namespace Falcon.Protocol.Handshake
         const String webSocketKeyName = "Sec-WebSocket-Key";
         const String magicHashString = "258EAFA5-E914-47DA-95CA-C5AB0DC85B11";
 
-        public String GetResponse(String request)
+        public byte[] GetResponse(byte[] request)
         {
-            if (!request.Contains(endSequence))
-                return String.Empty;
+            var data = ASCIIEncoding.UTF8.GetString(request);
 
-            var fields = ParseRequestToDictionary(request);
+            if (!data.Contains(endSequence))
+                return null;
+
+            var fields = ParseRequestToDictionary(data);
             var key = fields[webSocketKeyName];
             var responseKey = CreateResponseKey(key);
 
-            return String.Format("HTTP/1.1 101 Switching Protocols\r\n" +
-                                 "Upgrade: websocket\r\n" +
-                                 "Connection: Upgrade\r\n" +
-                                 "Sec-WebSocket-Accept: {0}\r\n" +
-                                 "{1}",
-                                  responseKey, endSequence);
+            var response = String.Format("HTTP/1.1 101 Switching Protocols\r\n" +
+                                         "Upgrade: websocket\r\n" +
+                                         "Connection: Upgrade\r\n" +
+                                         "Sec-WebSocket-Accept: {0}\r\n" +
+                                         "{1}",
+                                          responseKey, endSequence);
+            return ASCIIEncoding.UTF8.GetBytes(response);
         }
 
         Dictionary<String, String> ParseRequestToDictionary(String request)

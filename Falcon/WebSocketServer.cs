@@ -1,4 +1,5 @@
-﻿using Falcon.WebSocketClients;
+﻿using Falcon.Protocol.Handshake;
+using Falcon.WebSocketClients;
 using Falcon.WebSocketEventArguments;
 using System;
 using System.Collections.Generic;
@@ -13,6 +14,7 @@ namespace Falcon
     {
         ServerListener server;
         WebSocketClientsManager webSocketClientsManager;
+        HandshakeResponseGenerator handshakeResponseGenerator;
 
         int bufferSize = 8192;
 
@@ -25,6 +27,7 @@ namespace Falcon
         {
             server = new ServerListener(bufferSize);
             webSocketClientsManager = new WebSocketClientsManager();
+            handshakeResponseGenerator = new HandshakeResponseGenerator();
 
             server.WebSocketConnected += OnWebSocketConnected;
             server.WebSocketDataReceived += OnWebSocketDataReceived;
