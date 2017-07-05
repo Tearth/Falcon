@@ -1,4 +1,5 @@
-﻿using Falcon.WebSocketEventArguments;
+﻿using Falcon.WebSocketClients;
+using Falcon.WebSocketEventArguments;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -11,10 +12,12 @@ namespace Falcon
     public class WebSocketServer
     {
         ServerListener server;
+        WebSocketClientsManager webSocketClientsManager;
 
         public WebSocketServer()
         {
             server = new ServerListener();
+            webSocketClientsManager = new WebSocketClientsManager();
 
             server.WebSocketConnected += OnWebSocketConnected;
             server.WebSocketDataReceived += OnWebSocketDataReceived;

@@ -46,9 +46,7 @@ namespace Falcon.SocketServices
                 return;
             }
 
-            var client = new Client();
-            client.Bind(clientSocket);
-
+            var client = new Client(clientSocket);
             Connected(this, new ConnectedEventArgs(client));
         }
     }
