@@ -12,7 +12,7 @@ namespace Falcon.WebSocketClients
 
         public WebSocketClientsManager()
         {
-
+            webSocketClients = new List<WebSocketClient>();
         }
 
         public void Add(WebSocketClient client)

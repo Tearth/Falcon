@@ -14,6 +14,11 @@ namespace Falcon
         ServerListener server;
         WebSocketClientsManager webSocketClientsManager;
 
+        public event EventHandler<WebSocketConnectedEventArgs> WebSocketConnected;
+        public event EventHandler<WebSocketDataReceivedEventArgs> WebSocketDataReceived;
+        public event EventHandler<WebSocketDataSentEventArgs> WebSocketDataSent;
+        public event EventHandler<WebSocketDisconnectedEventArgs> WebSocketDisconnected;
+
         public WebSocketServer()
         {
             server = new ServerListener();
@@ -38,7 +43,10 @@ namespace Falcon
 
         void OnWebSocketConnected(object sender, WebSocketConnectedEventArgs args)
         {
-            
+            var webSocketClient = new WebSocketClient(args.ClientID);
+            webSocketClientsManager.Add(webSocketClient);
+
+            WebSocketConnected(this, args);
         }
 
         void OnWebSocketDataReceived(object sender, WebSocketDataReceivedEventArgs args)
@@ -53,7 +61,10 @@ namespace Falcon
 
         void OnWebSocketDisconnected(object sender, WebSocketDisconnectedEventArgs args)
         {
-            
+            var webSocketClient = webSocketClientsManager.GetByID(args.ClientID);
+            webSocketClientsManager.Remove(webSocketClient);
+
+            WebSocketDisconnected(this, args);
         }
     }
 }

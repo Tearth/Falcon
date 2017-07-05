@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace Falcon.WebSocketEventArguments
 {
-    class WebSocketDataReceivedEventArgs : EventArgs
+    public class WebSocketDataReceivedEventArgs : EventArgs
     {
         public String ClientID { get; private set; }
         public byte[] Data { get; private set; }

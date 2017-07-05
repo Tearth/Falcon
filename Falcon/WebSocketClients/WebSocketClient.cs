@@ -10,14 +10,12 @@ namespace Falcon.WebSocketClients
     class WebSocketClient
     {
         public String ID { get; private set; }
-        public Client SocketClient { get; private set; }
 
         public bool HandshakeDone { get; set; }
 
-        public WebSocketClient(Client socketClient)
+        public WebSocketClient(String id)
         {
-            this.SocketClient = socketClient;
-            this.ID = Guid.NewGuid().ToString();
+            this.ID = id;
         }
     }
 }
