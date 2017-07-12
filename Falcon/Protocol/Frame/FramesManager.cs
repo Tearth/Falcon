@@ -23,9 +23,10 @@ namespace Falcon.Protocol.Frame
         public byte[] Decrypt(byte[] data, out DecryptResult result)
         {
             var frame = decryptor.Decrypt(data, out result);
-            var message = frame.GetMessage();
-            
-            return message;
+            if (result != DecryptResult.SuccessWithFIN && result != DecryptResult.SuccessWithoutFIN)
+                return null;
+
+            return frame.GetMessage();
         }
     }
 }
