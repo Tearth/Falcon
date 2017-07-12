@@ -13,6 +13,8 @@ namespace Falcon.Protocol.Frame
         public bool Mask { get; set; }
         public ulong Length { get; set; }
 
+        public byte HeaderLength { get; set; }
+
         public byte[] MaskingKey { get; set; }
         public byte[] Payload { get; set; }
     }

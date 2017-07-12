@@ -9,7 +9,9 @@ namespace Falcon.Protocol.Frame
     enum DecryptResult
     {
         None,
-        Success,
-        InvalidFrame
+        InvalidHeader,
+        PartialMessage,
+        SuccessWithFIN,
+        SuccessWithoutFIN
     }
 }
