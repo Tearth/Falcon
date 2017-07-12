@@ -109,6 +109,8 @@ namespace Falcon
 
             var decryptResult = DecryptResult.None;
             var message = framesManager.Decrypt(frame, out decryptResult);
+
+            WebSocketDataReceived(this, new WebSocketDataReceivedEventArgs(client.ID, message));
         }
     }
 }

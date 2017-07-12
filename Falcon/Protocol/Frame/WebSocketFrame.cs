@@ -17,5 +17,16 @@ namespace Falcon.Protocol.Frame
 
         public byte[] MaskingKey { get; set; }
         public byte[] Payload { get; set; }
+
+        public byte[] GetMessage()
+        {
+            var message = new byte[Length];
+            for (ulong i = 0; i < Length; i++)
+            {
+                message[i] = (byte)(Payload[i] ^ MaskingKey[i % 4]);
+            }
+
+            return message;
+        }
     }
 }
