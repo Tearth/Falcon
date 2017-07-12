@@ -2,11 +2,7 @@
 using Falcon.WebSocketClients;
 using Falcon.WebSocketEventArguments;
 using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Net;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Falcon
 {
@@ -71,8 +67,10 @@ namespace Falcon
         void OnWebSocketDataReceived(object sender, WebSocketDataReceivedEventArgs args)
         {
             var client = webSocketClientsManager.Get(args.ClientID);
+            client.AddToBuffer(args.Data);
+
             if (!client.HandshakeDone)
-                DoHandshake(client, args.Data);
+                DoHandshake(client);
         }
 
         void OnWebSocketDataSent(object sender, WebSocketDataSentEventArgs args)
@@ -88,13 +86,15 @@ namespace Falcon
             WebSocketDisconnected(this, args);
         }
 
-        void DoHandshake(WebSocketClient client, byte[] data)
+        void DoHandshake(WebSocketClient client)
         {
-            var response = handshakeResponseGenerator.GetResponse(data);
+            var response = handshakeResponseGenerator.GetResponse(client.GetBufferData());
             if (response != null)
             {
                 SendRawData(client.ID, response);
+
                 client.HandshakeDone = true;
+                client.ClearBuffer();
             }
         }
     }

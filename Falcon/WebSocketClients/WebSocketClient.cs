@@ -10,39 +10,44 @@ namespace Falcon.WebSocketClients
     class WebSocketClient
     {
         public String ID { get; private set; }
-        public byte[] Buffer { get; set; }
         public bool HandshakeDone { get; set; }
 
-        public int BufferPointer { get; private set; }
+        byte[] buffer;
+        int bufferPointer;
 
         public WebSocketClient(String id, int bufferSize)
         {
             this.ID = id;
-            this.Buffer = new byte[bufferSize];
+            this.buffer = new byte[bufferSize];
 
-            BufferPointer = 0;
+            bufferPointer = 0;
         }
 
         public bool AddToBuffer(byte[] data)
         {
-            if (BufferPointer + data.Length > Buffer.Length)
+            if (bufferPointer + data.Length > buffer.Length)
                 return false;
 
-            Array.Copy(data, 0, Buffer, BufferPointer, data.Length);
-            BufferPointer += data.Length;
+            Array.Copy(data, 0, buffer, bufferPointer, data.Length);
+            bufferPointer += data.Length;
             return true;
         }
 
         public void RemoveFromBuffer(int length)
         {
-            Array.Copy(Buffer, length, Buffer, 0, Buffer.Length - length);
-            BufferPointer -= length;
+            Array.Copy(buffer, length, buffer, 0, buffer.Length - length);
+            bufferPointer -= length;
         }
 
         public void ClearBuffer()
         {
-            Array.Clear(Buffer, 0, Buffer.Length);
-            BufferPointer = 0;
+            Array.Clear(buffer, 0, buffer.Length);
+            bufferPointer = 0;
+        }
+
+        public byte[] GetBufferData()
+        {
+            return buffer.Take(bufferPointer).ToArray();
         }
     }
 }
