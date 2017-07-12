@@ -8,9 +8,11 @@ namespace Falcon.Protocol.Frame
 {
     class FramesManager
     {
+        FrameDecryptor decryptor;
+
         public FramesManager()
         {
-
+            decryptor = new FrameDecryptor();
         }
 
         public byte[] Encrypt(byte[] data)
@@ -20,7 +22,7 @@ namespace Falcon.Protocol.Frame
 
         public byte[] Decrypt(byte[] frame, out DecryptResult result)
         {
-            throw new NotImplementedException();
+            return decryptor.Decrypt(frame, out result);
         }
     }
 }
