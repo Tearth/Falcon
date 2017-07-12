@@ -13,7 +13,7 @@ namespace Falcon.Protocol.Frame
 
         }
 
-        public byte[] Decrypt(byte[] frame)
+        public byte[] Decrypt(byte[] frame, out DecryptResult result)
         {
             throw new NotImplementedException();
         }

@@ -40,7 +40,8 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Protocol\Frame\EFrameType.cs" />
+    <Compile Include="Protocol\Frame\DecryptResult.cs" />
+    <Compile Include="Protocol\Frame\FrameType.cs" />
     <Compile Include="Protocol\Frame\FrameDecryptor.cs" />
     <Compile Include="Protocol\Frame\FrameEncryptor.cs" />
     <Compile Include="Protocol\Frame\FramesManager.cs" />

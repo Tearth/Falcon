@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace Falcon.Protocol.Frame
 {
-    enum EFrameType
+    enum FrameType
     {
         None,
         Message,

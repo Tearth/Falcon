@@ -1,4 +1,5 @@
-﻿using Falcon.Protocol.Handshake;
+﻿using Falcon.Protocol.Frame;
+using Falcon.Protocol.Handshake;
 using Falcon.WebSocketClients;
 using Falcon.WebSocketEventArguments;
 using System;
@@ -11,6 +12,7 @@ namespace Falcon
         ServerListener server;
         WebSocketClientsManager webSocketClientsManager;
         HandshakeResponseGenerator handshakeResponseGenerator;
+        FramesManager framesManager;
 
         int bufferSize = 8192;
 
@@ -24,6 +26,7 @@ namespace Falcon
             server = new ServerListener(bufferSize);
             webSocketClientsManager = new WebSocketClientsManager();
             handshakeResponseGenerator = new HandshakeResponseGenerator();
+            framesManager = new FramesManager();
 
             server.WebSocketConnected += OnWebSocketConnected;
             server.WebSocketDataReceived += OnWebSocketDataReceived;
@@ -71,6 +74,8 @@ namespace Falcon
 
             if (!client.HandshakeDone)
                 DoHandshake(client);
+            else
+                ProcessMessage(client);
         }
 
         void OnWebSocketDataSent(object sender, WebSocketDataSentEventArgs args)
@@ -96,6 +101,14 @@ namespace Falcon
                 client.HandshakeDone = true;
                 client.ClearBuffer();
             }
+        }
+
+        void ProcessMessage(WebSocketClient client)
+        {
+            var frame = client.GetBufferData();
+
+            var decryptResult = DecryptResult.None;
+            var message = framesManager.Decrypt(frame, out decryptResult);
         }
     }
 }
