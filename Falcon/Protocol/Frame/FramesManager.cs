@@ -22,6 +22,8 @@ namespace Falcon.Protocol.Frame
             var frame = new WebSocketFrame();
             frame.OpCode = 1;
             frame.Payload = data;
+            frame.PayloadLengthSignature = GetPayloadLengthSignature(frame.Payload);
+            frame.PayloadExtendedLength = GetPayloadExtendedLength(frame.Payload);
 
             return serializer.GetBytes(frame);
         }
@@ -37,6 +39,24 @@ namespace Falcon.Protocol.Frame
 
             parsedBytes = (int)frame.FrameLength;
             return frame.GetMessage();
+        }
+
+        byte GetPayloadLengthSignature(byte[] data)
+        {
+            if (data.Length > 65535)
+                return 127;
+            if (data.Length >= 126)
+                return 126;
+
+            return (byte)data.Length;
+        }
+
+        uint GetPayloadExtendedLength(byte[] data)
+        {
+            if (data.Length < 126)
+                return 0;
+
+            return (uint)data.Length;
         }
     }
 }
