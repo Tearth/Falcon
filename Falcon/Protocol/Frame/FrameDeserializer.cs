@@ -53,7 +53,7 @@ namespace Falcon.Protocol.Frame
                 return null;
             }
 
-            frame.Payload = data.Skip(frame.HeaderLength).ToArray();
+            frame.Payload = data.Skip(frame.HeaderLength + frame.MaskingKey.Length).ToArray();
 
             result = frame.FIN ? DecryptResult.SuccessWithFIN : DecryptResult.SuccessWithoutFIN;
             return frame;
