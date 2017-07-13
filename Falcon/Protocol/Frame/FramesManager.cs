@@ -8,16 +8,22 @@ namespace Falcon.Protocol.Frame
 {
     class FramesManager
     {
+        FrameSerializer serializer;
         FrameDeserializer deserializer;
 
         public FramesManager()
         {
+            serializer = new FrameSerializer();
             deserializer = new FrameDeserializer();
         }
 
         public byte[] Serialize(byte[] data)
         {
-            throw new NotImplementedException();
+            var frame = new WebSocketFrame();
+            frame.OpCode = 1;
+            frame.Payload = data;
+
+            return serializer.GetBytes(frame);
         }
 
         public byte[] Deserialize(byte[] data, out DecryptResult result)

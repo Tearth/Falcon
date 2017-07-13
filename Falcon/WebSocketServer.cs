@@ -45,14 +45,15 @@ namespace Falcon
             server.StopListening();
         }
 
-        /*public bool SendData(String clientID, byte[] data)
+        public bool SendData(String clientID, byte[] data)
         {
             if (!webSocketClientsManager.Exists(clientID))
                 return false;
-            
-            server.SendData(clientID, data);
+
+            var frameBytes = framesManager.Serialize(data);
+            server.SendData(clientID, frameBytes);
             return true;
-        }*/
+        }
 
         void SendRawData(String clientID, byte[] data)
         {
