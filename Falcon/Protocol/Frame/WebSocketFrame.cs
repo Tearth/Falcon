@@ -18,9 +18,11 @@ namespace Falcon.Protocol.Frame
         {
             get
             {
-                if (PayloadLengthSignature < 126) return 2;
-                if (PayloadLengthSignature == 126) return 4;
-                return 10;
+                var maskLength = Mask ? MaskingKey.Length : 0;
+
+                if (PayloadLengthSignature < 126) return (byte)(2 + maskLength);
+                if (PayloadLengthSignature == 126) return (byte)(4 + maskLength);
+                return (byte)(10 + maskLength);
             }
         }
         public ulong PayloadLength
