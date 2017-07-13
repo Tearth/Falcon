@@ -21,6 +21,7 @@ namespace Falcon.Protocol.Frame
         {
             var frame = new WebSocketFrame();
             frame.OpCode = 1;
+            frame.FIN = true;
             frame.Mask = false;
             frame.Payload = data;
             frame.PayloadLengthSignature = GetPayloadLengthSignature(frame.Payload);

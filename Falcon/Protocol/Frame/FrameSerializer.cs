@@ -10,17 +10,17 @@ namespace Falcon.Protocol.Frame
     {
         public byte[] GetBytes(WebSocketFrame frame)
         {
-            var serializedFrameLength = frame.HeaderLength + frame.PayloadLength;
-            var bytes = new byte[serializedFrameLength];
+            var bytes = new byte[frame.FrameLength];
 
-            bytes[0] = (byte)(128 + frame.OpCode);
+            bytes[0] = (byte)((Convert.ToByte(frame.FIN) << 7) + frame.OpCode);
             bytes[1] = frame.PayloadLengthSignature;
 
             var lengthBytes = BitConverter.GetBytes((ulong)frame.Payload.Length);
             var lengthBytesCount = frame.HeaderLength - 2;
+            var lengthBytesReversed = lengthBytes.Take(lengthBytesCount).Reverse().ToArray();
 
-            Array.Copy(lengthBytes, 0, bytes, 2, lengthBytesCount);
-            Array.Copy(frame.Payload, 0, bytes, 2 + lengthBytesCount, frame.Payload.Length);
+            Array.Copy(lengthBytesReversed, 0, bytes, 2, lengthBytesCount);
+            Array.Copy(frame.Payload, 0, bytes, 2 + lengthBytesCount, (int)frame.PayloadLength);
 
             return bytes;
         }

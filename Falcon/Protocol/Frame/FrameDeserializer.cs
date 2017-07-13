@@ -34,7 +34,7 @@ namespace Falcon.Protocol.Frame
             }
             else if(frame.PayloadLengthSignature == 127 && data.Length >= 14)
             {
-                frame.PayloadExtendedLength = BitConverter.ToUInt64(data.Skip(2).Take(8).ToArray(), 0);
+                frame.PayloadExtendedLength = BitConverter.ToUInt64(data.Skip(2).Take(8).Reverse().ToArray(), 0);
                 frame.MaskingKey = data.Skip(10).Take(4).ToArray();
             }
             else if(data.Length >= 6)
