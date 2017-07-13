@@ -6,14 +6,14 @@ using System.Threading.Tasks;
 
 namespace Falcon.Protocol.Frame
 {
-    class FrameDecryptor
+    class FrameDeserializer
     {
-        public FrameDecryptor()
+        public FrameDeserializer()
         {
 
         }
 
-        public WebSocketFrame Decrypt(byte[] data, out DecryptResult result)
+        public WebSocketFrame GetFrame(byte[] data, out DecryptResult result)
         {
             var frame = new WebSocketFrame();
             if(data.Length < 2)

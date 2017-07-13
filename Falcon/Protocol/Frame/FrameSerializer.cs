@@ -6,7 +6,11 @@ using System.Threading.Tasks;
 
 namespace Falcon.Protocol.Frame
 {
-    class FrameEncryptor
+    class FrameSerializer
     {
+        public byte[] GetBytes(WebSocketFrame frame)
+        {
+            throw new NotImplementedException();
+        }
     }
 }

@@ -8,21 +8,21 @@ namespace Falcon.Protocol.Frame
 {
     class FramesManager
     {
-        FrameDecryptor decryptor;
+        FrameDeserializer deserializer;
 
         public FramesManager()
         {
-            decryptor = new FrameDecryptor();
+            deserializer = new FrameDeserializer();
         }
 
-        public byte[] Encrypt(byte[] data)
+        public byte[] Serialize(byte[] data)
         {
             throw new NotImplementedException();
         }
 
-        public byte[] Decrypt(byte[] data, out DecryptResult result)
+        public byte[] Deserialize(byte[] data, out DecryptResult result)
         {
-            var frame = decryptor.Decrypt(data, out result);
+            var frame = deserializer.GetFrame(data, out result);
             if (result != DecryptResult.SuccessWithFIN && result != DecryptResult.SuccessWithoutFIN)
                 return null;
 
