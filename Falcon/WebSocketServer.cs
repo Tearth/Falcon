@@ -30,7 +30,7 @@ namespace Falcon
         {
             this.BufferSize = bufferSize;
 
-            server = new ServerListener(bufferSize);
+            server = new ServerListener(BufferSize);
             webSocketClientsManager = new WebSocketClientsManager();
             handshakeResponseGenerator = new HandshakeResponseGenerator();
             framesManager = new FramesManager();

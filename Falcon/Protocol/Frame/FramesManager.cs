@@ -19,13 +19,10 @@ namespace Falcon.Protocol.Frame
 
         public byte[] Serialize(byte[] data)
         {
-            var frame = new WebSocketFrame();
+            var frame = new WebSocketFrame(data);
             frame.OpCode = 1;
             frame.FIN = true;
             frame.Mask = false;
-            frame.Payload = data;
-            frame.PayloadLengthSignature = GetPayloadLengthSignature(frame.Payload);
-            frame.PayloadExtendedLength = GetPayloadExtendedLength(frame.Payload);
 
             return serializer.GetBytes(frame);
         }
@@ -43,24 +40,6 @@ namespace Falcon.Protocol.Frame
             parsedBytes = (int)frame.FrameLength;
             type = (FrameType)frame.OpCode;
             return frame.GetMessage();
-        }
-
-        byte GetPayloadLengthSignature(byte[] data)
-        {
-            if (data.Length > 65535)
-                return 127;
-            if (data.Length >= 126)
-                return 126;
-
-            return (byte)data.Length;
-        }
-
-        uint GetPayloadExtendedLength(byte[] data)
-        {
-            if (data.Length < 126)
-                return 0;
-
-            return (uint)data.Length;
         }
     }
 }

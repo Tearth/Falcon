@@ -44,6 +44,25 @@ namespace Falcon.Protocol.Frame
         public byte[] MaskingKey { get; set; }
         public byte[] Payload { get; set; }
 
+        public WebSocketFrame()
+        {
+
+        }
+
+        public WebSocketFrame(byte[] data)
+        {
+            Payload = data;
+
+            if (data.Length > 65535)
+                PayloadLengthSignature = 127;
+            else if (data.Length >= 126)
+                PayloadLengthSignature = 126;
+            else
+                PayloadLengthSignature = (byte)data.Length;
+
+            PayloadExtendedLength = PayloadLengthSignature < 126 ? (ulong)data.Length : 0;
+        }
+
         public byte[] GetMessage()
         {
             var message = new byte[PayloadLength];
