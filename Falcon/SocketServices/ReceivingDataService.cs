@@ -28,6 +28,10 @@ namespace Falcon.SocketServices
                 clientSocket.BeginReceive(client.Buffer, 0, client.Buffer.Length, 0,
                                           new AsyncCallback(AcceptNewData), client);
             }
+            catch (ObjectDisposedException)
+            {
+                return;
+            }
             catch(Exception ex)
             {
                 Disconnected(this, new DisconnectedEventArgs(client, ex));
@@ -44,7 +48,11 @@ namespace Falcon.SocketServices
             {
                 receivedBytes = client.Socket.EndReceive(ar);
             }
-            catch(Exception ex)
+            catch (ObjectDisposedException)
+            {
+                return;
+            }
+            catch (Exception ex)
             {
                 Disconnected(this, new DisconnectedEventArgs(client, ex));
                 return;

@@ -78,6 +78,15 @@ namespace Falcon
             sendDataService.SendData(client, data);
         }
 
+        public void CloseClientConnection(String clientID)
+        {
+            var client = clientsManager.Get(clientID);
+            client.Socket.Close();
+            clientsManager.Remove(client);
+
+            OnDisconnected(this, new DisconnectedEventArgs(client));
+        }
+
         void Loop()
         {
             while(!Shutdown)

@@ -109,13 +109,18 @@ namespace Falcon
             var frame = client.GetBufferData();
 
             var decryptResult = DecryptResult.None;
+            var frameType = FrameType.None;
             var parsedBytes = 0;
-            var message = framesManager.Deserialize(frame, out decryptResult, out parsedBytes);
+            var message = framesManager.Deserialize(frame, out decryptResult, out frameType, out parsedBytes);
 
             if(parsedBytes > 0)
             {
+                if (frameType == FrameType.Message)
+                    WebSocketDataReceived(this, new WebSocketDataReceivedEventArgs(client.ID, message));
+                else if (frameType == FrameType.Disconnect)
+                    server.CloseClientConnection(client.ID);
+
                 client.RemoveFromBuffer(parsedBytes);
-                WebSocketDataReceived(this, new WebSocketDataReceivedEventArgs(client.ID, message));
             }
         }
     }

@@ -30,16 +30,18 @@ namespace Falcon.Protocol.Frame
             return serializer.GetBytes(frame);
         }
 
-        public byte[] Deserialize(byte[] data, out DecryptResult result, out int parsedBytes)
+        public byte[] Deserialize(byte[] data, out DecryptResult result, out FrameType type, out int parsedBytes)
         {
             var frame = deserializer.GetFrame(data, out result);
             if (result != DecryptResult.SuccessWithFIN && result != DecryptResult.SuccessWithoutFIN)
             {
                 parsedBytes = 0;
+                type = FrameType.None;
                 return null;
             }
 
             parsedBytes = (int)frame.FrameLength;
+            type = (FrameType)frame.OpCode;
             return frame.GetMessage();
         }
 
