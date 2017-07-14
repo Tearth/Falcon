@@ -14,15 +14,22 @@ namespace Falcon
         HandshakeResponseGenerator handshakeResponseGenerator;
         FramesManager framesManager;
 
-        int bufferSize = 8192;
+        public int BufferSize { get; private set; }
 
         public event EventHandler<WebSocketConnectedEventArgs> WebSocketConnected;
         public event EventHandler<WebSocketDataReceivedEventArgs> WebSocketDataReceived;
         public event EventHandler<WebSocketDataSentEventArgs> WebSocketDataSent;
         public event EventHandler<WebSocketDisconnectedEventArgs> WebSocketDisconnected;
 
-        public WebSocketServer()
+        public WebSocketServer() : this(8192)
         {
+
+        }
+
+        public WebSocketServer(int bufferSize)
+        {
+            this.BufferSize = bufferSize;
+
             server = new ServerListener(bufferSize);
             webSocketClientsManager = new WebSocketClientsManager();
             handshakeResponseGenerator = new HandshakeResponseGenerator();
@@ -62,7 +69,7 @@ namespace Falcon
 
         void OnWebSocketConnected(object sender, WebSocketConnectedEventArgs args)
         {
-            var webSocketClient = new WebSocketClient(args.ClientID, bufferSize);
+            var webSocketClient = new WebSocketClient(args.ClientID, BufferSize);
             webSocketClientsManager.Add(webSocketClient);
 
             WebSocketConnected(this, args);
@@ -115,10 +122,29 @@ namespace Falcon
 
             if(parsedBytes > 0)
             {
-                if (frameType == FrameType.Message)
-                    WebSocketDataReceived(this, new WebSocketDataReceivedEventArgs(client.ID, message));
-                else if (frameType == FrameType.Disconnect)
-                    server.CloseClientConnection(client.ID);
+                switch (frameType)
+                {
+                    case (FrameType.Message):
+                    {
+                        WebSocketDataReceived(this, new WebSocketDataReceivedEventArgs(client.ID, message));
+                        break;
+                    }
+                    case (FrameType.Disconnect):
+                    {
+                        server.CloseClientConnection(client.ID);
+                        break;
+                    }
+                    case (FrameType.Ping):
+                    {
+                        //server.SendPong(client.ID);
+                        break;
+                    }
+                    case (FrameType.Pong):
+                    {
+                        //server.SendPong(client.ID);
+                        break;
+                    }
+                }
 
                 client.RemoveFromBuffer(parsedBytes);
             }
