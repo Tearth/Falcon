@@ -57,7 +57,7 @@ namespace Falcon
             if (!webSocketClientsManager.Exists(clientID))
                 return false;
 
-            var frameBytes = framesManager.Serialize(data);
+            var frameBytes = framesManager.Serialize(data, FrameType.Message);
             server.SendData(clientID, frameBytes);
             return true;
         }
@@ -120,7 +120,7 @@ namespace Falcon
             var parsedBytes = 0;
             var message = framesManager.Deserialize(frame, out decryptResult, out frameType, out parsedBytes);
 
-            if(parsedBytes > 0)
+            if (parsedBytes > 0)
             {
                 switch (frameType)
                 {
@@ -136,12 +136,11 @@ namespace Falcon
                     }
                     case (FrameType.Ping):
                     {
-                        //server.SendPong(client.ID);
+                        SendRawData(client.ID, framesManager.Serialize(message, FrameType.Pong));
                         break;
                     }
                     case (FrameType.Pong):
                     {
-                        //server.SendPong(client.ID);
                         break;
                     }
                 }

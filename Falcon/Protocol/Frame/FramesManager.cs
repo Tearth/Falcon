@@ -17,10 +17,10 @@ namespace Falcon.Protocol.Frame
             deserializer = new FrameDeserializer();
         }
 
-        public byte[] Serialize(byte[] data)
+        public byte[] Serialize(byte[] data, FrameType type)
         {
             var frame = new WebSocketFrame(data);
-            frame.OpCode = 1;
+            frame.OpCode = (byte)type;
             frame.FIN = true;
             frame.Mask = false;
 
