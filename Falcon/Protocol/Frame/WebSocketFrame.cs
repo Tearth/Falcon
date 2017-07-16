@@ -60,7 +60,7 @@ namespace Falcon.Protocol.Frame
             else
                 PayloadLengthSignature = (byte)data.Length;
 
-            PayloadExtendedLength = PayloadLengthSignature < 126 ? (ulong)data.Length : 0;
+            PayloadExtendedLength = PayloadLengthSignature < 126 ? 0 : (ulong)data.Length;
         }
 
         public byte[] GetMessage()
