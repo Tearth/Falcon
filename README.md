@@ -8,6 +8,7 @@ Falcon is a simple implementation of WebSocket protocol, based on [RFC6455](http
  * WebSocketDataReceived - triggered when new data has received
  * WebSocketDataSent - triggered when data has been successfully sent
  * WebSocketDisconnected - triggered when client has disconnected
+
 **Methods:**
  * Open - starts WebSocket server with the specified port
  * Close - closes WebSocket server
