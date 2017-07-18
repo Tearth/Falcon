@@ -99,6 +99,11 @@ namespace Falcon
             server.SendData(clientID, data);
         }
 
+        public void DisconnectClient(String clientID)
+        {
+            server.CloseClientConnection(clientID);
+        }
+
         void OnWebSocketConnected(object sender, WebSocketConnectedEventArgs args)
         {
             var webSocketClient = new WebSocketClient(args.ClientID, BufferSize);
