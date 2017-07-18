@@ -3,12 +3,12 @@ Version 1.0
 
 Falcon is a simple implementation of WebSocket protocol, based on [RFC6455](https://tools.ietf.org/html/rfc6455). Main class of this library is WebSocketServer, which includes:
 
-* Events:
+**Events:**
  * WebSocketConnected - triggered when a new client has connected
  * WebSocketDataReceived - triggered when new data has received
  * WebSocketDataSent - triggered when data has been successfully sent
  * WebSocketDisconnected - triggered when client has disconnected
-* Methods:
+**Methods:**
  * Open - starts WebSocket server with the specified port
  * Close - closes WebSocket server
  * SendData - sends specified data to the client
