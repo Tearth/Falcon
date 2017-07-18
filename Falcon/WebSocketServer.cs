@@ -14,11 +14,29 @@ namespace Falcon
         HandshakeResponseGenerator handshakeResponseGenerator;
         FramesManager framesManager;
 
+        /// <summary>
+        /// Buffer size for each client. Default is 8192
+        /// </summary>
         public int BufferSize { get; private set; }
 
+        /// <summary>
+        /// Event triggered when a new client has connected to the server
+        /// </summary>
         public event EventHandler<WebSocketConnectedEventArgs> WebSocketConnected;
+
+        /// <summary>
+        /// Event triggered when a new data has received from connected client
+        /// </summary>
         public event EventHandler<WebSocketDataReceivedEventArgs> WebSocketDataReceived;
+
+        /// <summary>
+        /// Event triggered when data has been succesfully sent
+        /// </summary>
         public event EventHandler<WebSocketDataSentEventArgs> WebSocketDataSent;
+
+        /// <summary>
+        /// Event triggered when the client has disconnected from the server
+        /// </summary>
         public event EventHandler<WebSocketDisconnectedEventArgs> WebSocketDisconnected;
 
         public WebSocketServer() : this(8192)
@@ -41,17 +59,27 @@ namespace Falcon
             server.WebSocketDisconnected += OnWebSocketDisconnected;
         }
 
+        /// <summary>
+        /// Opens WebSocket server with specified address and port.
+        /// </summary>
         public void Open(IPAddress address, int port)
         {
             var endPoint = new IPEndPoint(address, port);
             server.StartListening(endPoint);
         }
-
+        
+        /// <summary>
+        /// Closes WebSocket server
+        /// </summary>
         public void Close()
         {
             server.StopListening();
         }
 
+        /// <summary>
+        /// Sends data (as WebSocket frame) to connected client with the specified id.
+        /// Returns false if clientID not exists.
+        /// </summary>
         public bool SendData(String clientID, byte[] data)
         {
             if (!webSocketClientsManager.Exists(clientID))
@@ -62,7 +90,11 @@ namespace Falcon
             return true;
         }
 
-        void SendRawData(String clientID, byte[] data)
+        /// <summary>
+        /// Sends raw data (without creating WebSocket frame) to connected client with the specified id.
+        /// Returns false if clientID not exists.
+        /// </summary>
+        public void SendRawData(String clientID, byte[] data)
         {
             server.SendData(clientID, data);
         }
