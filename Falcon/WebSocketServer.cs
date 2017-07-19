@@ -109,7 +109,7 @@ namespace Falcon
             var webSocketClient = new WebSocketClient(args.ClientID, BufferSize);
             webSocketClientsManager.Add(webSocketClient);
 
-            WebSocketConnected(this, args);
+            WebSocketConnected?.Invoke(this, args);
         }
 
         void OnWebSocketDataReceived(object sender, WebSocketDataReceivedEventArgs args)
@@ -125,7 +125,7 @@ namespace Falcon
 
         void OnWebSocketDataSent(object sender, WebSocketDataSentEventArgs args)
         {
-            WebSocketDataSent(this, args);
+            WebSocketDataSent?.Invoke(this, args);
         }
 
         void OnWebSocketDisconnected(object sender, WebSocketDisconnectedEventArgs args)
@@ -133,7 +133,7 @@ namespace Falcon
             var webSocketClient = webSocketClientsManager.Get(args.ClientID);
             webSocketClientsManager.Remove(webSocketClient);
 
-            WebSocketDisconnected(this, args);
+            WebSocketDisconnected?.Invoke(this, args);
         }
 
         void DoHandshake(WebSocketClient client)
@@ -163,7 +163,7 @@ namespace Falcon
                 {
                     case (FrameType.Message):
                     {
-                        WebSocketDataReceived(this, new WebSocketDataReceivedEventArgs(client.ID, message));
+                        WebSocketDataReceived?.Invoke(this, new WebSocketDataReceivedEventArgs(client.ID, message));
                         break;
                     }
                     case (FrameType.Disconnect):
