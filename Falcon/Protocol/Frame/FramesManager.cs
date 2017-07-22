@@ -7,8 +7,8 @@
 
         public FramesManager()
         {
-            serializer = new FrameSerializer();
-            deserializer = new FrameDeserializer();
+            this.serializer = new FrameSerializer();
+            this.deserializer = new FrameDeserializer();
         }
 
         public byte[] Serialize(byte[] data, FrameType type)

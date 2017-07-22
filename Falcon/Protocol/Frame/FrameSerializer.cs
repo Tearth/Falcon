@@ -5,6 +5,11 @@ namespace Falcon.Protocol.Frame
 {
     class FrameSerializer
     {
+        public FrameSerializer()
+        {
+
+        }
+
         public byte[] GetBytes(WebSocketFrame frame)
         {
             var bytes = new byte[frame.FrameLength];

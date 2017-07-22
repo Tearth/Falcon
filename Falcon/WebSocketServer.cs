@@ -50,15 +50,15 @@ namespace Falcon
         {
             this.BufferSize = bufferSize;
 
-            server = new ServerListener(BufferSize);
-            webSocketClientsManager = new WebSocketClientsManager();
-            handshakeResponseGenerator = new HandshakeResponseGenerator();
-            framesManager = new FramesManager();
+            this.server = new ServerListener(BufferSize);
+            this.webSocketClientsManager = new WebSocketClientsManager();
+            this.handshakeResponseGenerator = new HandshakeResponseGenerator();
+            this.framesManager = new FramesManager();
 
-            server.WebSocketConnected += OnWebSocketConnected;
-            server.WebSocketDataReceived += OnWebSocketDataReceived;
-            server.WebSocketDataSent += OnWebSocketDataSent;
-            server.WebSocketDisconnected += OnWebSocketDisconnected;
+            this.server.WebSocketConnected += OnWebSocketConnected;
+            this.server.WebSocketDataReceived += OnWebSocketDataReceived;
+            this.server.WebSocketDataSent += OnWebSocketDataSent;
+            this.server.WebSocketDisconnected += OnWebSocketDisconnected;
         }
 
         /// <summary>

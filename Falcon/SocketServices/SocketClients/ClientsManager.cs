@@ -9,7 +9,7 @@ namespace Falcon.SocketClients
 
         public ClientsManager()
         {
-            clients = new ConcurrentDictionary<String, Client>();
+            this.clients = new ConcurrentDictionary<String, Client>();
         }
 
         public void Add(Client client)

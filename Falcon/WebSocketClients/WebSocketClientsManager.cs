@@ -9,7 +9,7 @@ namespace Falcon.WebSocketClients
 
         public WebSocketClientsManager()
         {
-            webSocketClients = new ConcurrentDictionary<String, WebSocketClient>();
+            this.webSocketClients = new ConcurrentDictionary<String, WebSocketClient>();
         }
 
         public void Add(WebSocketClient client)

@@ -16,7 +16,7 @@ namespace Falcon.WebSocketClients
             this.ID = id;
             this.buffer = new byte[bufferSize];
 
-            bufferPointer = 0;
+            this.bufferPointer = 0;
         }
 
         public bool AddToBuffer(byte[] data)

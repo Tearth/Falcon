@@ -36,26 +36,27 @@ namespace Falcon
         {
             this.bufferSize = bufferSize;
 
-            socket = new Socket(AddressFamily.InterNetwork, SocketType.Stream, ProtocolType.Tcp);
-            loop = new Task(Loop);
+            this.socket = new Socket(AddressFamily.InterNetwork, SocketType.Stream, ProtocolType.Tcp);
+            this.loop = new Task(Loop);
+
             loopEvent = new ManualResetEvent(false);
 
-            clientsManager = new ClientsManager();
-            newConnectionService = new ConnectingService();
-            receiveDataService = new ReceivingDataService();
-            sendDataService = new SendingDataService();
-            clientInfoGenerator = new ClientInfoGenerator();
+            this.clientsManager = new ClientsManager();
+            this.newConnectionService = new ConnectingService();
+            this.receiveDataService = new ReceivingDataService();
+            this.sendDataService = new SendingDataService();
+            this.clientInfoGenerator = new ClientInfoGenerator();
 
-            newConnectionService.Connected += OnConnected;
-            newConnectionService.Disconnected += OnDisconnected;
+            this.newConnectionService.Connected += OnConnected;
+            this.newConnectionService.Disconnected += OnDisconnected;
 
-            receiveDataService.ReceivedData += OnReceivedData;
-            receiveDataService.Disconnected += OnDisconnected;
+            this.receiveDataService.ReceivedData += OnReceivedData;
+            this.receiveDataService.Disconnected += OnDisconnected;
 
-            sendDataService.SentData += OnSentData;
-            sendDataService.Disconnected += OnDisconnected;
+            this.sendDataService.SentData += OnSentData;
+            this.sendDataService.Disconnected += OnDisconnected;
 
-            Shutdown = true;
+            this.Shutdown = true;
         }
 
         public void StartListening(IPEndPoint endPoint)
