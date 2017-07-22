@@ -1,5 +1,6 @@
 ﻿using Falcon.SocketClients;
 using Falcon.SocketServices;
+using Falcon.SocketServices.ClientInformations;
 using Falcon.SocketServices.EventArguments;
 using Falcon.WebSocketEventArguments;
 using System;
@@ -22,6 +23,7 @@ namespace Falcon
         ConnectingService newConnectionService;
         ReceivingDataService receiveDataService;
         SendingDataService sendDataService;
+        ClientInfoGenerator clientInfoGenerator;
 
         int bufferSize;
         static ManualResetEvent loopEvent;
@@ -44,6 +46,7 @@ namespace Falcon
             newConnectionService = new ConnectingService();
             receiveDataService = new ReceivingDataService();
             sendDataService = new SendingDataService();
+            clientInfoGenerator = new ClientInfoGenerator();
 
             newConnectionService.Connected += OnConnected;
             newConnectionService.Disconnected += OnDisconnected;
@@ -90,6 +93,12 @@ namespace Falcon
             clientsManager.Remove(client);
 
             OnDisconnected(this, new DisconnectedEventArgs(client, ex));
+        }
+
+        public ClientInfo GetClientInfo(String clientID)
+        {
+            var client = clientsManager.Get(clientID);
+            return clientInfoGenerator.Get(client);
         }
 
         void Loop()

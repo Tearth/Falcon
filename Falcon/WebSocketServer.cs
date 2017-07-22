@@ -1,6 +1,7 @@
 ﻿using Falcon.Exceptions;
 using Falcon.Protocol.Frame;
 using Falcon.Protocol.Handshake;
+using Falcon.SocketServices.ClientInformations;
 using Falcon.WebSocketClients;
 using Falcon.WebSocketEventArguments;
 using System;
@@ -98,6 +99,11 @@ namespace Falcon
         public void SendRawData(String clientID, byte[] data)
         {
             server.SendData(clientID, data);
+        }
+
+        public ClientInfo GetClientInfo(String clientID)
+        {
+            return server.GetClientInfo(clientID);
         }
 
         public void DisconnectClient(String clientID)

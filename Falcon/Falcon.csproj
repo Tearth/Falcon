@@ -47,6 +47,8 @@
     <Compile Include="Protocol\Frame\FrameSerializer.cs" />
     <Compile Include="Protocol\Frame\FramesManager.cs" />
     <Compile Include="Protocol\Frame\WebSocketFrame.cs" />
+    <Compile Include="SocketServices\ClientInformations\ClientInfo.cs" />
+    <Compile Include="SocketServices\ClientInformations\ClientInfoGenerator.cs" />
     <Compile Include="SocketServices\SocketClients\Client.cs" />
     <Compile Include="SocketServices\SocketClients\ClientsManager.cs" />
     <Compile Include="Protocol\Handshake\HandshakeResponseGenerator.cs" />
