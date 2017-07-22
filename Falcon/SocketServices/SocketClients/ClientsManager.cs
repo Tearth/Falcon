@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -8,31 +9,35 @@ namespace Falcon.SocketClients
 {
     class ClientsManager
     {
-        List<Client> clients;
+        ConcurrentDictionary<String, Client> clients;
 
         public ClientsManager()
         {
-            clients = new List<Client>();
+            clients = new ConcurrentDictionary<String, Client>();
         }
 
         public void Add(Client client)
         {
-            clients.Add(client);
+            clients.TryAdd(client.ID, client);
         }
 
         public void Remove(Client client)
         {
-            clients.Remove(client);
+            Client outValue;
+            clients.TryRemove(client.ID, out outValue);
         }
 
         public Client Get(String id)
         {
-            return clients.FirstOrDefault(p => p.ID == id);
+            if (!Exists(id))
+                return null;
+
+            return clients[id];
         }
 
         public bool Exists(String id)
         {
-            return clients.Exists(p => p.ID == id);
+            return clients.ContainsKey(id);
         }
     }
 }
