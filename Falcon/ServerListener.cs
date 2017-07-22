@@ -87,6 +87,9 @@ namespace Falcon
         public void CloseConnection(String clientID, Exception ex)
         {
             var client = clientsManager.Get(clientID);
+            if (client == null)
+                return;
+
             client.Socket.Close();
             clientsManager.Remove(client);
 
@@ -96,6 +99,9 @@ namespace Falcon
         public ClientInfo GetClientInfo(String clientID)
         {
             var client = clientsManager.Get(clientID);
+            if (client == null)
+                return null;
+
             return clientInfoGenerator.Get(client);
         }
 

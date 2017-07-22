@@ -101,11 +101,17 @@ namespace Falcon
             server.SendData(clientID, data);
         }
 
+        /// <summary>
+        /// Returns informations about client with specified id. If not exists, returns null.
+        /// </summary>
         public ClientInfo GetClientInfo(String clientID)
         {
             return server.GetClientInfo(clientID);
         }
 
+        /// <summary>
+        /// Disconnects client with specified id.
+        /// </summary>
         public void DisconnectClient(String clientID)
         {
             server.CloseConnection(clientID);
