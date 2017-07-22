@@ -91,7 +91,7 @@ namespace Falcon
             if (client == null)
                 return;
 
-            client.Socket.Close();
+            client.Close();
             clientsManager.Remove(client);
 
             OnDisconnected(this, new DisconnectedEventArgs(client, ex));

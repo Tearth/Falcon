@@ -1,6 +1,7 @@
 ﻿using Falcon.SocketClients;
 using Falcon.SocketServices.EventArguments;
 using System;
+using System.Net.Sockets;
 
 namespace Falcon.SocketServices
 {
@@ -22,10 +23,14 @@ namespace Falcon.SocketServices
             {
                 clientSocket.BeginSend(data, 0, data.Length, 0, new AsyncCallback(EndSendData), client);
             }
-            catch(Exception ex)
+            catch (ObjectDisposedException)
+            {
+                if (!client.Closed)
+                    throw;
+            }
+            catch (SocketException ex)
             {
                 Disconnected(this, new DisconnectedEventArgs(client, ex));
-                return;
             }
         }
 
@@ -37,14 +42,17 @@ namespace Falcon.SocketServices
             try
             {
                 sentBytes = client.Socket.EndSend(ar);
+                SentData(this, new DataSentEventArgs(client, sentBytes));
             }
-            catch(Exception ex)
+            catch (ObjectDisposedException)
+            {
+                if (!client.Closed)
+                    throw;
+            }
+            catch (SocketException ex)
             {
                 Disconnected(this, new DisconnectedEventArgs(client, ex));
-                return;
-            }
-
-            SentData(this, new DataSentEventArgs(client, sentBytes));
+            } 
         }
     }
 }

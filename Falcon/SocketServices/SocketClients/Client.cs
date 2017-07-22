@@ -10,6 +10,8 @@ namespace Falcon.SocketClients
         public byte[] Buffer { get; private set; }
         public DateTime JoinTime { get; private set; }
 
+        public bool Closed { get; set; }
+
         public Client(Socket socket, int bufferSize)
         {
             this.ID = Guid.NewGuid().ToString();
@@ -17,6 +19,13 @@ namespace Falcon.SocketClients
             this.Socket = socket;
 
             this.JoinTime = DateTime.Now;
+            this.Closed = false;
+        }
+
+        public void Close()
+        {
+            Closed = true;
+            Socket.Close();
         }
     }
 }

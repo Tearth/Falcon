@@ -20,7 +20,7 @@ namespace Falcon.SocketServices
             {
                 server.BeginAccept(new AsyncCallback(AcceptNewConnection), server);
             }
-            catch(Exception ex)
+            catch (SocketException ex)
             {
                 Disconnected(this, new DisconnectedEventArgs(null, ex));
             }
@@ -34,14 +34,12 @@ namespace Falcon.SocketServices
             try
             {
                 clientSocket = server.EndAccept(ar);
+                Connected(this, new ConnectedEventArgs(clientSocket));
             }
-            catch(Exception ex)
+            catch (SocketException ex)
             {
                 Disconnected(this, new DisconnectedEventArgs(null, ex));
-                return;
             }
-
-            Connected(this, new ConnectedEventArgs(clientSocket));
         }
     }
 }
