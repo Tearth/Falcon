@@ -105,13 +105,12 @@ namespace Falcon
         void OnConnected(object sender, ConnectedEventArgs args)
         {
             var client = new Client(args.ClientSocket, bufferSize);
-
             clientsManager.Add(client);
-            receiveDataService.ReceiveData(client);
 
             var connectionArgs = new WebSocketConnectedEventArgs(client.ID);
             WebSocketConnected(this, connectionArgs);
 
+            receiveDataService.ReceiveData(client);
             loopEvent.Set();
         }
 

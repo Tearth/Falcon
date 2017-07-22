@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -8,31 +9,35 @@ namespace Falcon.WebSocketClients
 {
     class WebSocketClientsManager
     {
-        List<WebSocketClient> webSocketClients;
+        ConcurrentDictionary<String, WebSocketClient> webSocketClients;
 
         public WebSocketClientsManager()
         {
-            webSocketClients = new List<WebSocketClient>();
+            webSocketClients = new ConcurrentDictionary<String, WebSocketClient>();
         }
 
         public void Add(WebSocketClient client)
         {
-            webSocketClients.Add(client);
+            webSocketClients.TryAdd(client.ID, client);
         }
 
         public void Remove(WebSocketClient client)
         {
-            webSocketClients.Remove(client);
+            WebSocketClient outValue;
+            webSocketClients.TryRemove(client.ID, out outValue);
         }
 
         public WebSocketClient Get(String id)
         {
-            return webSocketClients.FirstOrDefault(p => p.ID == id);
+            if (!Exists(id))
+                return null;
+
+            return webSocketClients[id];
         }
 
         public bool Exists(String id)
         {
-            return webSocketClients.Exists(p => p.ID == id);
+            return webSocketClients.ContainsKey(id);
         }
     }
 }
