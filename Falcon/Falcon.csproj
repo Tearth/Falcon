@@ -40,6 +40,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Exceptions\BufferOverflowException.cs" />
     <Compile Include="Protocol\Frame\DecryptResult.cs" />
     <Compile Include="Protocol\Frame\FrameType.cs" />
     <Compile Include="Protocol\Frame\FrameDeserializer.cs" />

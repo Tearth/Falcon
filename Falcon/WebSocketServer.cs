@@ -1,4 +1,5 @@
-﻿using Falcon.Protocol.Frame;
+﻿using Falcon.Exceptions;
+using Falcon.Protocol.Frame;
 using Falcon.Protocol.Handshake;
 using Falcon.WebSocketClients;
 using Falcon.WebSocketEventArguments;
@@ -101,7 +102,7 @@ namespace Falcon
 
         public void DisconnectClient(String clientID)
         {
-            server.CloseClientConnection(clientID);
+            server.CloseConnection(clientID);
         }
 
         void OnWebSocketConnected(object sender, WebSocketConnectedEventArgs args)
@@ -115,7 +116,12 @@ namespace Falcon
         void OnWebSocketDataReceived(object sender, WebSocketDataReceivedEventArgs args)
         {
             var client = webSocketClientsManager.Get(args.ClientID);
-            client.AddToBuffer(args.Data);
+
+            if(!client.AddToBuffer(args.Data))
+            {
+                server.CloseConnection(args.ClientID, new BufferOverflowException());
+                return;
+            }
 
             if (!client.HandshakeDone)
                 DoHandshake(client);
@@ -168,7 +174,7 @@ namespace Falcon
                     }
                     case (FrameType.Disconnect):
                     {
-                        server.CloseClientConnection(client.ID);
+                        server.CloseConnection(client.ID);
                         break;
                     }
                     case (FrameType.Ping):
