@@ -5,7 +5,7 @@ namespace Falcon.SocketClients
 {
     class Client
     {
-        public String ID { get; private set; }
+        public string ID { get; private set; }
         public Socket Socket { get; private set; }
         public byte[] Buffer { get; private set; }
         public DateTime JoinTime { get; private set; }

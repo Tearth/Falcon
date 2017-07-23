@@ -6,19 +6,19 @@ namespace Falcon.Protocol.Handshake
 {
     class HandshakeParser
     {
-        const String endLineSequence = "\r\n";
+        const string endLineSequence = "\r\n";
 
         public HandshakeParser()
         {
 
         }
 
-        public Dictionary<String, String> ParseToDictionary(String request)
+        public Dictionary<string, string> ParseToDictionary(string request)
         {
-            var requestFields = new Dictionary<String, String>();
+            var requestFields = new Dictionary<string, string>();
             var lines = SplitRequest(request);
 
-            foreach (String l in lines)
+            foreach (string l in lines)
             {
                 var tokens = l.Split(':');
                 if (tokens.Length < 2)
@@ -29,7 +29,7 @@ namespace Falcon.Protocol.Handshake
             return requestFields;
         }
 
-        List<String> SplitRequest(String request)
+        List<string> SplitRequest(string request)
         {
             return request.Split(endLineSequence.ToArray(), StringSplitOptions.RemoveEmptyEntries).ToList();
         }

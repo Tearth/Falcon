@@ -5,13 +5,13 @@ namespace Falcon.WebSocketClients
 {
     class WebSocketClient
     {
-        public String ID { get; private set; }
+        public string ID { get; private set; }
         public bool HandshakeDone { get; set; }
 
         byte[] buffer;
         int bufferPointer;
 
-        public WebSocketClient(String id, int bufferSize)
+        public WebSocketClient(string id, int bufferSize)
         {
             this.ID = id;
             this.buffer = new byte[bufferSize];

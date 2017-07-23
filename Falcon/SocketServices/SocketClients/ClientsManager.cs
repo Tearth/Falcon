@@ -5,11 +5,11 @@ namespace Falcon.SocketClients
 {
     class ClientsManager
     {
-        ConcurrentDictionary<String, Client> clients;
+        ConcurrentDictionary<string, Client> clients;
 
         public ClientsManager()
         {
-            this.clients = new ConcurrentDictionary<String, Client>();
+            this.clients = new ConcurrentDictionary<string, Client>();
         }
 
         public void Add(Client client)
@@ -23,7 +23,7 @@ namespace Falcon.SocketClients
             clients.TryRemove(client.ID, out outValue);
         }
 
-        public Client Get(String id)
+        public Client Get(string id)
         {
             if (!Exists(id))
                 return null;
@@ -31,7 +31,7 @@ namespace Falcon.SocketClients
             return clients[id];
         }
 
-        public bool Exists(String id)
+        public bool Exists(string id)
         {
             return clients.ContainsKey(id);
         }

@@ -9,8 +9,8 @@ namespace Falcon.Protocol.Handshake
         HandshakeParser handshakeParser;
         HandshakeKeyGenerator handshakeKeyGenerator;
 
-        const String webSocketKeyName = "Sec-WebSocket-Key";
-        const String endSequence = "\r\n\r\n";
+        const string webSocketKeyName = "Sec-WebSocket-Key";
+        const string endSequence = "\r\n\r\n";
 
         public HandshakeResponseGenerator()
         {
@@ -32,7 +32,7 @@ namespace Falcon.Protocol.Handshake
             var key = handshakeFields[webSocketKeyName];
             var responseKey = handshakeKeyGenerator.Get(key);
 
-            var response = String.Format("HTTP/1.1 101 Switching Protocols\r\n" +
+            var response = string.Format("HTTP/1.1 101 Switching Protocols\r\n" +
                                          "Upgrade: websocket\r\n" +
                                          "Connection: Upgrade\r\n" +
                                          "Sec-WebSocket-Accept: {0}" +

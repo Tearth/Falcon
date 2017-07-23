@@ -74,18 +74,18 @@ namespace Falcon
             socket.Close();
         }
 
-        public void SendData(String clientID, byte[] data)
+        public void SendData(string clientID, byte[] data)
         {
             var client = clientsManager.Get(clientID);
             sendDataService.SendData(client, data);
         }
 
-        public void CloseConnection(String clientID)
+        public void CloseConnection(string clientID)
         {
             CloseConnection(clientID, null);
         }
 
-        public void CloseConnection(String clientID, Exception ex)
+        public void CloseConnection(string clientID, Exception ex)
         {
             var client = clientsManager.Get(clientID);
             if (client == null)
@@ -97,7 +97,7 @@ namespace Falcon
             OnDisconnected(this, new DisconnectedEventArgs(client, ex));
         }
 
-        public ClientInfo GetClientInfo(String clientID)
+        public ClientInfo GetClientInfo(string clientID)
         {
             var client = clientsManager.Get(clientID);
             if (client == null)

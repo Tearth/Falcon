@@ -5,11 +5,11 @@ namespace Falcon.WebSocketClients
 {
     class WebSocketClientsManager
     {
-        ConcurrentDictionary<String, WebSocketClient> webSocketClients;
+        ConcurrentDictionary<string, WebSocketClient> webSocketClients;
 
         public WebSocketClientsManager()
         {
-            this.webSocketClients = new ConcurrentDictionary<String, WebSocketClient>();
+            this.webSocketClients = new ConcurrentDictionary<string, WebSocketClient>();
         }
 
         public void Add(WebSocketClient client)
@@ -23,7 +23,7 @@ namespace Falcon.WebSocketClients
             webSocketClients.TryRemove(client.ID, out outValue);
         }
 
-        public WebSocketClient Get(String id)
+        public WebSocketClient Get(string id)
         {
             if (!Exists(id))
                 return null;
@@ -31,7 +31,7 @@ namespace Falcon.WebSocketClients
             return webSocketClients[id];
         }
 
-        public bool Exists(String id)
+        public bool Exists(string id)
         {
             return webSocketClients.ContainsKey(id);
         }

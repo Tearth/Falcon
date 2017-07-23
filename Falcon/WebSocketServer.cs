@@ -82,7 +82,7 @@ namespace Falcon
         /// Sends data (as WebSocket frame) to connected client with the specified id.
         /// Returns false if clientID not exists.
         /// </summary>
-        public bool SendData(String clientID, byte[] data)
+        public bool SendData(string clientID, byte[] data)
         {
             if (!webSocketClientsManager.Exists(clientID))
                 return false;
@@ -96,7 +96,7 @@ namespace Falcon
         /// Sends raw data (without creating WebSocket frame) to connected client with the specified id.
         /// Returns false if clientID not exists.
         /// </summary>
-        public void SendRawData(String clientID, byte[] data)
+        public void SendRawData(string clientID, byte[] data)
         {
             server.SendData(clientID, data);
         }
@@ -104,7 +104,7 @@ namespace Falcon
         /// <summary>
         /// Returns informations about client with specified id. If not exists, returns null.
         /// </summary>
-        public ClientInfo GetClientInfo(String clientID)
+        public ClientInfo GetClientInfo(string clientID)
         {
             return server.GetClientInfo(clientID);
         }
@@ -112,7 +112,7 @@ namespace Falcon
         /// <summary>
         /// Disconnects client with specified id.
         /// </summary>
-        public void DisconnectClient(String clientID)
+        public void DisconnectClient(string clientID)
         {
             server.CloseConnection(clientID);
         }
