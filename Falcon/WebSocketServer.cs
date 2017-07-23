@@ -7,6 +7,7 @@ using Falcon.WebSocketClients;
 using Falcon.WebSocketEventArguments;
 using System;
 using System.Net;
+using System.Text;
 
 namespace Falcon
 {
@@ -88,6 +89,15 @@ namespace Falcon
         public bool SendData(string clientID, byte[] data)
         {
             return SendData(clientID, data, FrameType.Message);
+        }
+
+        /// <summary>
+        /// Sends text (as WebSocket frame) to connected client with the specified id.
+        /// Returns false if clientID not exists.
+        /// </summary>
+        public bool SendData(string clientID, string text)
+        {
+            return SendData(clientID, ASCIIEncoding.UTF8.GetBytes(text), FrameType.Message);
         }
 
         /// <summary>

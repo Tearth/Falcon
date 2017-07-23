@@ -5,11 +5,6 @@ namespace Falcon.SocketServices.ClientInformations
 {
     class ClientInfoGenerator
     {
-        public ClientInfoGenerator()
-        {
-
-        }
-
         public ClientInfo Get(Client client)
         {
             return new ClientInfo()

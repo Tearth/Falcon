@@ -8,11 +8,6 @@ namespace Falcon.Protocol.Handshake
     {
         const string endLineSequence = "\r\n";
 
-        public HandshakeParser()
-        {
-
-        }
-
         public IDictionary<string, string> ParseToDictionary(string request)
         {
             var requestFields = new Dictionary<string, string>();

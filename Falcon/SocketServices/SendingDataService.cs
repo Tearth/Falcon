@@ -10,11 +10,6 @@ namespace Falcon.SocketServices
         public event EventHandler<DataSentEventArgs> SentData;
         public event EventHandler<DisconnectedEventArgs> Disconnected;
 
-        public SendingDataService()
-        {
-
-        }
-
         public void SendData(Client client, byte[] data)
         {
             var clientSocket = client.Socket;

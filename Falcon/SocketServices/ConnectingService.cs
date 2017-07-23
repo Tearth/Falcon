@@ -9,11 +9,6 @@ namespace Falcon.SocketServices
         public event EventHandler<ConnectedEventArgs> Connected;
         public event EventHandler<DisconnectedEventArgs> Disconnected;
 
-        public ConnectingService()
-        {
-
-        }
-
         public void BeginConnection(Socket server)
         {
             try

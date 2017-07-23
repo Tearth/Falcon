@@ -5,11 +5,6 @@ namespace Falcon.Protocol.Frame
 {
     class FrameDeserializer
     {
-        public FrameDeserializer()
-        {
-
-        }
-
         public WebSocketFrame GetFrame(byte[] data, out DecryptResult result)
         {
             var frame = new WebSocketFrame();
