@@ -90,6 +90,10 @@ namespace Falcon
             return SendData(clientID, data, FrameType.Message);
         }
 
+        /// <summary>
+        /// Sends data (as WebSocket frame with specified type) to connected client with the specified id.
+        /// Returns false if clientID not exists.
+        /// </summary>
         public bool SendData(string clientID, byte[] data, FrameType type)
         {
             if (!webSocketClientsManager.Exists(clientID))
