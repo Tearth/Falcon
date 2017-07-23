@@ -6,7 +6,7 @@ namespace Falcon.Protocol.Handshake
 {
     class HandshakeParser
     {
-        const string endLineSequence = "\r\n";
+        const string EndLineSequence = "\r\n";
 
         public IDictionary<string, string> ParseToDictionary(string request)
         {
@@ -26,7 +26,7 @@ namespace Falcon.Protocol.Handshake
 
         IList<string> SplitRequest(string request)
         {
-            return request.Split(endLineSequence.ToArray(), StringSplitOptions.RemoveEmptyEntries).ToList();
+            return request.Split(EndLineSequence.ToArray(), StringSplitOptions.RemoveEmptyEntries).ToList();
         }
     }
 }

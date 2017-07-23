@@ -10,8 +10,8 @@ namespace Falcon.SocketServices.EventArguments
 
         public DataSentEventArgs(Client client, int bytesSent)
         {
-            this.Client = client;
-            this.BytesSent = bytesSent;
+            Client = client;
+            BytesSent = bytesSent;
         }
     }
 }

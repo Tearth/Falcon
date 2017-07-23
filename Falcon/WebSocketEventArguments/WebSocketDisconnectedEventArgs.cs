@@ -10,12 +10,12 @@ namespace Falcon.WebSocketEventArguments
 
         public WebSocketDisconnectedEventArgs(string clientID)
         {
-            this.ClientID = clientID;
+            ClientID = clientID;
         }
 
         public WebSocketDisconnectedEventArgs(string clientID, Exception exception) : this(clientID)
         {
-            this.Exception = exception;
+            Exception = exception;
         }
     }
 }

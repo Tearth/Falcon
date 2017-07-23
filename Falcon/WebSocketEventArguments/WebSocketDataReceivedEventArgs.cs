@@ -9,8 +9,8 @@ namespace Falcon.WebSocketEventArguments
 
         public WebSocketDataReceivedEventArgs(string clientID, byte[] data)
         {
-            this.ClientID = clientID;
-            this.Data = data;
+            ClientID = clientID;
+            Data = data;
         }
     }
 }

@@ -8,7 +8,7 @@ namespace Falcon.WebSocketEventArguments
 
         public WebSocketConnectedEventArgs(string clientID)
         {
-            this.ClientID = clientID;
+            ClientID = clientID;
         }
     }
 }

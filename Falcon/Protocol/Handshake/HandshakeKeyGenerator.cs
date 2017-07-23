@@ -6,11 +6,11 @@ namespace Falcon.Protocol.Handshake
 {
     class HandshakeKeyGenerator
     {
-        const string magicHashstring = "258EAFA5-E914-47DA-95CA-C5AB0DC85B11";
+        const string MagicHashstring = "258EAFA5-E914-47DA-95CA-C5AB0DC85B11";
 
         public string Get(string requestKey)
         {
-            var mergedKeys = requestKey + magicHashstring;
+            var mergedKeys = requestKey + MagicHashstring;
             var sha1Generator = SHA1.Create();
 
             var convertedKey = Encoding.UTF8.GetBytes(mergedKeys);

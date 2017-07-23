@@ -10,8 +10,8 @@ namespace Falcon.SocketServices.EventArguments
 
         public DataReceivedEventArgs(Client client, int bytesReceived)
         {
-            this.Client = client;
-            this.BytesReceived = bytesReceived;
+            Client = client;
+            BytesReceived = bytesReceived;
         }
     }
 }

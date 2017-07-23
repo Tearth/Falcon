@@ -14,17 +14,17 @@ namespace Falcon
 {
     class ServerListener
     {
-        Socket socket;
-        Task loop;
+        Socket _socket;
+        Task _loop;
 
-        ClientsManager clientsManager;
-        ConnectingService newConnectionService;
-        ReceivingDataService receiveDataService;
-        SendingDataService sendDataService;
-        ClientInfoGenerator clientInfoGenerator;
+        ClientsManager _clientsManager;
+        ConnectingService _newConnectionService;
+        ReceivingDataService _receiveDataService;
+        SendingDataService _sendDataService;
+        ClientInfoGenerator _clientInfoGenerator;
 
-        int bufferSize;
-        static ManualResetEvent loopEvent;
+        int _bufferSize;
+        static ManualResetEvent _loopEvent;
 
         public event EventHandler<WebSocketConnectedEventArgs> WebSocketConnected;
         public event EventHandler<WebSocketDataReceivedEventArgs> WebSocketDataReceived;
@@ -34,50 +34,50 @@ namespace Falcon
 
         public ServerListener(int bufferSize)
         {
-            this.bufferSize = bufferSize;
+            _bufferSize = bufferSize;
 
-            this.socket = new Socket(AddressFamily.InterNetwork, SocketType.Stream, ProtocolType.Tcp);
-            this.loop = new Task(Loop);
+            _socket = new Socket(AddressFamily.InterNetwork, SocketType.Stream, ProtocolType.Tcp);
+            _loop = new Task(Loop);
 
-            loopEvent = new ManualResetEvent(false);
+            _loopEvent = new ManualResetEvent(false);
 
-            this.clientsManager = new ClientsManager();
-            this.newConnectionService = new ConnectingService();
-            this.receiveDataService = new ReceivingDataService();
-            this.sendDataService = new SendingDataService();
-            this.clientInfoGenerator = new ClientInfoGenerator();
+            _clientsManager = new ClientsManager();
+            _newConnectionService = new ConnectingService();
+            _receiveDataService = new ReceivingDataService();
+            _sendDataService = new SendingDataService();
+            _clientInfoGenerator = new ClientInfoGenerator();
 
-            this.newConnectionService.Connected += OnConnected;
-            this.newConnectionService.Disconnected += OnDisconnected;
+            _newConnectionService.Connected += OnConnected;
+            _newConnectionService.Disconnected += OnDisconnected;
 
-            this.receiveDataService.ReceivedData += OnReceivedData;
-            this.receiveDataService.Disconnected += OnDisconnected;
+            _receiveDataService.ReceivedData += OnReceivedData;
+            _receiveDataService.Disconnected += OnDisconnected;
 
-            this.sendDataService.SentData += OnSentData;
-            this.sendDataService.Disconnected += OnDisconnected;
+            _sendDataService.SentData += OnSentData;
+            _sendDataService.Disconnected += OnDisconnected;
 
-            this.Shutdown = true;
+            Shutdown = true;
         }
 
         public void StartListening(IPEndPoint endPoint)
         {
-            socket.Bind(endPoint);
-            socket.Listen(128);
+            _socket.Bind(endPoint);
+            _socket.Listen(128);
 
             Shutdown = false;
-            loop.Start();
+            _loop.Start();
         }
 
         public void StopListening()
         {
             Shutdown = true;
-            socket.Close();
+            _socket.Close();
         }
 
         public void SendData(string clientID, byte[] data)
         {
-            var client = clientsManager.Get(clientID);
-            sendDataService.SendData(client, data);
+            var client = _clientsManager.Get(clientID);
+            _sendDataService.SendData(client, data);
         }
 
         public void CloseConnection(string clientID)
@@ -87,45 +87,45 @@ namespace Falcon
 
         public void CloseConnection(string clientID, Exception ex)
         {
-            var client = clientsManager.Get(clientID);
+            var client = _clientsManager.Get(clientID);
             if (client == null)
                 return;
 
             client.Close();
-            clientsManager.Remove(client);
+            _clientsManager.Remove(client);
 
             OnDisconnected(this, new DisconnectedEventArgs(client, ex));
         }
 
         public ClientInfo GetClientInfo(string clientID)
         {
-            var client = clientsManager.Get(clientID);
+            var client = _clientsManager.Get(clientID);
             if (client == null)
                 return null;
 
-            return clientInfoGenerator.Get(client);
+            return _clientInfoGenerator.Get(client);
         }
 
         void Loop()
         {
             while(!Shutdown)
             {
-                loopEvent.Reset();
-                newConnectionService.BeginConnection(socket);
-                loopEvent.WaitOne();
+                _loopEvent.Reset();
+                _newConnectionService.BeginConnection(_socket);
+                _loopEvent.WaitOne();
             }    
         }
 
         void OnConnected(object sender, ConnectedEventArgs args)
         {
-            var client = new Client(args.ClientSocket, bufferSize);
-            clientsManager.Add(client);
+            var client = new Client(args.ClientSocket, _bufferSize);
+            _clientsManager.Add(client);
 
             var connectionArgs = new WebSocketConnectedEventArgs(client.ID);
             WebSocketConnected(this, connectionArgs);
 
-            receiveDataService.ReceiveData(client);
-            loopEvent.Set();
+            _receiveDataService.ReceiveData(client);
+            _loopEvent.Set();
         }
 
         void OnReceivedData(object sender, DataReceivedEventArgs args)
@@ -136,7 +136,7 @@ namespace Falcon
             var receivedDataArgs = new WebSocketDataReceivedEventArgs(client.ID, receivedData);
             WebSocketDataReceived(this, receivedDataArgs);
 
-            receiveDataService.ReceiveData(client);
+            _receiveDataService.ReceiveData(client);
         }
 
         void OnSentData(object sender, DataSentEventArgs args)
@@ -147,7 +147,7 @@ namespace Falcon
 
         void OnDisconnected(object sender, DisconnectedEventArgs args)
         {
-            clientsManager.Remove(args.Client);
+            _clientsManager.Remove(args.Client);
 
             var disconnectArgs = new WebSocketDisconnectedEventArgs(args.Client.ID, args.Exception);
             WebSocketDisconnected(this, disconnectArgs);

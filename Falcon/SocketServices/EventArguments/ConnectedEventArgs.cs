@@ -9,7 +9,7 @@ namespace Falcon.SocketServices.EventArguments
 
         public ConnectedEventArgs(Socket clientSocket)
         {
-            this.ClientSocket = clientSocket;
+            ClientSocket = clientSocket;
         }
     }
 }

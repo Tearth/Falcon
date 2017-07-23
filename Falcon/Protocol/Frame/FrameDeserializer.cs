@@ -19,7 +19,7 @@ namespace Falcon.Protocol.Frame
             frame.Mask = Convert.ToBoolean(data[1] >> 7);
             frame.PayloadLengthSignature = Convert.ToByte(data[1] & 127);
 
-            if(frame.PayloadLengthSignature == 126 && data.Length >= 8)
+            if (frame.PayloadLengthSignature == 126 && data.Length >= 8)
             {
                 frame.PayloadExtendedLength = (ulong)((data[2] << 8) + data[3]);
                 frame.MaskingKey = data.Skip(4).Take(4).ToArray();

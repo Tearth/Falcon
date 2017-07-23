@@ -14,12 +14,12 @@ namespace Falcon.SocketClients
 
         public Client(Socket socket, int bufferSize)
         {
-            this.ID = Guid.NewGuid().ToString();
-            this.Buffer = new byte[bufferSize];
-            this.Socket = socket;
+            ID = Guid.NewGuid().ToString();
+            Buffer = new byte[bufferSize];
+            Socket = socket;
 
-            this.JoinTime = DateTime.Now;
-            this.Closed = false;
+            JoinTime = DateTime.Now;
+            Closed = false;
         }
 
         public void Close()

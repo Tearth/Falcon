@@ -11,12 +11,12 @@ namespace Falcon.SocketServices.EventArguments
 
         public DisconnectedEventArgs(Client client)
         {
-            this.Client = client;
+            Client = client;
         }
 
         public DisconnectedEventArgs(Client client, Exception exception) : this(client)
         {
-            this.Exception = exception;
+            Exception = exception;
         }
     }
 }

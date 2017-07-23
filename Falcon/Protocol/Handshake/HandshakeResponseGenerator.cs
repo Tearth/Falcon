@@ -6,38 +6,38 @@ namespace Falcon.Protocol.Handshake
 {
     class HandshakeResponseGenerator
     {
-        HandshakeParser handshakeParser;
-        HandshakeKeyGenerator handshakeKeyGenerator;
+        HandshakeParser _handshakeParser;
+        HandshakeKeyGenerator _handshakeKeyGenerator;
 
-        const string webSocketKeyName = "Sec-WebSocket-Key";
-        const string endSequence = "\r\n\r\n";
+        const string WebSocketKeyName = "Sec-WebSocket-Key";
+        const string EndSequence = "\r\n\r\n";
 
         public HandshakeResponseGenerator()
         {
-            this.handshakeParser = new HandshakeParser();
-            this.handshakeKeyGenerator = new HandshakeKeyGenerator();
+            _handshakeParser = new HandshakeParser();
+            _handshakeKeyGenerator = new HandshakeKeyGenerator();
         }
 
         public byte[] GetResponse(byte[] request)
         {
             var data = ASCIIEncoding.UTF8.GetString(request);
 
-            if (!data.Contains(endSequence))
+            if (!data.Contains(EndSequence))
                 return null;
 
-            var handshakeFields = handshakeParser.ParseToDictionary(data);
-            if (!handshakeFields.Any(p => p.Key == webSocketKeyName))
+            var handshakeFields = _handshakeParser.ParseToDictionary(data);
+            if (!handshakeFields.Any(p => p.Key == WebSocketKeyName))
                 return null;
 
-            var key = handshakeFields[webSocketKeyName];
-            var responseKey = handshakeKeyGenerator.Get(key);
+            var key = handshakeFields[WebSocketKeyName];
+            var responseKey = _handshakeKeyGenerator.Get(key);
 
             var response = string.Format("HTTP/1.1 101 Switching Protocols\r\n" +
                                          "Upgrade: websocket\r\n" +
                                          "Connection: Upgrade\r\n" +
                                          "Sec-WebSocket-Accept: {0}" +
                                          "{1}",
-                                          responseKey, endSequence);
+                                          responseKey, EndSequence);
 
             return ASCIIEncoding.UTF8.GetBytes(response);
         }
