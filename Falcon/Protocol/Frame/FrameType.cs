@@ -1,6 +1,6 @@
 ﻿namespace Falcon.Protocol.Frame
 {
-    enum FrameType : byte
+    public enum FrameType : byte
     {
         None = 0x00,
         Message = 0x01,

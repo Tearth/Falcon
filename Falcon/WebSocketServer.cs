@@ -1,4 +1,5 @@
-﻿using Falcon.Exceptions;
+﻿using Falcon.CommandsExecutors;
+using Falcon.Exceptions;
 using Falcon.Protocol.Frame;
 using Falcon.Protocol.Handshake;
 using Falcon.SocketServices.ClientInformations;
@@ -15,6 +16,7 @@ namespace Falcon
         WebSocketClientsManager webSocketClientsManager;
         HandshakeResponseGenerator handshakeResponseGenerator;
         FramesManager framesManager;
+        CommandExecutorFactory commandsExecutorFactory;
 
         /// <summary>
         /// Buffer size for each client. Default is 8192
@@ -54,6 +56,7 @@ namespace Falcon
             this.webSocketClientsManager = new WebSocketClientsManager();
             this.handshakeResponseGenerator = new HandshakeResponseGenerator();
             this.framesManager = new FramesManager();
+            this.commandsExecutorFactory = new CommandExecutorFactory();
 
             this.server.WebSocketConnected += OnWebSocketConnected;
             this.server.WebSocketDataReceived += OnWebSocketDataReceived;
@@ -84,10 +87,15 @@ namespace Falcon
         /// </summary>
         public bool SendData(string clientID, byte[] data)
         {
+            return SendData(clientID, data, FrameType.Message);
+        }
+
+        public bool SendData(string clientID, byte[] data, FrameType type)
+        {
             if (!webSocketClientsManager.Exists(clientID))
                 return false;
 
-            var frameBytes = framesManager.Serialize(data, FrameType.Message);
+            var frameBytes = framesManager.Serialize(data, type);
             server.SendData(clientID, frameBytes);
             return true;
         }
@@ -177,28 +185,10 @@ namespace Falcon
 
             if (parsedBytes > 0)
             {
-                switch (frameType)
-                {
-                    case (FrameType.Message):
-                    {
-                        WebSocketDataReceived?.Invoke(this, new WebSocketDataReceivedEventArgs(client.ID, message));
-                        break;
-                    }
-                    case (FrameType.Disconnect):
-                    {
-                        server.CloseConnection(client.ID);
-                        break;
-                    }
-                    case (FrameType.Ping):
-                    {
-                        SendRawData(client.ID, framesManager.Serialize(message, FrameType.Pong));
-                        break;
-                    }
-                    case (FrameType.Pong):
-                    {
-                        break;
-                    }
-                }
+                var commandExecutor = commandsExecutorFactory.Create(frameType);
+
+                if (commandExecutor.Do(this, client.ID, message))
+                    WebSocketDataReceived?.Invoke(this, new WebSocketDataReceivedEventArgs(client.ID, message));
 
                 client.RemoveFromBuffer(parsedBytes);
             }

@@ -36,6 +36,12 @@
     <Reference Include="System.Net.Http" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="CommandsExecutors\CommandExecutorFactory.cs" />
+    <Compile Include="CommandsExecutors\Executors\DisconnectExecutor.cs" />
+    <Compile Include="CommandsExecutors\Executors\ICommandExecutor.cs" />
+    <Compile Include="CommandsExecutors\Executors\MessageExecutor.cs" />
+    <Compile Include="CommandsExecutors\Executors\PingExecutor.cs" />
+    <Compile Include="CommandsExecutors\Executors\PongExecutor.cs" />
     <Compile Include="Exceptions\BufferOverflowException.cs" />
     <Compile Include="Protocol\Frame\DecryptResult.cs" />
     <Compile Include="Protocol\Frame\FrameType.cs" />
