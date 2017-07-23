@@ -1,11 +1,12 @@
 ﻿using System;
 using System.Collections.Concurrent;
+using System.Collections.Generic;
 
 namespace Falcon.WebSocketClients
 {
     class WebSocketClientsManager
     {
-        ConcurrentDictionary<string, WebSocketClient> webSocketClients;
+        IDictionary<string, WebSocketClient> webSocketClients;
 
         public WebSocketClientsManager()
         {
@@ -14,13 +15,12 @@ namespace Falcon.WebSocketClients
 
         public void Add(WebSocketClient client)
         {
-            webSocketClients.TryAdd(client.ID, client);
+            webSocketClients.Add(client.ID, client);
         }
 
         public void Remove(WebSocketClient client)
         {
-            WebSocketClient outValue;
-            webSocketClients.TryRemove(client.ID, out outValue);
+            webSocketClients.Remove(client.ID);
         }
 
         public WebSocketClient Get(string id)

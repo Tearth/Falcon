@@ -13,7 +13,7 @@ namespace Falcon.Protocol.Handshake
 
         }
 
-        public Dictionary<string, string> ParseToDictionary(string request)
+        public IDictionary<string, string> ParseToDictionary(string request)
         {
             var requestFields = new Dictionary<string, string>();
             var lines = SplitRequest(request);
@@ -29,7 +29,7 @@ namespace Falcon.Protocol.Handshake
             return requestFields;
         }
 
-        List<string> SplitRequest(string request)
+        IList<string> SplitRequest(string request)
         {
             return request.Split(endLineSequence.ToArray(), StringSplitOptions.RemoveEmptyEntries).ToList();
         }

@@ -1,11 +1,12 @@
 ﻿using System;
 using System.Collections.Concurrent;
+using System.Collections.Generic;
 
 namespace Falcon.SocketClients
 {
     class ClientsManager
     {
-        ConcurrentDictionary<string, Client> clients;
+        IDictionary<string, Client> clients;
 
         public ClientsManager()
         {
@@ -14,13 +15,12 @@ namespace Falcon.SocketClients
 
         public void Add(Client client)
         {
-            clients.TryAdd(client.ID, client);
+            clients.Add(client.ID, client);
         }
 
         public void Remove(Client client)
         {
-            Client outValue;
-            clients.TryRemove(client.ID, out outValue);
+            clients.Remove(client.ID);
         }
 
         public Client Get(string id)
