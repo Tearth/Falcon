@@ -19,10 +19,9 @@ namespace Falcon.SocketServices
                 clientSocket.BeginReceive(client.Buffer, 0, client.Buffer.Length, 0,
                                           new AsyncCallback(AcceptNewData), client);
             }
-            catch (ObjectDisposedException)
+            catch (ObjectDisposedException) when (client.Closed)
             {
-                if (!client.Closed)
-                    throw;
+                //Do nothing, socket is already closed by WebSocket server
             }
             catch (SocketException ex)
             {
@@ -44,10 +43,9 @@ namespace Falcon.SocketServices
                 else
                     ReceivedData(this, new DataReceivedEventArgs(client, receivedBytes));
             }
-            catch (ObjectDisposedException)
+            catch (ObjectDisposedException) when (client.Closed)
             {
-                if (!client.Closed)
-                    throw;
+                //Do nothing, socket is already closed by WebSocket server
             }
             catch (SocketException ex)
             {

@@ -18,10 +18,9 @@ namespace Falcon.SocketServices
             {
                 clientSocket.BeginSend(data, 0, data.Length, 0, new AsyncCallback(EndSendData), client);
             }
-            catch (ObjectDisposedException)
+            catch (ObjectDisposedException) when (client.Closed)
             {
-                if (!client.Closed)
-                    throw;
+                //Do nothing, socket is already closed by WebSocket server
             }
             catch (SocketException ex)
             {
@@ -39,10 +38,9 @@ namespace Falcon.SocketServices
                 sentBytes = client.Socket.EndSend(ar);
                 SentData(this, new DataSentEventArgs(client, sentBytes));
             }
-            catch (ObjectDisposedException)
+            catch (ObjectDisposedException) when (client.Closed)
             {
-                if (!client.Closed)
-                    throw;
+                //Do nothing, socket is already closed by WebSocket server
             }
             catch (SocketException ex)
             {
