@@ -7,7 +7,7 @@ namespace Falcon.CommandsExecutors
     {
         public ICommandExecutor Create(FrameType type)
         {
-            switch(type)
+            switch (type)
             {
                 case (FrameType.Message): return new MessageExecutor();
                 case (FrameType.Ping): return new PingExecutor();

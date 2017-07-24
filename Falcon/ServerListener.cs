@@ -108,12 +108,12 @@ namespace Falcon
 
         void Loop()
         {
-            while(!Shutdown)
+            while (!Shutdown)
             {
                 _loopEvent.Reset();
                 _newConnectionService.BeginConnection(_socket);
                 _loopEvent.WaitOne();
-            }    
+            }
         }
 
         void OnConnected(object sender, ConnectedEventArgs args)

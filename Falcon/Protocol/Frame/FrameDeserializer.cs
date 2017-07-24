@@ -8,7 +8,7 @@ namespace Falcon.Protocol.Frame
         public WebSocketFrame GetFrame(byte[] data, out DecryptResult result)
         {
             var frame = new WebSocketFrame();
-            if(data.Length < 2)
+            if (data.Length < 2)
             {
                 result = DecryptResult.InvalidHeader;
                 return null;
@@ -24,12 +24,12 @@ namespace Falcon.Protocol.Frame
                 frame.PayloadExtendedLength = (ulong)((data[2] << 8) + data[3]);
                 frame.MaskingKey = data.Skip(4).Take(4).ToArray();
             }
-            else if(frame.PayloadLengthSignature == 127 && data.Length >= 14)
+            else if (frame.PayloadLengthSignature == 127 && data.Length >= 14)
             {
                 frame.PayloadExtendedLength = BitConverter.ToUInt64(data.Skip(2).Take(8).Reverse().ToArray(), 0);
                 frame.MaskingKey = data.Skip(10).Take(4).ToArray();
             }
-            else if(data.Length >= 6)
+            else if (data.Length >= 6)
             {
                 frame.MaskingKey = data.Skip(2).Take(4).ToArray();
             }

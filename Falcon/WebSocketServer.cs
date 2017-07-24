@@ -73,7 +73,7 @@ namespace Falcon
             var endPoint = new IPEndPoint(address, port);
             _server.StartListening(endPoint);
         }
-        
+
         /// <summary>
         /// Closes WebSocket server
         /// </summary>
@@ -151,7 +151,7 @@ namespace Falcon
         {
             var client = _webSocketClientsManager.Get(args.ClientID);
 
-            if(!client.AddToBuffer(args.Data))
+            if (!client.AddToBuffer(args.Data))
             {
                 _server.CloseConnection(args.ClientID, new BufferOverflowException());
                 return;

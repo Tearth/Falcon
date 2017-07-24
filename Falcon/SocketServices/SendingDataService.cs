@@ -47,7 +47,7 @@ namespace Falcon.SocketServices
             catch (SocketException ex)
             {
                 Disconnected(this, new DisconnectedEventArgs(client, ex));
-            } 
+            }
         }
     }
 }
