@@ -51,6 +51,9 @@ namespace Falcon
 
         public WebSocketServer(int bufferSize)
         {
+            if (bufferSize <= 0)
+                throw new ArgumentOutOfRangeException("bufferSize");
+
             BufferSize = bufferSize;
 
             _server = new ServerListener(BufferSize);
@@ -151,7 +154,7 @@ namespace Falcon
         {
             var client = _webSocketClientsManager.Get(args.ClientID);
 
-            if (!client.AddToBuffer(args.Data))
+            if (!client.Buffer.Add(args.Data))
             {
                 _server.CloseConnection(args.ClientID, new BufferOverflowException());
                 return;
@@ -178,19 +181,19 @@ namespace Falcon
 
         void DoHandshake(WebSocketClient client)
         {
-            var response = _handshakeResponseGenerator.GetResponse(client.GetBufferData());
+            var response = _handshakeResponseGenerator.GetResponse(client.Buffer.GetData());
             if (response != null)
             {
                 SendRawData(client.ID, response);
 
                 client.HandshakeDone = true;
-                client.ClearBuffer();
+                client.Buffer.Clear();
             }
         }
 
         void ProcessMessage(WebSocketClient client)
         {
-            var frame = client.GetBufferData();
+            var frame = client.Buffer.GetData();
 
             var decryptResult = DecryptResult.None;
             var frameType = FrameType.None;
@@ -204,7 +207,7 @@ namespace Falcon
                 if (commandExecutor.Do(this, client.ID, message))
                     WebSocketDataReceived?.Invoke(this, new WebSocketDataReceivedEventArgs(client.ID, message));
 
-                client.RemoveFromBuffer(parsedBytes);
+                client.Buffer.Remove(parsedBytes);
             }
         }
     }
