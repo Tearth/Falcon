@@ -141,10 +141,14 @@ namespace Falcon
         /// <summary>
         /// Returns informations about client with specified id. If not exists, returns null.
         /// </summary>
-        //public ClientInfo GetClientInfo(string clientID)
-        //{
-        //    return null;
-        //}
+        public ClientInfo GetClientInfo(string clientID)
+        {
+            var webSocketClient = _webSocketClientsManager.GetByID(clientID);
+            if (webSocketClient == null)
+                return null;
+
+            return webSocketClient.GetInfo();
+        }
 
         /// <summary>
         /// Disconnects client with specified id.
