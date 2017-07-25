@@ -5,46 +5,44 @@ using System.Net.Sockets;
 
 namespace Falcon.SocketServices
 {
-    class SendingDataService
+    internal class SendingDataService
     {
         public event EventHandler<DataSentEventArgs> SentData;
         public event EventHandler<DisconnectedEventArgs> Disconnected;
 
-        public void SendData(Client client, byte[] data)
+        public void SendData(Socket socket, byte[] data)
         {
-            var clientSocket = client.Socket;
-
             try
             {
-                clientSocket.BeginSend(data, 0, data.Length, 0, new AsyncCallback(EndSendData), client);
+                socket.BeginSend(data, 0, data.Length, 0, new AsyncCallback(EndSendData), socket);
             }
-            catch (ObjectDisposedException) when (client.Closed)
+            /*catch (ObjectDisposedException) when (client.Closed)
             {
                 //Do nothing, socket is already closed by WebSocket server
-            }
+            }*/
             catch (SocketException ex)
             {
-                Disconnected(this, new DisconnectedEventArgs(client, ex));
+                Disconnected(this, new DisconnectedEventArgs(socket, ex));
             }
         }
 
         void EndSendData(IAsyncResult ar)
         {
-            var client = (Client)ar.AsyncState;
+            var socket = (Socket)ar.AsyncState;
             var sentBytes = 0;
 
             try
             {
-                sentBytes = client.Socket.EndSend(ar);
-                SentData(this, new DataSentEventArgs(client, sentBytes));
+                sentBytes = socket.EndSend(ar);
+                SentData(this, new DataSentEventArgs(socket, sentBytes));
             }
-            catch (ObjectDisposedException) when (client.Closed)
+            /*catch (ObjectDisposedException) when (client.Closed)
             {
                 //Do nothing, socket is already closed by WebSocket server
-            }
+            }*/
             catch (SocketException ex)
             {
-                Disconnected(this, new DisconnectedEventArgs(client, ex));
+                Disconnected(this, new DisconnectedEventArgs(socket, ex));
             }
         }
     }

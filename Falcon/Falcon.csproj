@@ -42,8 +42,11 @@
     <Compile Include="CommandsExecutors\Executors\MessageExecutor.cs" />
     <Compile Include="CommandsExecutors\Executors\PingExecutor.cs" />
     <Compile Include="CommandsExecutors\Executors\PongExecutor.cs" />
+    <Compile Include="EServerState.cs" />
     <Compile Include="Exceptions\BufferOverflowException.cs" />
-    <Compile Include="Protocol\Frame\DecryptResult.cs" />
+    <Compile Include="Exceptions\ServerAlreadyClosedException.cs" />
+    <Compile Include="Exceptions\ServerAlreadyWorkingException.cs" />
+    <Compile Include="Protocol\Frame\DeserializeResult.cs" />
     <Compile Include="Protocol\Frame\FrameType.cs" />
     <Compile Include="Protocol\Frame\FrameDeserializer.cs" />
     <Compile Include="Protocol\Frame\FrameSerializer.cs" />
@@ -51,10 +54,7 @@
     <Compile Include="Protocol\Frame\WebSocketFrame.cs" />
     <Compile Include="Protocol\Handshake\HandshakeParser.cs" />
     <Compile Include="Protocol\Handshake\HandshakeKeyGenerator.cs" />
-    <Compile Include="SocketServices\ClientInformation\ClientInfo.cs" />
-    <Compile Include="SocketServices\ClientInformation\ClientInfoGenerator.cs" />
     <Compile Include="SocketServices\SocketClients\Client.cs" />
-    <Compile Include="SocketServices\SocketClients\ClientsManager.cs" />
     <Compile Include="Protocol\Handshake\HandshakeResponseGenerator.cs" />
     <Compile Include="ServerListener.cs" />
     <Compile Include="SocketServices\EventArguments\DisconnectedEventArgs.cs" />

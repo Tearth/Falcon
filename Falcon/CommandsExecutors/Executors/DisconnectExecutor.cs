@@ -1,6 +1,6 @@
 ﻿namespace Falcon.CommandsExecutors.Executors
 {
-    class DisconnectExecutor : ICommandExecutor
+    internal class DisconnectExecutor : ICommandExecutor
     {
         public bool Do(WebSocketServer webSocketServer, string clientID, byte[] message)
         {

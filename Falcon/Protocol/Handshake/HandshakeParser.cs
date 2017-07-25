@@ -4,7 +4,7 @@ using System.Linq;
 
 namespace Falcon.Protocol.Handshake
 {
-    class HandshakeParser
+    internal class HandshakeParser
     {
         const string EndLineSequence = "\r\n";
 

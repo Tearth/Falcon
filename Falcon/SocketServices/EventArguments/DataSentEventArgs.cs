@@ -1,16 +1,16 @@
-﻿using Falcon.SocketClients;
-using System;
+﻿using System;
+using System.Net.Sockets;
 
 namespace Falcon.SocketServices.EventArguments
 {
-    class DataSentEventArgs : EventArgs
+    internal class DataSentEventArgs : EventArgs
     {
-        public Client Client { get; private set; }
+        public Socket Socket { get; private set; }
         public int BytesSent { get; private set; }
 
-        public DataSentEventArgs(Client client, int bytesSent)
+        public DataSentEventArgs(Socket socket, int bytesSent)
         {
-            Client = client;
+            Socket = socket;
             BytesSent = bytesSent;
         }
     }

@@ -2,16 +2,17 @@
 using Falcon.Exceptions;
 using Falcon.Protocol.Frame;
 using Falcon.Protocol.Handshake;
-using Falcon.SocketServices.ClientInformations;
+using Falcon.SocketServices.EventArguments;
 using Falcon.WebSocketClients;
 using Falcon.WebSocketEventArguments;
 using System;
+using System.Linq;
 using System.Net;
 using System.Text;
 
 namespace Falcon
 {
-    public class WebSocketServer
+    public class WebSocketServer : IDisposable
     {
         ServerListener _server;
         WebSocketClientsManager _webSocketClientsManager;
@@ -62,10 +63,10 @@ namespace Falcon
             _framesManager = new FramesManager();
             _commandsExecutorFactory = new CommandExecutorFactory();
 
-            _server.WebSocketConnected += OnWebSocketConnected;
-            _server.WebSocketDataReceived += OnWebSocketDataReceived;
-            _server.WebSocketDataSent += OnWebSocketDataSent;
-            _server.WebSocketDisconnected += OnWebSocketDisconnected;
+            _server.ClientConnected += OnConnected;
+            _server.DataReceived += OnDataReceived;
+            _server.DataSent += OnDataSent;
+            _server.ClientDisconnected += OnDisconnected;
         }
 
         /// <summary>
@@ -73,8 +74,11 @@ namespace Falcon
         /// </summary>
         public void Open(IPAddress address, int port)
         {
-            var endPoint = new IPEndPoint(address, port);
-            _server.StartListening(endPoint);
+            if (_server.ServerState != EServerState.Closed)
+                throw new ServerAlreadyWorkingException();
+
+            var endpoint = new IPEndPoint(address, port);
+            _server.StartListening(endpoint);
         }
 
         /// <summary>
@@ -82,6 +86,9 @@ namespace Falcon
         /// </summary>
         public void Close()
         {
+            if (_server.ServerState != EServerState.Working)
+                throw new ServerAlreadyClosedException();
+
             _server.StopListening();
         }
 
@@ -109,11 +116,12 @@ namespace Falcon
         /// </summary>
         public bool SendData(string clientID, byte[] data, FrameType type)
         {
-            if (!_webSocketClientsManager.Exists(clientID))
+            var webSocketClient = _webSocketClientsManager.GetByID(clientID);
+            if (webSocketClient == null)
                 return false;
 
             var frameBytes = _framesManager.Serialize(data, type);
-            _server.SendData(clientID, frameBytes);
+            _server.Send(webSocketClient.Socket, frameBytes);
             return true;
         }
 
@@ -123,66 +131,89 @@ namespace Falcon
         /// </summary>
         public void SendRawData(string clientID, byte[] data)
         {
-            _server.SendData(clientID, data);
+            var webSocketClient = _webSocketClientsManager.GetByID(clientID);
+            if (webSocketClient == null)
+                return;
+
+            _server.Send(webSocketClient.Socket, data);
         }
 
         /// <summary>
         /// Returns informations about client with specified id. If not exists, returns null.
         /// </summary>
-        public ClientInfo GetClientInfo(string clientID)
-        {
-            return _server.GetClientInfo(clientID);
-        }
+        //public ClientInfo GetClientInfo(string clientID)
+        //{
+        //    return null;
+        //}
 
         /// <summary>
         /// Disconnects client with specified id.
         /// </summary>
         public void DisconnectClient(string clientID)
         {
-            _server.CloseConnection(clientID);
+            var webSocketClient = _webSocketClientsManager.GetByID(clientID);
+            if (webSocketClient == null)
+                return;
+
+            _server.CloseConnection(webSocketClient.Socket);
+            _webSocketClientsManager.Remove(webSocketClient);
+        }
+        
+        public void Dispose()
+        {
+            _server.Dispose();
         }
 
-        void OnWebSocketConnected(object sender, WebSocketConnectedEventArgs args)
+        void OnConnected(object sender, ConnectedEventArgs e)
         {
-            var webSocketClient = new WebSocketClient(args.ClientID, BufferSize);
+            var webSocketClient = new WebSocketClient(e.Socket, BufferSize);
             _webSocketClientsManager.Add(webSocketClient);
 
-            WebSocketConnected?.Invoke(this, args);
+            WebSocketConnected?.Invoke(this, new WebSocketConnectedEventArgs(webSocketClient.ID));
         }
 
-        void OnWebSocketDataReceived(object sender, WebSocketDataReceivedEventArgs args)
+        void OnDataReceived(object sender, DataReceivedEventArgs e)
         {
-            var client = _webSocketClientsManager.Get(args.ClientID);
+            var webSocketClient = _webSocketClientsManager.GetBySocket(e.Socket);
+            if (webSocketClient == null)
+                return;
 
-            if (!client.Buffer.Add(args.Data))
+            if (!webSocketClient.Buffer.Add(e.Data))
             {
-                _server.CloseConnection(args.ClientID, new BufferOverflowException());
+                _server.CloseConnection(webSocketClient.Socket, new BufferOverflowException());
                 return;
             }
 
-            if (!client.HandshakeDone)
-                DoHandshake(client);
+            if (!webSocketClient.HandshakeDone)
+                DoHandshake(webSocketClient);
             else
-                ProcessMessage(client);
+                ProcessMessage(webSocketClient);
         }
 
-        void OnWebSocketDataSent(object sender, WebSocketDataSentEventArgs args)
+        void OnDataSent(object sender, DataSentEventArgs e)
         {
-            WebSocketDataSent?.Invoke(this, args);
+            var webSocketClient = _webSocketClientsManager.GetBySocket(e.Socket);
+            if (webSocketClient == null)
+                return;
+
+            WebSocketDataSent?.Invoke(this, new WebSocketDataSentEventArgs(webSocketClient.ID, e.BytesSent));
         }
 
-        void OnWebSocketDisconnected(object sender, WebSocketDisconnectedEventArgs args)
+        void OnDisconnected(object sender, DisconnectedEventArgs e)
         {
-            var webSocketClient = _webSocketClientsManager.Get(args.ClientID);
+            var webSocketClient = _webSocketClientsManager.GetBySocket(e.Socket);
+            if (webSocketClient == null)
+                return;
+
             _webSocketClientsManager.Remove(webSocketClient);
 
-            WebSocketDisconnected?.Invoke(this, args);
+            WebSocketDisconnected?.Invoke(this, new WebSocketDisconnectedEventArgs(webSocketClient.ID));
         }
 
         void DoHandshake(WebSocketClient client)
         {
             var response = _handshakeResponseGenerator.GetResponse(client.Buffer.GetData());
-            if (response != null)
+            if (response.Length > 0)
             {
                 SendRawData(client.ID, response);
 
@@ -195,7 +226,7 @@ namespace Falcon
         {
             var frame = client.Buffer.GetData();
 
-            var decryptResult = DecryptResult.None;
+            var decryptResult = DeserializeResult.None;
             var frameType = FrameType.None;
             var parsedBytes = 0;
             var message = _framesManager.Deserialize(frame, out decryptResult, out frameType, out parsedBytes);

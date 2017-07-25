@@ -1,10 +1,12 @@
 ﻿using System;
+using System.Linq;
 using System.Collections.Concurrent;
 using System.Collections.Generic;
+using System.Net.Sockets;
 
 namespace Falcon.WebSocketClients
 {
-    class WebSocketClientsManager
+    internal class WebSocketClientsManager
     {
         IDictionary<string, WebSocketClient> _webSocketClients;
 
@@ -23,12 +25,17 @@ namespace Falcon.WebSocketClients
             _webSocketClients.Remove(client.ID);
         }
 
-        public WebSocketClient Get(string id)
+        public WebSocketClient GetByID(string id)
         {
             if (!Exists(id))
                 return null;
 
             return _webSocketClients[id];
+        }
+
+        public WebSocketClient GetBySocket(Socket socket)
+        {
+            return _webSocketClients.FirstOrDefault(p => p.Value.Socket == socket).Value;
         }
 
         public bool Exists(string id)

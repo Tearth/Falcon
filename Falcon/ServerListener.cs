@@ -1,8 +1,5 @@
-﻿using Falcon.SocketClients;
-using Falcon.SocketServices;
-using Falcon.SocketServices.ClientInformations;
+﻿using Falcon.SocketServices;
 using Falcon.SocketServices.EventArguments;
-using Falcon.WebSocketEventArguments;
 using System;
 using System.Linq;
 using System.Net;
@@ -12,25 +9,24 @@ using System.Threading.Tasks;
 
 namespace Falcon
 {
-    class ServerListener
+    internal class ServerListener : IDisposable
     {
         Socket _socket;
         Task _loop;
-
-        ClientsManager _clientsManager;
+        
         ConnectingService _newConnectionService;
         ReceivingDataService _receiveDataService;
         SendingDataService _sendDataService;
-        ClientInfoGenerator _clientInfoGenerator;
 
         int _bufferSize;
         static ManualResetEvent _loopEvent;
 
-        public event EventHandler<WebSocketConnectedEventArgs> WebSocketConnected;
-        public event EventHandler<WebSocketDataReceivedEventArgs> WebSocketDataReceived;
-        public event EventHandler<WebSocketDataSentEventArgs> WebSocketDataSent;
-        public event EventHandler<WebSocketDisconnectedEventArgs> WebSocketDisconnected;
-        public bool Shutdown { get; private set; }
+        public event EventHandler<ConnectedEventArgs> ClientConnected;
+        public event EventHandler<DataReceivedEventArgs> DataReceived;
+        public event EventHandler<DataSentEventArgs> DataSent;
+        public event EventHandler<DisconnectedEventArgs> ClientDisconnected;
+        
+        public EServerState ServerState { get; private set; }
 
         public ServerListener(int bufferSize)
         {
@@ -40,12 +36,10 @@ namespace Falcon
             _loop = new Task(Loop);
 
             _loopEvent = new ManualResetEvent(false);
-
-            _clientsManager = new ClientsManager();
+            
             _newConnectionService = new ConnectingService();
             _receiveDataService = new ReceivingDataService();
             _sendDataService = new SendingDataService();
-            _clientInfoGenerator = new ClientInfoGenerator();
 
             _newConnectionService.Connected += OnConnected;
             _newConnectionService.Disconnected += OnDisconnected;
@@ -56,59 +50,51 @@ namespace Falcon
             _sendDataService.SentData += OnSentData;
             _sendDataService.Disconnected += OnDisconnected;
 
-            Shutdown = true;
+            ServerState = EServerState.Closed;
         }
 
-        public void StartListening(IPEndPoint endPoint)
+        public void StartListening(IPEndPoint endpoint)
         {
-            _socket.Bind(endPoint);
+            ServerState = EServerState.Working;
+
+            _socket.Bind(endpoint);
             _socket.Listen(128);
 
-            Shutdown = false;
             _loop.Start();
         }
 
         public void StopListening()
         {
-            Shutdown = true;
+            ServerState = EServerState.Closed;
+
             _socket.Close();
         }
 
-        public void SendData(string clientID, byte[] data)
+        public void Send(Socket socket, byte[] data)
         {
-            var client = _clientsManager.Get(clientID);
-            _sendDataService.SendData(client, data);
+            _sendDataService.SendData(socket, data);
         }
 
-        public void CloseConnection(string clientID)
+        public void CloseConnection(Socket socket)
         {
-            CloseConnection(clientID, null);
+            CloseConnection(socket, null);
         }
 
-        public void CloseConnection(string clientID, Exception ex)
+        public void CloseConnection(Socket socket, Exception ex)
         {
-            var client = _clientsManager.Get(clientID);
-            if (client == null)
-                return;
-
-            client.Close();
-            _clientsManager.Remove(client);
-
-            OnDisconnected(this, new DisconnectedEventArgs(client, ex));
+            socket.Close();
+            OnDisconnected(this, new DisconnectedEventArgs(socket, ex));
         }
 
-        public ClientInfo GetClientInfo(string clientID)
+        public void Dispose()
         {
-            var client = _clientsManager.Get(clientID);
-            if (client == null)
-                return null;
-
-            return _clientInfoGenerator.Get(client);
+            _loop.Dispose(); 
+            _socket.Dispose();
         }
 
         void Loop()
         {
-            while (!Shutdown)
+            while (ServerState == EServerState.Working)
             {
                 _loopEvent.Reset();
                 _newConnectionService.BeginConnection(_socket);
@@ -116,41 +102,28 @@ namespace Falcon
             }
         }
 
-        void OnConnected(object sender, ConnectedEventArgs args)
+        void OnConnected(object sender, ConnectedEventArgs e)
         {
-            var client = new Client(args.ClientSocket, _bufferSize);
-            _clientsManager.Add(client);
+            ClientConnected(this, new ConnectedEventArgs(e.Socket));
 
-            var connectionArgs = new WebSocketConnectedEventArgs(client.ID);
-            WebSocketConnected(this, connectionArgs);
-
-            _receiveDataService.ReceiveData(client);
+            _receiveDataService.ReceiveData(e.Socket);
             _loopEvent.Set();
         }
 
-        void OnReceivedData(object sender, DataReceivedEventArgs args)
+        void OnReceivedData(object sender, DataReceivedEventArgs e)
         {
-            var client = args.Client;
-            var receivedData = client.Buffer.Take(args.BytesReceived).ToArray();
-
-            var receivedDataArgs = new WebSocketDataReceivedEventArgs(client.ID, receivedData);
-            WebSocketDataReceived(this, receivedDataArgs);
-
-            _receiveDataService.ReceiveData(client);
+            DataReceived(this, e);
+            _receiveDataService.ReceiveData(e.Socket);
         }
 
-        void OnSentData(object sender, DataSentEventArgs args)
+        void OnSentData(object sender, DataSentEventArgs e)
         {
-            var sentDataArgs = new WebSocketDataSentEventArgs(args.Client.ID, args.BytesSent);
-            WebSocketDataSent(this, sentDataArgs);
+            DataSent(this, e);
         }
 
-        void OnDisconnected(object sender, DisconnectedEventArgs args)
+        void OnDisconnected(object sender, DisconnectedEventArgs e)
         {
-            _clientsManager.Remove(args.Client);
-
-            var disconnectArgs = new WebSocketDisconnectedEventArgs(args.Client.ID, args.Exception);
-            WebSocketDisconnected(this, disconnectArgs);
+            ClientDisconnected(this, e);
         }
     }
 }

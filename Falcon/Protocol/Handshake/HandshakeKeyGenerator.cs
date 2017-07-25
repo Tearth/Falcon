@@ -4,7 +4,7 @@ using System.Text;
 
 namespace Falcon.Protocol.Handshake
 {
-    class HandshakeKeyGenerator
+    internal class HandshakeKeyGenerator
     {
         const string MagicHashstring = "258EAFA5-E914-47DA-95CA-C5AB0DC85B11";
 

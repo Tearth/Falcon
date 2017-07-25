@@ -4,7 +4,7 @@ using System.Net.Sockets;
 
 namespace Falcon.SocketServices
 {
-    class ConnectingService
+    internal class ConnectingService
     {
         public event EventHandler<ConnectedEventArgs> Connected;
         public event EventHandler<DisconnectedEventArgs> Disconnected;

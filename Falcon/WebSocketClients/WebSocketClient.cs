@@ -1,18 +1,20 @@
 ﻿using System;
 using System.Linq;
+using System.Net.Sockets;
 
 namespace Falcon.WebSocketClients
 {
-    class WebSocketClient
+    internal class WebSocketClient
     {
         public string ID { get; private set; }
+        public Socket Socket { get; private set; }
         public bool HandshakeDone { get; set; }
         public Buffer Buffer { get; private set; }
 
-        public WebSocketClient(string id, int bufferSize)
+        public WebSocketClient(Socket socket, int bufferSize)
         {
-            ID = id;
-
+            ID = Guid.NewGuid().ToString();
+            Socket = socket;
             Buffer = new Buffer(bufferSize);
         }
     }

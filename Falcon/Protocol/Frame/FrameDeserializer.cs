@@ -3,14 +3,14 @@ using System.Linq;
 
 namespace Falcon.Protocol.Frame
 {
-    class FrameDeserializer
+    internal class FrameDeserializer
     {
-        public WebSocketFrame GetFrame(byte[] data, out DecryptResult result)
+        public WebSocketFrame GetFrame(byte[] data, out DeserializeResult result)
         {
             var frame = new WebSocketFrame();
             if (data.Length < 2)
             {
-                result = DecryptResult.InvalidHeader;
+                result = DeserializeResult.InvalidHeader;
                 return null;
             }
 
@@ -35,19 +35,19 @@ namespace Falcon.Protocol.Frame
             }
             else
             {
-                result = DecryptResult.InvalidHeader;
+                result = DeserializeResult.InvalidHeader;
                 return null;
             }
 
             if (frame.HeaderLength + frame.PayloadLength > (ulong)data.Length)
             {
-                result = DecryptResult.PartialMessage;
+                result = DeserializeResult.PartialMessage;
                 return null;
             }
 
             frame.Payload = data.Skip(frame.HeaderLength).ToArray();
 
-            result = frame.FIN ? DecryptResult.SuccessWithFIN : DecryptResult.SuccessWithoutFIN;
+            result = frame.FIN ? DeserializeResult.SuccessWithFIN : DeserializeResult.SuccessWithoutFIN;
             return frame;
         }
     }

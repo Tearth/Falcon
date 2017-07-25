@@ -1,6 +1,6 @@
 ﻿namespace Falcon.CommandsExecutors.Executors
 {
-    interface ICommandExecutor
+    internal interface ICommandExecutor
     {
         bool Do(WebSocketServer webSocketServer, string clientID, byte[] message);
     }

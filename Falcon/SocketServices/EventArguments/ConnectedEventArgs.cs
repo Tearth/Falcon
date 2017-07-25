@@ -3,13 +3,13 @@ using System.Net.Sockets;
 
 namespace Falcon.SocketServices.EventArguments
 {
-    class ConnectedEventArgs : EventArgs
+    internal class ConnectedEventArgs : EventArgs
     {
-        public Socket ClientSocket { get; private set; }
+        public Socket Socket { get; private set; }
 
-        public ConnectedEventArgs(Socket clientSocket)
+        public ConnectedEventArgs(Socket socket)
         {
-            ClientSocket = clientSocket;
+            Socket = socket;
         }
     }
 }

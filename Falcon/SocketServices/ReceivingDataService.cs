@@ -1,14 +1,20 @@
 ﻿using Falcon.SocketClients;
 using Falcon.SocketServices.EventArguments;
 using System;
+using System.Linq;
 using System.Net.Sockets;
 
 namespace Falcon.SocketServices
 {
-    class ReceivingDataService
+    internal class ReceivingDataService
     {
         public event EventHandler<DataReceivedEventArgs> ReceivedData;
         public event EventHandler<DisconnectedEventArgs> Disconnected;
+
+        public void ReceiveData(Socket socket)
+        {
+            ReceiveData(new Client(socket, 1000));
+        }
 
         public void ReceiveData(Client client)
         {
@@ -19,13 +25,13 @@ namespace Falcon.SocketServices
                 clientSocket.BeginReceive(client.Buffer, 0, client.Buffer.Length, 0,
                                           new AsyncCallback(AcceptNewData), client);
             }
-            catch (ObjectDisposedException) when (client.Closed)
+            catch (ObjectDisposedException)
             {
                 //Do nothing, socket is already closed by WebSocket server
             }
             catch (SocketException ex)
             {
-                Disconnected(this, new DisconnectedEventArgs(client, ex));
+                Disconnected(this, new DisconnectedEventArgs(client.Socket, ex));
             }
         }
 
@@ -39,17 +45,17 @@ namespace Falcon.SocketServices
                 receivedBytes = client.Socket.EndReceive(ar);
 
                 if (receivedBytes == 0)
-                    Disconnected(this, new DisconnectedEventArgs(client));
+                    Disconnected(this, new DisconnectedEventArgs(client.Socket));
                 else
-                    ReceivedData(this, new DataReceivedEventArgs(client, receivedBytes));
+                    ReceivedData(this, new DataReceivedEventArgs(client.Socket, client.Buffer.Take(receivedBytes).ToArray()));
             }
-            catch (ObjectDisposedException) when (client.Closed)
+            /*catch (ObjectDisposedException) when (client.Closed)
             {
                 //Do nothing, socket is already closed by WebSocket server
-            }
+            }*/
             catch (SocketException ex)
             {
-                Disconnected(this, new DisconnectedEventArgs(client, ex));
+                Disconnected(this, new DisconnectedEventArgs(client.Socket, ex));
             }
         }
     }

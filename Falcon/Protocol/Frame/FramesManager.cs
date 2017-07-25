@@ -1,6 +1,6 @@
 ﻿namespace Falcon.Protocol.Frame
 {
-    class FramesManager
+    internal class FramesManager
     {
         FrameSerializer _serializer;
         FrameDeserializer _deserializer;
@@ -21,10 +21,10 @@
             return _serializer.GetBytes(frame);
         }
 
-        public byte[] Deserialize(byte[] data, out DecryptResult result, out FrameType type, out int parsedBytes)
+        public byte[] Deserialize(byte[] data, out DeserializeResult result, out FrameType type, out int parsedBytes)
         {
             var frame = _deserializer.GetFrame(data, out result);
-            if (result != DecryptResult.SuccessWithFIN && result != DecryptResult.SuccessWithoutFIN)
+            if (result != DeserializeResult.SuccessWithFIN && result != DeserializeResult.SuccessWithoutFIN)
             {
                 parsedBytes = 0;
                 type = FrameType.None;

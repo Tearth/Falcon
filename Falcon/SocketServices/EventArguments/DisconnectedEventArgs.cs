@@ -1,20 +1,20 @@
-﻿using Falcon.SocketClients;
-using System;
+﻿using System;
+using System.Net.Sockets;
 
 namespace Falcon.SocketServices.EventArguments
 {
-    class DisconnectedEventArgs : EventArgs
+    internal class DisconnectedEventArgs : EventArgs
     {
-        public Client Client { get; private set; }
+        public Socket Socket { get; private set; }
         public bool Unexpected { get { return Exception != null; } }
         public Exception Exception { get; private set; }
 
-        public DisconnectedEventArgs(Client client)
+        public DisconnectedEventArgs(Socket socket)
         {
-            Client = client;
+            Socket = socket;
         }
 
-        public DisconnectedEventArgs(Client client, Exception exception) : this(client)
+        public DisconnectedEventArgs(Socket socket, Exception exception) : this(socket)
         {
             Exception = exception;
         }
