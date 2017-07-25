@@ -1,4 +1,4 @@
-﻿using Falcon.SocketClients;
+﻿using Falcon.SocketServices.Clients;
 using Falcon.SocketServices.EventArguments;
 using System;
 using System.Linq;
@@ -49,10 +49,10 @@ namespace Falcon.SocketServices
                 else
                     ReceivedData(this, new DataReceivedEventArgs(client.Socket, client.Buffer.Take(receivedBytes).ToArray()));
             }
-            /*catch (ObjectDisposedException) when (client.Closed)
+            catch (ObjectDisposedException)
             {
                 //Do nothing, socket is already closed by WebSocket server
-            }*/
+            }
             catch (SocketException ex)
             {
                 Disconnected(this, new DisconnectedEventArgs(client.Socket, ex));

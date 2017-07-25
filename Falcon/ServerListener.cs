@@ -67,6 +67,7 @@ namespace Falcon
             ServerState = EServerState.Closed;
 
             _loopEvent.Set();
+            
             _socket.Close();
         }
 
@@ -82,14 +83,25 @@ namespace Falcon
 
         public void CloseConnection(Socket socket, Exception ex)
         {
+            socket.Shutdown(SocketShutdown.Both);
             socket.Close();
+
             OnDisconnected(this, new DisconnectedEventArgs(socket, ex));
         }
 
         public void Dispose()
         {
-            _loop.Dispose(); 
-            _socket.Dispose();
+            Dispose(true);
+            GC.SuppressFinalize(this);
+        }
+
+        protected virtual void Dispose(bool disposing)
+        {
+            if (disposing)
+            {
+                _loop.Dispose();
+                _socket.Dispose();
+            }
         }
 
         void Loop()

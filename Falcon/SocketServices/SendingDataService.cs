@@ -1,5 +1,4 @@
-﻿using Falcon.SocketClients;
-using Falcon.SocketServices.EventArguments;
+﻿using Falcon.SocketServices.EventArguments;
 using System;
 using System.Net.Sockets;
 
@@ -16,10 +15,10 @@ namespace Falcon.SocketServices
             {
                 socket.BeginSend(data, 0, data.Length, 0, new AsyncCallback(EndSendData), socket);
             }
-            /*catch (ObjectDisposedException) when (client.Closed)
+            catch (ObjectDisposedException)
             {
                 //Do nothing, socket is already closed by WebSocket server
-            }*/
+            }
             catch (SocketException ex)
             {
                 Disconnected(this, new DisconnectedEventArgs(socket, ex));
@@ -36,10 +35,10 @@ namespace Falcon.SocketServices
                 sentBytes = socket.EndSend(ar);
                 SentData(this, new DataSentEventArgs(socket, sentBytes));
             }
-            /*catch (ObjectDisposedException) when (client.Closed)
+            catch (ObjectDisposedException)
             {
                 //Do nothing, socket is already closed by WebSocket server
-            }*/
+            }
             catch (SocketException ex)
             {
                 Disconnected(this, new DisconnectedEventArgs(socket, ex));

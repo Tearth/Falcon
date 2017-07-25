@@ -1,6 +1,6 @@
 ﻿using System.Net.Sockets;
 
-namespace Falcon.SocketClients
+namespace Falcon.SocketServices.Clients
 {
     internal class Client
     {

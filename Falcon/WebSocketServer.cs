@@ -53,7 +53,7 @@ namespace Falcon
         public WebSocketServer(int bufferSize)
         {
             if (bufferSize <= 0)
-                throw new ArgumentOutOfRangeException("bufferSize");
+                throw new ArgumentOutOfRangeException("bufferSize", "Buffer size must be greater than zero.");
 
             BufferSize = bufferSize;
 
@@ -158,10 +158,19 @@ namespace Falcon
             _server.CloseConnection(webSocketClient.Socket);
             _webSocketClientsManager.Remove(webSocketClient);
         }
-        
+
         public void Dispose()
         {
-            _server.Dispose();
+            Dispose(true);
+            GC.SuppressFinalize(this);
+        }
+
+        protected virtual void Dispose(bool disposing)
+        {
+            if (disposing)
+            {
+                _server.Dispose();
+            }
         }
 
         void OnConnected(object sender, ConnectedEventArgs e)

@@ -54,7 +54,7 @@
     <Compile Include="Protocol\Frame\WebSocketFrame.cs" />
     <Compile Include="Protocol\Handshake\HandshakeParser.cs" />
     <Compile Include="Protocol\Handshake\HandshakeKeyGenerator.cs" />
-    <Compile Include="SocketServices\SocketClients\Client.cs" />
+    <Compile Include="SocketServices\Clients\Client.cs" />
     <Compile Include="Protocol\Handshake\HandshakeResponseGenerator.cs" />
     <Compile Include="ServerListener.cs" />
     <Compile Include="SocketServices\EventArguments\DisconnectedEventArgs.cs" />
