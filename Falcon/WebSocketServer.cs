@@ -72,24 +72,24 @@ namespace Falcon
         /// <summary>
         /// Opens WebSocket server with specified address and port.
         /// </summary>
-        public void Open(IPAddress address, int port)
+        public void Start(IPAddress address, int port)
         {
             if (_server.ServerState != EServerState.Closed)
                 throw new ServerAlreadyWorkingException();
 
             var endpoint = new IPEndPoint(address, port);
-            _server.StartListening(endpoint);
+            _server.Start(endpoint);
         }
 
         /// <summary>
         /// Closes WebSocket server
         /// </summary>
-        public void Close()
+        public void Stop()
         {
             if (_server.ServerState != EServerState.Working)
                 throw new ServerAlreadyClosedException();
 
-            _server.StopListening();
+            _server.Stop();
         }
 
         /// <summary>

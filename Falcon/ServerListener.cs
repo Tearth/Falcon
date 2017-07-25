@@ -31,10 +31,6 @@ namespace Falcon
         public ServerListener(int bufferSize)
         {
             _bufferSize = bufferSize;
-
-            _socket = new Socket(AddressFamily.InterNetwork, SocketType.Stream, ProtocolType.Tcp);
-            _loop = new Task(Loop);
-
             _loopEvent = new ManualResetEvent(false);
             
             _newConnectionService = new ConnectingService();
@@ -53,8 +49,11 @@ namespace Falcon
             ServerState = EServerState.Closed;
         }
 
-        public void StartListening(IPEndPoint endpoint)
+        public void Start(IPEndPoint endpoint)
         {
+            _socket = new Socket(AddressFamily.InterNetwork, SocketType.Stream, ProtocolType.Tcp);
+            _loop = new Task(Loop);
+
             ServerState = EServerState.Working;
 
             _socket.Bind(endpoint);
@@ -63,10 +62,11 @@ namespace Falcon
             _loop.Start();
         }
 
-        public void StopListening()
+        public void Stop()
         {
             ServerState = EServerState.Closed;
 
+            _loopEvent.Set();
             _socket.Close();
         }
 
