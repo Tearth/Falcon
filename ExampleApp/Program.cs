@@ -10,6 +10,8 @@ namespace ExampleApp
     {
         static void Main(string[] args)
         {
+            var core = new Core();
+            core.Run();
         }
     }
 }
