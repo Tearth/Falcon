@@ -23,7 +23,7 @@ namespace Falcon
         /// <summary>
         /// Buffer size for each client. Default is 8192
         /// </summary>
-        public int BufferSize { get; private set; }
+        public uint BufferSize { get; private set; }
 
         /// <summary>
         /// Event triggered when a new client has connected to the server
@@ -50,7 +50,7 @@ namespace Falcon
 
         }
 
-        public WebSocketServer(int bufferSize)
+        public WebSocketServer(uint bufferSize)
         {
             if (bufferSize <= 0)
                 throw new ArgumentOutOfRangeException("bufferSize", "Buffer size must be greater than zero.");
@@ -122,6 +122,7 @@ namespace Falcon
 
             var frameBytes = _framesManager.Serialize(data, type);
             _server.Send(webSocketClient.Socket, frameBytes);
+
             return true;
         }
 
@@ -173,7 +174,7 @@ namespace Falcon
         {
             if (disposing)
             {
-                _server.Dispose();
+                if(_server != null) _server.Dispose();
             }
         }
 
@@ -220,7 +221,7 @@ namespace Falcon
 
             _webSocketClientsManager.Remove(webSocketClient);
 
-            WebSocketDisconnected?.Invoke(this, new WebSocketDisconnectedEventArgs(webSocketClient.ID));
+            WebSocketDisconnected?.Invoke(this, new WebSocketDisconnectedEventArgs(webSocketClient.ID, e.Exception));
         }
 
         void DoHandshake(WebSocketClient client)
@@ -239,10 +240,10 @@ namespace Falcon
         {
             var frame = client.Buffer.GetData();
 
-            var decryptResult = DeserializeResult.None;
+            var deserializeResult = DeserializeResult.None;
             var frameType = FrameType.None;
             var parsedBytes = 0;
-            var message = _framesManager.Deserialize(frame, out decryptResult, out frameType, out parsedBytes);
+            var message = _framesManager.Deserialize(frame, out deserializeResult, out frameType, out parsedBytes);
 
             if (parsedBytes > 0)
             {

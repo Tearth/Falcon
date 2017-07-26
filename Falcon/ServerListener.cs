@@ -18,7 +18,7 @@ namespace Falcon
         ReceivingDataService _receiveDataService;
         SendingDataService _sendDataService;
 
-        int _bufferSize;
+        uint _bufferSize;
         static ManualResetEvent _loopEvent;
 
         public event EventHandler<ConnectedEventArgs> ClientConnected;
@@ -28,7 +28,7 @@ namespace Falcon
         
         public EServerState ServerState { get; private set; }
 
-        public ServerListener(int bufferSize)
+        public ServerListener(uint bufferSize)
         {
             _bufferSize = bufferSize;
             _loopEvent = new ManualResetEvent(false);
@@ -67,7 +67,6 @@ namespace Falcon
             ServerState = EServerState.Closed;
 
             _loopEvent.Set();
-            
             _socket.Close();
         }
 
@@ -83,8 +82,8 @@ namespace Falcon
 
         public void CloseConnection(Socket socket, Exception ex)
         {
-            socket.Shutdown(SocketShutdown.Both);
-            socket.Close();
+            //socket.Shutdown(SocketShutdown.Both);
+            //socket.Close();
 
             OnDisconnected(this, new DisconnectedEventArgs(socket, ex));
         }
@@ -99,8 +98,8 @@ namespace Falcon
         {
             if (disposing)
             {
-                _loop.Dispose();
-                _socket.Dispose();
+                if(_loop != null) _loop.Dispose();
+                if(_socket != null) _socket.Dispose();
             }
         }
 

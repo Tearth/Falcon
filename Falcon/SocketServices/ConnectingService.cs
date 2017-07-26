@@ -15,6 +15,10 @@ namespace Falcon.SocketServices
             {
                 server.BeginAccept(new AsyncCallback(AcceptNewConnection), server);
             }
+            catch (ObjectDisposedException)
+            {
+                //Do nothing, socket is already closed by WebSocket server
+            }
             catch (SocketException ex)
             {
                 Disconnected(this, new DisconnectedEventArgs(null, ex));
@@ -30,6 +34,10 @@ namespace Falcon.SocketServices
             {
                 clientSocket = server.EndAccept(ar);
                 Connected(this, new ConnectedEventArgs(clientSocket));
+            }
+            catch (ObjectDisposedException)
+            {
+                //Do nothing, socket is already closed by WebSocket server
             }
             catch (SocketException ex)
             {

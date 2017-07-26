@@ -13,7 +13,7 @@ namespace Falcon.WebSocketClients
         public Buffer Buffer { get; private set; }
         public DateTime JoinTime { get; private set; }
 
-        public WebSocketClient(Socket socket, int bufferSize)
+        public WebSocketClient(Socket socket, uint bufferSize)
         {
             ID = Guid.NewGuid().ToString();
             Socket = socket;
