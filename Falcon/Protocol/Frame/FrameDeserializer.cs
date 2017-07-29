@@ -7,7 +7,7 @@ namespace Falcon.Protocol.Frame
     {
         public WebSocketFrame GetFrame(byte[] data, out DeserializeResult result)
         {
-            var frame = new WebSocketFrame();
+            var frame = new WebSocketFrame(false);
             if (data.Length < 2)
             {
                 result = DeserializeResult.InvalidHeader;
@@ -16,7 +16,6 @@ namespace Falcon.Protocol.Frame
 
             frame.FIN = Convert.ToBoolean(data[0] >> 7);
             frame.OpCode = Convert.ToByte(data[0] & 15);
-            frame.Mask = Convert.ToBoolean(data[1] >> 7);
             frame.PayloadLengthSignature = Convert.ToByte(data[1] & 127);
 
             if (frame.PayloadLengthSignature == 126 && data.Length >= 8)
