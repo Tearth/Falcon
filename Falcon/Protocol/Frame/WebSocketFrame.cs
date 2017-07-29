@@ -4,7 +4,7 @@
     {
         public bool FIN { get; set; }
         public byte OpCode { get; set; }
-        public bool Mask { get; private set; }
+        public bool Mask { get; set; }
 
         public byte PayloadLengthSignature { get; set; }
         public ulong PayloadExtendedLength { get; set; }
@@ -43,15 +43,9 @@
 
         }
 
-        public WebSocketFrame(bool mask)
-        {
-            Mask = mask;
-        }
-
-        public WebSocketFrame(byte[] data, bool mask)
+        public WebSocketFrame(byte[] data)
         {
             Payload = data;
-            Mask = mask;
 
             if (data.Length > 65535)
                 PayloadLengthSignature = 127;
@@ -65,9 +59,6 @@
 
         public byte[] GetMessage()
         {
-            if (!Mask)
-                return Payload;
-
             var message = new byte[PayloadLength];
             for (ulong i = 0; i < PayloadLength; i++)
             {

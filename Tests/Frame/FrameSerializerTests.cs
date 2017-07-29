@@ -16,8 +16,9 @@ namespace Tests.Frame
             var serializer = new FrameSerializer();
 
             var exampleDataBytes = ASCIIEncoding.UTF8.GetBytes("Foo Bar");
-            var frame = new WebSocketFrame(exampleDataBytes, false);
+            var frame = new WebSocketFrame(exampleDataBytes);
             frame.FIN = true;
+            frame.Mask = false;
             frame.OpCode = (byte)FrameType.Message;
 
             var serializedFrame = serializer.GetBytes(frame);
@@ -32,8 +33,9 @@ namespace Tests.Frame
             var serializer = new FrameSerializer();
 
             var exampleDataBytes = ASCIIEncoding.UTF8.GetBytes("");
-            var frame = new WebSocketFrame(exampleDataBytes, false);
+            var frame = new WebSocketFrame(exampleDataBytes);
             frame.FIN = false;
+            frame.Mask = false;
             frame.OpCode = (byte)FrameType.Message;
 
             var serializedFrame = serializer.GetBytes(frame);
@@ -48,8 +50,9 @@ namespace Tests.Frame
             var serializer = new FrameSerializer();
 
             var exampleDataBytes = ASCIIEncoding.UTF8.GetBytes("Foo Bar");
-            var frame = new WebSocketFrame(exampleDataBytes, false);
+            var frame = new WebSocketFrame(exampleDataBytes);
             frame.FIN = true;
+            frame.Mask = false;
             frame.OpCode = (byte)FrameType.Disconnect;
 
             var serializedFrame = serializer.GetBytes(frame);
@@ -64,8 +67,9 @@ namespace Tests.Frame
             var serializer = new FrameSerializer();
 
             var exampleDataBytes = ASCIIEncoding.UTF8.GetBytes("Foo Bar");
-            var frame = new WebSocketFrame(exampleDataBytes, false);
+            var frame = new WebSocketFrame(exampleDataBytes);
             frame.FIN = true;
+            frame.Mask = false;
             frame.OpCode = (byte)FrameType.Ping;
 
             var serializedFrame = serializer.GetBytes(frame);
@@ -80,8 +84,9 @@ namespace Tests.Frame
             var serializer = new FrameSerializer();
 
             var exampleDataBytes = ASCIIEncoding.UTF8.GetBytes("Foo Bar");
-            var frame = new WebSocketFrame(exampleDataBytes, false);
+            var frame = new WebSocketFrame(exampleDataBytes);
             frame.FIN = true;
+            frame.Mask = false;
             frame.OpCode = (byte)FrameType.Pong;
 
             var serializedFrame = serializer.GetBytes(frame);
