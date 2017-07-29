@@ -69,6 +69,7 @@
     </Otherwise>
   </Choose>
   <ItemGroup>
+    <Compile Include="Frame\FrameSerializerTests.cs" />
     <Compile Include="Handshake\HandshakeKeyGeneratorTests.cs" />
     <Compile Include="Handshake\HandshakeParserTests.cs" />
     <Compile Include="Handshake\HandshakeResponseGeneratorTests.cs" />
@@ -86,6 +87,7 @@
       <Name>Falcon</Name>
     </ProjectReference>
   </ItemGroup>
+  <ItemGroup />
   <Choose>
     <When Condition="'$(VisualStudioVersion)' == '10.0' And '$(IsCodedUITest)' == 'True'">
       <ItemGroup>
