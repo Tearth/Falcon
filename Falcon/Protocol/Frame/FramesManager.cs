@@ -13,10 +13,9 @@
 
         public byte[] Serialize(byte[] data, FrameType type)
         {
-            var frame = new WebSocketFrame(data);
+            var frame = new WebSocketFrame(data, false);
             frame.OpCode = (byte)type;
             frame.FIN = true;
-            frame.Mask = false;
 
             return _serializer.GetBytes(frame);
         }
