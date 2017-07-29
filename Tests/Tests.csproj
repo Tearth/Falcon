@@ -70,6 +70,7 @@
   </Choose>
   <ItemGroup>
     <Compile Include="Handshake\HandshakeKeyGeneratorTests.cs" />
+    <Compile Include="Handshake\HandshakeParserTests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
