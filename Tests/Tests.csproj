@@ -69,10 +69,17 @@
     </Otherwise>
   </Choose>
   <ItemGroup>
+    <Compile Include="Handshake\HandshakeKeyGeneratorTests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\Falcon\Falcon.csproj">
+      <Project>{1BE98DC1-E8C0-4E78-A8E3-EE398B01FE46}</Project>
+      <Name>Falcon</Name>
+    </ProjectReference>
   </ItemGroup>
   <Choose>
     <When Condition="'$(VisualStudioVersion)' == '10.0' And '$(IsCodedUITest)' == 'True'">
