@@ -41,6 +41,8 @@ namespace ExampleApp
             foreach (byte b in e.Data)
                 Console.Write(b + " ");
             Console.WriteLine();
+
+            webSocketServer.SendData(e.ClientID, e.Data);
         }
 
         private void WebSocketServer_DataSent(object sender, WebSocketDataSentEventArgs e)
