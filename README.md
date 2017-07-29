@@ -10,11 +10,11 @@ Falcon is a simple implementation of WebSocket protocol, based on [RFC6455](http
  * WebSocketDisconnected - triggered when client has disconnected
 
 **Methods:**
- * Open - starts WebSocket server with the specified port
- * Close - closes WebSocket server
+ * Start - starts WebSocket server with the specified port
+ * Stop - closes WebSocket server
  * SendData - sends specified data to the client
  * SendRawData - sends raw (without WebSocket frame) data to the client
  * DisconnectClient - removes connection with client
- * GetClientInfo - returns informations (IP, port, ...) about client
+ * GetClientInfo - returns information (IP, port, ...) about client
 
 Library supports only insecure ws protocol. Support for secure wss will be added later.
