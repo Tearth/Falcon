@@ -71,9 +71,13 @@
   <ItemGroup>
     <Compile Include="Handshake\HandshakeKeyGeneratorTests.cs" />
     <Compile Include="Handshake\HandshakeParserTests.cs" />
+    <Compile Include="Handshake\HandshakeResponseGeneratorTests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
+    <None Include="App.config">
+      <SubType>Designer</SubType>
+    </None>
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>

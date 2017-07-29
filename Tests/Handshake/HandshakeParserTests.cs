@@ -14,33 +14,33 @@ namespace Tests.Handshake
         public void ParseToDictionary_ValidRequest_ValidKey()
         {
             var parser = new HandshakeParser();
-            var request = @"GET /chat HTTP/1.1
-                            Host: server.example.com
-                            Upgrade: websocket
-                            Connection: Upgrade
-                            Sec-WebSocket-Key: dGhlIHNhbXBsZSBub25jZQ==
-                            Origin: http://example.com
-                            Sec-WebSocket-Protocol: chat, superchat
-                            Sec-WebSocket-Version: 13
-                            ";
+            var request = "GET /chat HTTP/1.1\r\n" +
+                          "Host: server.example.com\r\n" +
+                          "Upgrade: websocket\r\n" +
+                          "Connection: Upgrade\r\n" +
+                          "Sec-WebSocket-Key: dGhlIHNhbXBsZSBub25jZQ==\r\n" + 
+                          "Origin: http://example.com\r\n" +
+                          "Sec-WebSocket-Protocol: chat, superchat\r\n" +
+                          "Sec-WebSocket-Version: 13\r\n" +
+                          "\r\n";
 
             var result = parser.ParseToDictionary(request);
 
-            Assert.True(result["Sec-WebSocket-Key"] == "dGhlIHNhbXBsZSBub25jZQ==");
+            Assert.Equal("dGhlIHNhbXBsZSBub25jZQ==", result["Sec-WebSocket-Key"]);
         }
 
         [Fact]
         public void ParseToDictionary_RequestWithoutKey_ResultHasNoKey()
         {
             var parser = new HandshakeParser();
-            var request = @"GET /chat HTTP/1.1
-                            Host: server.example.com
-                            Upgrade: websocket
-                            Connection: Upgrade
-                            Origin: http://example.com
-                            Sec-WebSocket-Protocol: chat, superchat
-                            Sec-WebSocket-Version: 13
-                            ";
+            var request = "GET /chat HTTP/1.1\r\n" +
+                          "Host: server.example.com\r\n" +
+                          "Upgrade: websocket\r\n" +
+                          "Connection: Upgrade\r\n" +
+                          "Origin: http://example.com\r\n" +
+                          "Sec-WebSocket-Protocol: chat, superchat\r\n" +
+                          "Sec-WebSocket-Version: 13\r\n" +
+                          "\r\n";
 
             var result = parser.ParseToDictionary(request);
 
