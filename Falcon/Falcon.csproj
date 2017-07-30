@@ -46,6 +46,7 @@
     <Compile Include="Exceptions\BufferOverflowException.cs" />
     <Compile Include="Exceptions\ServerAlreadyClosedException.cs" />
     <Compile Include="Exceptions\ServerAlreadyWorkingException.cs" />
+    <Compile Include="IServerListener.cs" />
     <Compile Include="IWebSocketServer.cs" />
     <Compile Include="Protocol\Frame\DeserializeResult.cs" />
     <Compile Include="Protocol\Frame\FrameType.cs" />

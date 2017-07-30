@@ -1,5 +1,6 @@
 ﻿using Falcon.Protocol.Frame;
 using Falcon.WebSocketClients;
+using Falcon.WebSocketEventArguments;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -11,6 +12,11 @@ namespace Falcon
 {
     public interface IWebSocketServer
     {
+        event EventHandler<WebSocketConnectedEventArgs> WebSocketConnected;
+        event EventHandler<WebSocketDataReceivedEventArgs> WebSocketDataReceived;
+        event EventHandler<WebSocketDataSentEventArgs> WebSocketDataSent;
+        event EventHandler<WebSocketDisconnectedEventArgs> WebSocketDisconnected;
+
         void Start(IPAddress address, int port);
         void Stop();
 

@@ -9,7 +9,7 @@ using System.Threading.Tasks;
 
 namespace Falcon
 {
-    internal class ServerListener : IDisposable
+    internal class ServerListener : IServerListener, IDisposable
     {
         Socket _socket;
         Task _loop;
