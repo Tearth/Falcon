@@ -5,7 +5,7 @@ using System.Threading.Tasks;
 using Falcon.WebSocketClients;
 using Xunit;
 
-namespace Tests.WebSocketClient
+namespace Tests.WebSocketClientTests
 {
     public class BufferTests
     {

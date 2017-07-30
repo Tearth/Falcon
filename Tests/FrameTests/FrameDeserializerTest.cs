@@ -6,7 +6,7 @@ using System.Text;
 using System.Threading.Tasks;
 using Xunit;
 
-namespace Tests.Frame
+namespace Tests.FrameTests
 {
     public class FrameDeserializerTest
     {

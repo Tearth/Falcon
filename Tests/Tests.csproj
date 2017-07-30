@@ -69,13 +69,14 @@
     </Otherwise>
   </Choose>
   <ItemGroup>
-    <Compile Include="Frame\FrameDeserializerTest.cs" />
-    <Compile Include="Frame\FrameSerializerTests.cs" />
-    <Compile Include="Handshake\HandshakeKeyGeneratorTests.cs" />
-    <Compile Include="Handshake\HandshakeParserTests.cs" />
-    <Compile Include="Handshake\HandshakeResponseGeneratorTests.cs" />
+    <Compile Include="FrameTests\FrameDeserializerTest.cs" />
+    <Compile Include="FrameTests\FrameSerializerTests.cs" />
+    <Compile Include="HandshakeTests\HandshakeKeyGeneratorTests.cs" />
+    <Compile Include="HandshakeTests\HandshakeParserTests.cs" />
+    <Compile Include="HandshakeTests\HandshakeResponseGeneratorTests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="WebSocketClient\BufferTests.cs" />
+    <Compile Include="WebSocketClientTests\BufferTests.cs" />
+    <Compile Include="WebSocketClientTests\WebSocketClientsManagerTests.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config">
