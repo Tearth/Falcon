@@ -82,8 +82,8 @@ namespace Falcon
 
         public void CloseConnection(Socket socket, Exception ex)
         {
-            //socket.Shutdown(SocketShutdown.Both);
-            //socket.Close();
+            socket.Shutdown(SocketShutdown.Both);
+            socket.Close();
 
             OnDisconnected(this, new DisconnectedEventArgs(socket, ex));
         }
