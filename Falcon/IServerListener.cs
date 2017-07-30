@@ -9,7 +9,7 @@ using System.Threading.Tasks;
 
 namespace Falcon
 {
-    internal interface IServerListener
+    public interface IServerListener
     {
         event EventHandler<ConnectedEventArgs> ClientConnected;
         event EventHandler<DataReceivedEventArgs> DataReceived;

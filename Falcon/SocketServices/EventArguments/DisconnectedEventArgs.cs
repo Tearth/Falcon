@@ -3,7 +3,7 @@ using System.Net.Sockets;
 
 namespace Falcon.SocketServices.EventArguments
 {
-    internal class DisconnectedEventArgs : EventArgs
+    public class DisconnectedEventArgs : EventArgs
     {
         public Socket Socket { get; private set; }
         public bool Unexpected { get { return Exception != null; } }

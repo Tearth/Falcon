@@ -45,19 +45,24 @@ namespace Falcon
         /// </summary>
         public event EventHandler<WebSocketDisconnectedEventArgs> WebSocketDisconnected;
 
-        public WebSocketServer() : this(8192)
+        public WebSocketServer() : this(8192, new ServerListener(8192))
         {
 
         }
 
-        public WebSocketServer(uint bufferSize)
+        public WebSocketServer(uint bufferSize) : this(bufferSize, new ServerListener(bufferSize))
+        {
+            
+        }
+
+        public WebSocketServer(uint bufferSize, IServerListener serverListener)
         {
             if (bufferSize <= 0)
                 throw new ArgumentOutOfRangeException("bufferSize", "Buffer size must be greater than zero.");
 
             BufferSize = bufferSize;
 
-            _server = new ServerListener(BufferSize);
+            _server = serverListener;
             _webSocketClientsManager = new WebSocketClientsManager();
             _handshakeResponseGenerator = new HandshakeResponseGenerator();
             _framesManager = new FramesManager();

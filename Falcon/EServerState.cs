@@ -1,6 +1,6 @@
 ﻿namespace Falcon
 {
-    internal enum EServerState
+    public enum EServerState
     {
         None,
         Working,
