@@ -15,7 +15,7 @@ namespace Falcon
     public class WebSocketServer : IWebSocketServer, IDisposable
     {
         IServerListener _server;
-        WebSocketClientsManager _webSocketClientsManager;
+        IWebSocketClientsManager _webSocketClientsManager;
         IHandshakeResponseGenerator _handshakeResponseGenerator;
         IFramesManager _framesManager;
         ICommandExecutorFactory _commandsExecutorFactory;

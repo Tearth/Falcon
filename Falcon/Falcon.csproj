@@ -72,6 +72,7 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="WebSocketClients\Buffer.cs" />
     <Compile Include="WebSocketClients\ClientInfo.cs" />
+    <Compile Include="WebSocketClients\IWebSocketClientsManager.cs" />
     <Compile Include="WebSocketClients\WebSocketClient.cs" />
     <Compile Include="WebSocketClients\WebSocketClientsManager.cs" />
     <Compile Include="WebSocketEventArguments\WebSocketDisconnectedEventArgs.cs" />
