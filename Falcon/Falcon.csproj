@@ -58,6 +58,7 @@
     <Compile Include="Protocol\Frame\WebSocketFrame.cs" />
     <Compile Include="Protocol\Handshake\HandshakeParser.cs" />
     <Compile Include="Protocol\Handshake\HandshakeKeyGenerator.cs" />
+    <Compile Include="Protocol\Handshake\IHandshakeResponseGenerator.cs" />
     <Compile Include="SocketServices\Clients\Client.cs" />
     <Compile Include="Protocol\Handshake\HandshakeResponseGenerator.cs" />
     <Compile Include="ServerListener.cs" />

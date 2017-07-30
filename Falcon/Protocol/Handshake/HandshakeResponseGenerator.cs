@@ -4,7 +4,7 @@ using System.Text;
 
 namespace Falcon.Protocol.Handshake
 {
-    internal class HandshakeResponseGenerator
+    internal class HandshakeResponseGenerator : IHandshakeResponseGenerator
     {
         HandshakeParser _handshakeParser;
         HandshakeKeyGenerator _handshakeKeyGenerator;
