@@ -42,6 +42,7 @@
     <Compile Include="CommandsExecutors\Executors\MessageExecutor.cs" />
     <Compile Include="CommandsExecutors\Executors\PingExecutor.cs" />
     <Compile Include="CommandsExecutors\Executors\PongExecutor.cs" />
+    <Compile Include="CommandsExecutors\ICommandExecutorFactory.cs" />
     <Compile Include="EServerState.cs" />
     <Compile Include="Exceptions\BufferOverflowException.cs" />
     <Compile Include="Exceptions\ServerAlreadyClosedException.cs" />

@@ -3,7 +3,7 @@ using Falcon.Protocol.Frame;
 
 namespace Falcon.CommandsExecutors
 {
-    internal class CommandExecutorFactory
+    internal class CommandExecutorFactory : ICommandExecutorFactory
     {
         public ICommandExecutor Create(FrameType type)
         {

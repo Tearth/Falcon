@@ -16,6 +16,8 @@ namespace Falcon
         event EventHandler<DataSentEventArgs> DataSent;
         event EventHandler<DisconnectedEventArgs> ClientDisconnected;
 
+        EServerState ServerState { get; }
+
         void Start(IPEndPoint endpoint);
         void Stop();
         void Send(Socket socket, byte[] data);

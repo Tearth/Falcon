@@ -14,11 +14,11 @@ namespace Falcon
 {
     public class WebSocketServer : IWebSocketServer, IDisposable
     {
-        ServerListener _server;
+        IServerListener _server;
         WebSocketClientsManager _webSocketClientsManager;
         HandshakeResponseGenerator _handshakeResponseGenerator;
         FramesManager _framesManager;
-        CommandExecutorFactory _commandsExecutorFactory;
+        ICommandExecutorFactory _commandsExecutorFactory;
 
         /// <summary>
         /// Buffer size for each client. Default is 8192
@@ -174,7 +174,7 @@ namespace Falcon
         {
             if (disposing)
             {
-                if(_server != null) _server.Dispose();
+                if(_server != null) ((IDisposable)_server).Dispose();
             }
         }
 
