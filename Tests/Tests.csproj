@@ -69,7 +69,8 @@
     </Otherwise>
   </Choose>
   <ItemGroup>
-    <Compile Include="FrameTests\FrameDeserializerTest.cs" />
+    <Compile Include="CommandsExecutorsTests\CommandExecutorFactoryTests.cs" />
+    <Compile Include="FrameTests\FrameDeserializerTests.cs" />
     <Compile Include="FrameTests\FrameSerializerTests.cs" />
     <Compile Include="HandshakeTests\HandshakeKeyGeneratorTests.cs" />
     <Compile Include="HandshakeTests\HandshakeParserTests.cs" />

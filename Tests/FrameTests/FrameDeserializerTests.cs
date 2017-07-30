@@ -8,7 +8,7 @@ using Xunit;
 
 namespace Tests.FrameTests
 {
-    public class FrameDeserializerTest
+    public class FrameDeserializerTests
     {
         [Fact]
         public void GetFrame_FullMessage_ValidMessage()
