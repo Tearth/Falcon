@@ -12,7 +12,7 @@ using System.Text;
 
 namespace Falcon
 {
-    public class WebSocketServer : IDisposable
+    public class WebSocketServer : IWebSocketServer, IDisposable
     {
         ServerListener _server;
         WebSocketClientsManager _webSocketClientsManager;
