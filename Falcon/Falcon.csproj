@@ -54,6 +54,7 @@
     <Compile Include="Protocol\Frame\FrameDeserializer.cs" />
     <Compile Include="Protocol\Frame\FrameSerializer.cs" />
     <Compile Include="Protocol\Frame\FramesManager.cs" />
+    <Compile Include="Protocol\Frame\IFramesManager.cs" />
     <Compile Include="Protocol\Frame\WebSocketFrame.cs" />
     <Compile Include="Protocol\Handshake\HandshakeParser.cs" />
     <Compile Include="Protocol\Handshake\HandshakeKeyGenerator.cs" />

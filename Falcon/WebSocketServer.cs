@@ -17,7 +17,7 @@ namespace Falcon
         IServerListener _server;
         WebSocketClientsManager _webSocketClientsManager;
         HandshakeResponseGenerator _handshakeResponseGenerator;
-        FramesManager _framesManager;
+        IFramesManager _framesManager;
         ICommandExecutorFactory _commandsExecutorFactory;
 
         /// <summary>
