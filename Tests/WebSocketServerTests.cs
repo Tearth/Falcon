@@ -15,6 +15,15 @@ namespace Tests
     public class WebSocketServerTests
     {
         [Fact]
+        public void Start_NullAddress_ArgumentNullException()
+        {
+            var fakeServerListener = new FakeServerListener();
+            var webSocketServer = new WebSocketServer(1024, fakeServerListener);
+          
+            Assert.Throws<ArgumentNullException>("address", () => webSocketServer.Start(null, 12345));
+        }
+
+        [Fact]
         public void Start_OneCall_NoException()
         {
             var fakeServerListener = new FakeServerListener();

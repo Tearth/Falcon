@@ -6,6 +6,7 @@ using Falcon.SocketServices.EventArguments;
 using Falcon.WebSocketClients;
 using Falcon.WebSocketEventArguments;
 using System;
+using System.Diagnostics.Contracts;
 using System.Linq;
 using System.Net;
 using System.Text;
@@ -24,6 +25,11 @@ namespace Falcon
         /// Buffer size for each client. Default is 8192
         /// </summary>
         public uint BufferSize { get; private set; }
+
+        /// <summary>
+        /// Current state of server
+        /// </summary>
+        public EServerState ServerState { get { return _server.ServerState; } }
 
         /// <summary>
         /// Event triggered when a new client has connected to the server
@@ -57,8 +63,7 @@ namespace Falcon
 
         public WebSocketServer(uint bufferSize, IServerListener serverListener)
         {
-            if (bufferSize <= 0)
-                throw new ArgumentOutOfRangeException("bufferSize", "Buffer size must be greater than zero.");
+            Contract.Requires<ArgumentNullException>(serverListener != null, nameof(serverListener));
 
             BufferSize = bufferSize;
 
@@ -77,11 +82,8 @@ namespace Falcon
         /// <summary>
         /// Opens WebSocket server with specified address and port.
         /// </summary>
-        public void Start(IPAddress address, int port)
+        public void Start(IPAddress address, ushort port)
         {
-            if (_server.ServerState != EServerState.Closed)
-                throw new ServerAlreadyWorkingException();
-
             var endpoint = new IPEndPoint(address, port);
             _server.Start(endpoint);
         }
@@ -91,9 +93,6 @@ namespace Falcon
         /// </summary>
         public void Stop()
         {
-            if (_server.ServerState != EServerState.Working)
-                throw new ServerAlreadyClosedException();
-
             _server.Stop();
         }
 
