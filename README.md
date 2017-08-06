@@ -19,6 +19,6 @@ Falcon is a simple implementation of WebSocket protocol, based on [RFC6455](http
 
 Library supports only insecure ws protocol. Support for secure wss will be added later.
 
-Used libraries:
+**Used libraries:**
  * Xunit
  * Code Contracts
