@@ -38,7 +38,7 @@ namespace Tests.WebSocketClientTests
             buffer.Remove(2);
 
             var data = buffer.GetData();
-            Assert.True(data.Length == 1);
+            Assert.Equal(1, data.Length);
         }
 
         [Fact]
@@ -50,7 +50,7 @@ namespace Tests.WebSocketClientTests
             buffer.Remove(2);
 
             var data = buffer.GetData();
-            Assert.True(data[0] == 3);
+            Assert.Equal(3, data[0]);
         }
 
         [Fact]
@@ -61,7 +61,7 @@ namespace Tests.WebSocketClientTests
             var result = buffer.Add(new byte[] { 1, 2, 3 });
             buffer.Clear();
             
-            Assert.True(buffer.GetData().Length == 0);
+            Assert.Equal(0, buffer.GetData().Length);
         }
     }
 }

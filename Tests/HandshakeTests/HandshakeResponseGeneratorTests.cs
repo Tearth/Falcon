@@ -47,7 +47,7 @@ namespace Tests.HandshakeTests
             var requestBytes = ASCIIEncoding.UTF8.GetBytes(request);
             var result = responseGenerator.GetResponse(requestBytes);
 
-            Assert.True(result.Length == 0);
+            Assert.Equal(0, result.Length);
         }
 
         [Fact]
@@ -66,7 +66,7 @@ namespace Tests.HandshakeTests
             var requestBytes = ASCIIEncoding.UTF8.GetBytes(request);
             var result = responseGenerator.GetResponse(requestBytes);
 
-            Assert.True(result.Length == 0);
+            Assert.Equal(0, result.Length);
         }
     }
 }
