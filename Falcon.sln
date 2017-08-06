@@ -3,11 +3,11 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 14
 VisualStudioVersion = 14.0.25420.1
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Falcon", "Falcon.csproj", "{1BE98DC1-E8C0-4E78-A8E3-EE398B01FE46}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Falcon", "Falcon\Falcon.csproj", "{1BE98DC1-E8C0-4E78-A8E3-EE398B01FE46}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ExampleApp", "..\ExampleApp\ExampleApp.csproj", "{77A2DA17-D8E7-4B74-9AFA-73054F2CA4BF}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ExampleApp", "ExampleApp\ExampleApp.csproj", "{77A2DA17-D8E7-4B74-9AFA-73054F2CA4BF}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Tests", "..\Tests\Tests.csproj", "{8583C4AD-056E-4054-A27D-052A3F283E66}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Tests", "Tests\Tests.csproj", "{8583C4AD-056E-4054-A27D-052A3F283E66}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
