@@ -23,12 +23,12 @@ namespace Falcon.WebSocketClients
 
         public ClientInfo GetInfo()
         {
-            var removeEndpoint = ((IPEndPoint)this.Socket.RemoteEndPoint);
+            var remoteEndpoint = ((IPEndPoint)this.Socket.RemoteEndPoint);
             return new ClientInfo()
             {
                 ClientID = this.ID,
-                IP = removeEndpoint.Address,
-                Port = removeEndpoint.Port,
+                IP = remoteEndpoint.Address,
+                Port = remoteEndpoint.Port,
                 JoinTime = this.JoinTime
             };
         }
