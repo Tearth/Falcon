@@ -1,12 +1,8 @@
-﻿using Falcon;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using Falcon.SocketServices.EventArguments;
+﻿using System;
 using System.Net;
 using System.Net.Sockets;
+using Falcon;
+using Falcon.SocketServices.EventArguments;
 
 namespace Tests
 {

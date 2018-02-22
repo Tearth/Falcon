@@ -1,15 +1,13 @@
-﻿using Falcon.CommandsExecutors;
+﻿using System;
+using System.Net;
+using System.Text;
+using Falcon.CommandsExecutors;
 using Falcon.Exceptions;
 using Falcon.Protocol.Frame;
 using Falcon.Protocol.Handshake;
 using Falcon.SocketServices.EventArguments;
 using Falcon.WebSocketClients;
 using Falcon.WebSocketEventArguments;
-using System;
-using System.Diagnostics.Contracts;
-using System.Linq;
-using System.Net;
-using System.Text;
 
 namespace Falcon
 {
@@ -166,7 +164,7 @@ namespace Falcon
         }
 
         /// <summary>
-        /// Returns informations about client with specified id. If not exists, returns null.
+        /// Returns information about client with specified id. If not exists, returns null.
         /// </summary>
         public ClientInfo GetClientInfo(string clientID)
         {

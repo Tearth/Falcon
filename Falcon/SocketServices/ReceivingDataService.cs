@@ -1,8 +1,8 @@
-﻿using Falcon.SocketServices.Clients;
-using Falcon.SocketServices.EventArguments;
-using System;
+﻿using System;
 using System.Linq;
 using System.Net.Sockets;
+using Falcon.SocketServices.Clients;
+using Falcon.SocketServices.EventArguments;
 
 namespace Falcon.SocketServices
 {

@@ -1,13 +1,8 @@
-﻿using Falcon.Protocol.Frame;
+﻿using System;
+using System.Net;
+using Falcon.Protocol.Frame;
 using Falcon.WebSocketClients;
 using Falcon.WebSocketEventArguments;
-using System;
-using System.Collections.Generic;
-using System.Diagnostics.Contracts;
-using System.Linq;
-using System.Net;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Falcon
 {
