@@ -9,7 +9,7 @@ using System.Threading.Tasks;
 
 namespace ExampleApp
 {
-    class Core
+    public class Core
     {
         WebSocketServer webSocketServer;
 

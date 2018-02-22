@@ -115,7 +115,7 @@ namespace Falcon
 
         private void OnConnected(object sender, ConnectedEventArgs e)
         {
-            ClientConnected(this, new ConnectedEventArgs(e.Socket));
+            ClientConnected?.Invoke(this, new ConnectedEventArgs(e.Socket));
 
             _receiveDataService.ReceiveData(e.Socket);
             _loopEvent.Set();
@@ -123,18 +123,18 @@ namespace Falcon
 
         private void OnReceivedData(object sender, DataReceivedEventArgs e)
         {
-            DataReceived(this, e);
+            DataReceived?.Invoke(this, e);
             _receiveDataService.ReceiveData(e.Socket);
         }
 
         private void OnSentData(object sender, DataSentEventArgs e)
         {
-            DataSent(this, e);
+            DataSent?.Invoke(this, e);
         }
 
         private void OnDisconnected(object sender, DisconnectedEventArgs e)
         {
-            ClientDisconnected(this, e);
+            ClientDisconnected?.Invoke(this, e);
         }
     }
 }

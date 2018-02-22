@@ -31,7 +31,7 @@ namespace Falcon.SocketServices
             }
             catch (SocketException ex)
             {
-                Disconnected(this, new DisconnectedEventArgs(client.Socket, ex));
+                Disconnected?.Invoke(this, new DisconnectedEventArgs(client.Socket, ex));
             }
         }
 
@@ -45,11 +45,11 @@ namespace Falcon.SocketServices
 
                 if (receivedBytes == 0)
                 {
-                    Disconnected(this, new DisconnectedEventArgs(client.Socket));
+                    Disconnected?.Invoke(this, new DisconnectedEventArgs(client.Socket));
                 }
                 else
                 {
-                    ReceivedData(this, new DataReceivedEventArgs(client.Socket, client.Buffer.Take(receivedBytes).ToArray()));
+                    ReceivedData?.Invoke(this, new DataReceivedEventArgs(client.Socket, client.Buffer.Take(receivedBytes).ToArray()));
                 }
             }
             catch (ObjectDisposedException)
@@ -58,7 +58,7 @@ namespace Falcon.SocketServices
             }
             catch (SocketException ex)
             {
-                Disconnected(this, new DisconnectedEventArgs(client.Socket, ex));
+                Disconnected?.Invoke(this, new DisconnectedEventArgs(client.Socket, ex));
             }
         }
     }

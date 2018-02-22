@@ -16,9 +16,11 @@ namespace Tests.FrameTests
             var serializer = new FrameSerializer();
 
             var exampleDataBytes = Encoding.UTF8.GetBytes("Foo Bar");
-            var frame = new WebSocketFrame(exampleDataBytes, false);
-            frame.FIN = true;
-            frame.OpCode = (byte)FrameType.Message;
+            var frame = new WebSocketFrame(exampleDataBytes, false)
+            {
+                FIN = true,
+                OpCode = (byte)FrameType.Message
+            };
 
             var serializedFrame = serializer.GetBytes(frame);
 
@@ -32,9 +34,11 @@ namespace Tests.FrameTests
             var serializer = new FrameSerializer();
 
             var exampleDataBytes = Encoding.UTF8.GetBytes("");
-            var frame = new WebSocketFrame(exampleDataBytes, false);
-            frame.FIN = false;
-            frame.OpCode = (byte)FrameType.Message;
+            var frame = new WebSocketFrame(exampleDataBytes, false)
+            {
+                FIN = false,
+                OpCode = (byte)FrameType.Message
+            };
 
             var serializedFrame = serializer.GetBytes(frame);
 
@@ -48,9 +52,11 @@ namespace Tests.FrameTests
             var serializer = new FrameSerializer();
 
             var exampleDataBytes = Encoding.UTF8.GetBytes("Foo Bar");
-            var frame = new WebSocketFrame(exampleDataBytes, false);
-            frame.FIN = true;
-            frame.OpCode = (byte)FrameType.Disconnect;
+            var frame = new WebSocketFrame(exampleDataBytes, false)
+            {
+                FIN = true,
+                OpCode = (byte)FrameType.Disconnect
+            };
 
             var serializedFrame = serializer.GetBytes(frame);
 
@@ -64,9 +70,11 @@ namespace Tests.FrameTests
             var serializer = new FrameSerializer();
 
             var exampleDataBytes = Encoding.UTF8.GetBytes("Foo Bar");
-            var frame = new WebSocketFrame(exampleDataBytes, false);
-            frame.FIN = true;
-            frame.OpCode = (byte)FrameType.Ping;
+            var frame = new WebSocketFrame(exampleDataBytes, false)
+            {
+                FIN = true,
+                OpCode = (byte)FrameType.Ping
+            };
 
             var serializedFrame = serializer.GetBytes(frame);
 
@@ -80,9 +88,11 @@ namespace Tests.FrameTests
             var serializer = new FrameSerializer();
 
             var exampleDataBytes = Encoding.UTF8.GetBytes("Foo Bar");
-            var frame = new WebSocketFrame(exampleDataBytes, false);
-            frame.FIN = true;
-            frame.OpCode = (byte)FrameType.Pong;
+            var frame = new WebSocketFrame(exampleDataBytes, false)
+            {
+                FIN = true,
+                OpCode = (byte)FrameType.Pong
+            };
 
             var serializedFrame = serializer.GetBytes(frame);
 

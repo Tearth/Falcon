@@ -21,7 +21,7 @@ namespace Falcon.SocketServices
             }
             catch (SocketException ex)
             {
-                Disconnected(this, new DisconnectedEventArgs(null, ex));
+                Disconnected?.Invoke(this, new DisconnectedEventArgs(null, ex));
             }
         }
 
@@ -32,7 +32,7 @@ namespace Falcon.SocketServices
             try
             {
                 var clientSocket = server.EndAccept(ar);
-                Connected(this, new ConnectedEventArgs(clientSocket));
+                Connected?.Invoke(this, new ConnectedEventArgs(clientSocket));
             }
             catch (ObjectDisposedException)
             {
@@ -40,7 +40,7 @@ namespace Falcon.SocketServices
             }
             catch (SocketException ex)
             {
-                Disconnected(this, new DisconnectedEventArgs(null, ex));
+                Disconnected?.Invoke(this, new DisconnectedEventArgs(null, ex));
             }
         }
     }
