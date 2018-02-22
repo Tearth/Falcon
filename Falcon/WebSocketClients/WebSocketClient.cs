@@ -23,8 +23,8 @@ namespace Falcon.WebSocketClients
 
         public ClientInfo GetInfo()
         {
-            var remoteEndpoint = ((IPEndPoint)Socket.RemoteEndPoint);
-            return new ClientInfo()
+            var remoteEndpoint = (IPEndPoint)Socket.RemoteEndPoint;
+            return new ClientInfo
             {
                 ClientID = ID,
                 IP = remoteEndpoint.Address,
