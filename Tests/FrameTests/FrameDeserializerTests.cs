@@ -29,9 +29,8 @@ namespace Tests.FrameTests
             var deserializer = new FrameDeserializer();
 
             var data = new byte[] { 129, 134, 167, 225, 225, 210, 198, 131, 130, 182, 194, 135 };
-            var result = DeserializeResult.None;
-            var frame = deserializer.GetFrame(data, out result);
-            
+            deserializer.GetFrame(data, out var result);
+
             Assert.Equal(result, DeserializeResult.SuccessWithFIN);
         }
 
@@ -41,9 +40,8 @@ namespace Tests.FrameTests
             var deserializer = new FrameDeserializer();
 
             var data = new byte[] { 1, 134, 167, 225, 225, 210, 198, 131, 130, 182, 194, 135 };
-            var result = DeserializeResult.None;
-            var frame = deserializer.GetFrame(data, out result);
-            
+            deserializer.GetFrame(data, out var result);
+
             Assert.Equal(result, DeserializeResult.SuccessWithoutFIN);
         }
 
@@ -53,10 +51,8 @@ namespace Tests.FrameTests
             var deserializer = new FrameDeserializer();
 
             var data = new byte[] { 1, 134, 167, 225, 225, 210, 198, 131, 130 };
+            deserializer.GetFrame(data, out var result);
 
-            var result = DeserializeResult.None;
-            var frame = deserializer.GetFrame(data, out result);
-            
             Assert.Equal(result, DeserializeResult.PartialMessage);
         }
 
@@ -66,9 +62,8 @@ namespace Tests.FrameTests
             var deserializer = new FrameDeserializer();
 
             var data = new byte[] { 1, 134, 167, 225, 225 };
-            var result = DeserializeResult.None;
-            var frame = deserializer.GetFrame(data, out result);
-            
+            deserializer.GetFrame(data, out var result);
+
             Assert.Equal(result, DeserializeResult.InvalidHeader);
         }
 
@@ -78,8 +73,7 @@ namespace Tests.FrameTests
             var deserializer = new FrameDeserializer();
 
             var data = new byte[] { 1 };
-            var result = DeserializeResult.None;
-            var frame = deserializer.GetFrame(data, out result);
+            deserializer.GetFrame(data, out var result);
 
             Assert.Equal(result, DeserializeResult.InvalidHeader);
         }

@@ -245,9 +245,7 @@ namespace Falcon
             var frame = client.Buffer.GetData();
 
             var deserializeResult = DeserializeResult.None;
-            var frameType = FrameType.None;
-            var parsedBytes = 0;
-            var message = _framesManager.Deserialize(frame, out deserializeResult, out frameType, out parsedBytes);
+            var message = _framesManager.Deserialize(frame, out deserializeResult, out var frameType, out var parsedBytes);
 
             if (parsedBytes > 0)
             {
