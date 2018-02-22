@@ -63,8 +63,6 @@ namespace Falcon
 
         public WebSocketServer(uint bufferSize, IServerListener serverListener)
         {
-            Contract.Requires<ArgumentNullException>(serverListener != null, nameof(serverListener));
-
             BufferSize = bufferSize;
 
             _server = serverListener;
