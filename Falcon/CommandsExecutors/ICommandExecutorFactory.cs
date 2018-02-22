@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace Falcon.CommandsExecutors
 {
-    internal interface ICommandExecutorFactory
+    public interface ICommandExecutorFactory
     {
         ICommandExecutor Create(FrameType type);
     }

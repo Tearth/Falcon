@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace Falcon.WebSocketClients
 {
-    internal interface IWebSocketClientsManager
+    public interface IWebSocketClientsManager
     {
         void Add(WebSocketClient client);
         void Remove(WebSocketClient client);

@@ -1,6 +1,6 @@
 ﻿namespace Falcon.Protocol.Frame
 {
-    internal enum DeserializeResult
+    public enum DeserializeResult
     {
         None,
         InvalidHeader,

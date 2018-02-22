@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace Falcon.Protocol.Frame
 {
-    internal interface IFramesManager
+    public interface IFramesManager
     {
         byte[] Serialize(byte[] data, FrameType type);
         byte[] Deserialize(byte[] data, out DeserializeResult result, out FrameType type, out int parsedBytes);

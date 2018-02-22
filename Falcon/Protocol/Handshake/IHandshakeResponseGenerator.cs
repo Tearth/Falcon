@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace Falcon.Protocol.Handshake
 {
-    internal interface IHandshakeResponseGenerator
+    public interface IHandshakeResponseGenerator
     {
         byte[] GetResponse(byte[] request);
     }
