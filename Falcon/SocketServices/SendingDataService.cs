@@ -13,7 +13,7 @@ namespace Falcon.SocketServices
         {
             try
             {
-                socket.BeginSend(data, 0, data.Length, 0, new AsyncCallback(EndSendData), socket);
+                socket.BeginSend(data, 0, data.Length, 0, EndSendData, socket);
             }
             catch (ObjectDisposedException)
             {

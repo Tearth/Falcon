@@ -23,7 +23,7 @@ namespace Falcon.SocketServices
             try
             {
                 clientSocket.BeginReceive(client.Buffer, 0, client.Buffer.Length, 0,
-                                          new AsyncCallback(AcceptNewData), client);
+                                          AcceptNewData, client);
             }
             catch (ObjectDisposedException)
             {
