@@ -11,7 +11,6 @@ using System.Threading.Tasks;
 
 namespace Falcon
 {
-    [ContractClass(typeof(WebSocketServerContract))]
     public interface IWebSocketServer
     {
         uint BufferSize { get; }

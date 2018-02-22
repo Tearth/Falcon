@@ -82,6 +82,11 @@ namespace Falcon
         /// </summary>
         public void Start(IPAddress address, ushort port)
         {
+            if (ServerState != EServerState.Closed)
+            {
+                throw new ServerAlreadyWorkingException();
+            }
+
             var endpoint = new IPEndPoint(address, port);
             _server.Start(endpoint);
         }
@@ -91,6 +96,11 @@ namespace Falcon
         /// </summary>
         public void Stop()
         {
+            if (ServerState != EServerState.Working)
+            {
+                throw new ServerAlreadyClosedException();
+            }
+
             _server.Stop();
         }
 
@@ -118,6 +128,11 @@ namespace Falcon
         /// </summary>
         public bool SendData(string clientID, byte[] data, FrameType type)
         {
+            if (ServerState != EServerState.Working)
+            {
+                throw new ServerAlreadyWorkingException();
+            }
+
             var webSocketClient = _webSocketClientsManager.GetByID(clientID);
             if (webSocketClient == null)
             {
@@ -136,6 +151,11 @@ namespace Falcon
         /// </summary>
         public void SendRawData(string clientID, byte[] data)
         {
+            if (ServerState != EServerState.Working)
+            {
+                throw new ServerAlreadyWorkingException();
+            }
+
             var webSocketClient = _webSocketClientsManager.GetByID(clientID);
             if (webSocketClient == null)
             {
@@ -150,6 +170,11 @@ namespace Falcon
         /// </summary>
         public ClientInfo GetClientInfo(string clientID)
         {
+            if (ServerState != EServerState.Working)
+            {
+                throw new ServerAlreadyWorkingException();
+            }
+
             var webSocketClient = _webSocketClientsManager.GetByID(clientID);
             return webSocketClient?.GetInfo();
         }
@@ -159,6 +184,11 @@ namespace Falcon
         /// </summary>
         public void DisconnectClient(string clientID)
         {
+            if (ServerState != EServerState.Working)
+            {
+                throw new ServerAlreadyWorkingException();
+            }
+
             var webSocketClient = _webSocketClientsManager.GetByID(clientID);
             if (webSocketClient == null)
             {

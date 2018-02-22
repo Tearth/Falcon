@@ -124,7 +124,6 @@
     <Compile Include="WebSocketEventArguments\WebSocketDataReceivedEventArgs.cs" />
     <Compile Include="WebSocketEventArguments\WebSocketDataSentEventArgs.cs" />
     <Compile Include="WebSocketServer.cs" />
-    <Compile Include="WebSocketServerContract.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
