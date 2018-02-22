@@ -38,16 +38,19 @@ namespace Falcon.SocketServices
         void AcceptNewData(IAsyncResult ar)
         {
             var client = (Client)ar.AsyncState;
-            var receivedBytes = 0;
 
             try
             {
-                receivedBytes = client.Socket.EndReceive(ar);
+                var receivedBytes = client.Socket.EndReceive(ar);
 
                 if (receivedBytes == 0)
+                {
                     Disconnected(this, new DisconnectedEventArgs(client.Socket));
+                }
                 else
+                {
                     ReceivedData(this, new DataReceivedEventArgs(client.Socket, client.Buffer.Take(receivedBytes).ToArray()));
+                }
             }
             catch (ObjectDisposedException)
             {

@@ -28,11 +28,10 @@ namespace Falcon.SocketServices
         void EndSendData(IAsyncResult ar)
         {
             var socket = (Socket)ar.AsyncState;
-            var sentBytes = 0;
 
             try
             {
-                sentBytes = socket.EndSend(ar);
+                var sentBytes = socket.EndSend(ar);
                 SentData(this, new DataSentEventArgs(socket, sentBytes));
             }
             catch (ObjectDisposedException)

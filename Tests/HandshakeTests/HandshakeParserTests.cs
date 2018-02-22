@@ -18,7 +18,7 @@ namespace Tests.HandshakeTests
                           "Host: server.example.com\r\n" +
                           "Upgrade: websocket\r\n" +
                           "Connection: Upgrade\r\n" +
-                          "Sec-WebSocket-Key: dGhlIHNhbXBsZSBub25jZQ==\r\n" + 
+                          "Sec-WebSocket-Key: dGhlIHNhbXBsZSBub25jZQ==\r\n" +
                           "Origin: http://example.com\r\n" +
                           "Sec-WebSocket-Protocol: chat, superchat\r\n" +
                           "Sec-WebSocket-Version: 13\r\n" +

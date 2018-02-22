@@ -29,7 +29,7 @@ namespace Falcon
         /// <summary>
         /// Current state of server
         /// </summary>
-        public EServerState ServerState { get { return _server.ServerState; } }
+        public EServerState ServerState => _server.ServerState;
 
         /// <summary>
         /// Event triggered when a new client has connected to the server
@@ -58,7 +58,7 @@ namespace Falcon
 
         public WebSocketServer(uint bufferSize) : this(bufferSize, new ServerListener(bufferSize))
         {
-            
+
         }
 
         public WebSocketServer(uint bufferSize, IServerListener serverListener)
@@ -122,7 +122,9 @@ namespace Falcon
         {
             var webSocketClient = _webSocketClientsManager.GetByID(clientID);
             if (webSocketClient == null)
+            {
                 return false;
+            }
 
             var frameBytes = _framesManager.Serialize(data, type);
             _server.Send(webSocketClient.Socket, frameBytes);
@@ -138,7 +140,9 @@ namespace Falcon
         {
             var webSocketClient = _webSocketClientsManager.GetByID(clientID);
             if (webSocketClient == null)
+            {
                 return;
+            }
 
             _server.Send(webSocketClient.Socket, data);
         }
@@ -149,10 +153,7 @@ namespace Falcon
         public ClientInfo GetClientInfo(string clientID)
         {
             var webSocketClient = _webSocketClientsManager.GetByID(clientID);
-            if (webSocketClient == null)
-                return null;
-
-            return webSocketClient.GetInfo();
+            return webSocketClient?.GetInfo();
         }
 
         /// <summary>
@@ -162,7 +163,9 @@ namespace Falcon
         {
             var webSocketClient = _webSocketClientsManager.GetByID(clientID);
             if (webSocketClient == null)
+            {
                 return;
+            }
 
             _server.CloseConnection(webSocketClient.Socket);
             _webSocketClientsManager.Remove(webSocketClient);
@@ -178,7 +181,7 @@ namespace Falcon
         {
             if (disposing)
             {
-                if(_server != null) ((IDisposable)_server).Dispose();
+                ((IDisposable)_server)?.Dispose();
             }
         }
 
@@ -194,7 +197,9 @@ namespace Falcon
         {
             var webSocketClient = _webSocketClientsManager.GetBySocket(e.Socket);
             if (webSocketClient == null)
+            {
                 return;
+            }
 
             if (!webSocketClient.Buffer.Add(e.Data))
             {
@@ -203,16 +208,22 @@ namespace Falcon
             }
 
             if (!webSocketClient.HandshakeDone)
+            {
                 DoHandshake(webSocketClient);
+            }
             else
+            {
                 ProcessMessage(webSocketClient);
+            }
         }
 
         void OnDataSent(object sender, DataSentEventArgs e)
         {
             var webSocketClient = _webSocketClientsManager.GetBySocket(e.Socket);
             if (webSocketClient == null)
+            {
                 return;
+            }
 
             WebSocketDataSent?.Invoke(this, new WebSocketDataSentEventArgs(webSocketClient.ID, e.BytesSent));
         }
@@ -221,7 +232,9 @@ namespace Falcon
         {
             var webSocketClient = _webSocketClientsManager.GetBySocket(e.Socket);
             if (webSocketClient == null)
+            {
                 return;
+            }
 
             _webSocketClientsManager.Remove(webSocketClient);
 
@@ -252,7 +265,9 @@ namespace Falcon
                 var commandExecutor = _commandsExecutorFactory.Create(frameType);
 
                 if (commandExecutor.Do(this, client.ID, message))
+                {
                     WebSocketDataReceived?.Invoke(this, new WebSocketDataReceivedEventArgs(client.ID, message));
+                }
 
                 client.Buffer.Remove(parsedBytes);
             }

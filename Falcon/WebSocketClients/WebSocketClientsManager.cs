@@ -27,10 +27,7 @@ namespace Falcon.WebSocketClients
 
         public WebSocketClient GetByID(string id)
         {
-            if (!Exists(id))
-                return null;
-
-            return _webSocketClients[id];
+            return !Exists(id) ? null : _webSocketClients[id];
         }
 
         public WebSocketClient GetBySocket(Socket socket)

@@ -22,7 +22,7 @@ namespace Falcon
         public event EventHandler<WebSocketDataReceivedEventArgs> WebSocketDataReceived;
         public event EventHandler<WebSocketDataSentEventArgs> WebSocketDataSent;
         public event EventHandler<WebSocketDisconnectedEventArgs> WebSocketDisconnected;
-        
+
         public void DisconnectClient(string clientID)
         {
             Contract.Requires<ServerAlreadyClosedException>(ServerState == EServerState.Working);

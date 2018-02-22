@@ -17,7 +17,9 @@ namespace Falcon.WebSocketClients
         public bool Add(byte[] data)
         {
             if (_bufferPointer + data.Length > _buffer.Length)
+            {
                 return false;
+            }
 
             Array.Copy(data, 0, _buffer, _bufferPointer, data.Length);
             _bufferPointer += data.Length;

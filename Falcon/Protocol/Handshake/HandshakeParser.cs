@@ -13,11 +13,13 @@ namespace Falcon.Protocol.Handshake
             var requestFields = new Dictionary<string, string>();
             var lines = SplitRequest(request);
 
-            foreach (string l in lines)
+            foreach (var l in lines)
             {
                 var tokens = l.Split(':');
                 if (tokens.Length < 2)
+                {
                     continue;
+                }
 
                 requestFields.Add(tokens[0].Trim(), tokens[1].Trim());
             }

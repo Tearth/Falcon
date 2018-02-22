@@ -6,7 +6,7 @@ namespace Falcon.SocketServices.EventArguments
     public class DisconnectedEventArgs : EventArgs
     {
         public Socket Socket { get; private set; }
-        public bool Unexpected { get { return Exception != null; } }
+        public bool Unexpected => Exception != null;
         public Exception Exception { get; private set; }
 
         public DisconnectedEventArgs(Socket socket)

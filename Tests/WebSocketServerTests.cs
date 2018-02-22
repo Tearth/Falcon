@@ -18,7 +18,7 @@ namespace Tests
         {
             var fakeServerListener = new FakeServerListener();
             var webSocketServer = new WebSocketServer(1024, fakeServerListener);
-          
+
             Assert.Throws<ArgumentNullException>("address", () => webSocketServer.Start(null, 12345));
         }
 
@@ -27,7 +27,7 @@ namespace Tests
         {
             var fakeServerListener = new FakeServerListener();
             var webSocketServer = new WebSocketServer(1024, fakeServerListener);
-            
+
             var ex = Record.Exception(() => webSocketServer.Start(IPAddress.Any, 12345));
 
             Assert.Null(ex);
@@ -49,7 +49,7 @@ namespace Tests
         {
             var fakeServerListener = new FakeServerListener();
             var webSocketServer = new WebSocketServer(1024, fakeServerListener);
-            
+
             webSocketServer.Start(IPAddress.Any, 12345);
             var ex = Record.Exception(() => webSocketServer.Stop());
 

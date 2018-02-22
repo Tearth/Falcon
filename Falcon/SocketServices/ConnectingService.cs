@@ -28,11 +28,10 @@ namespace Falcon.SocketServices
         void AcceptNewConnection(IAsyncResult ar)
         {
             var server = (Socket)ar.AsyncState;
-            Socket clientSocket = null;
 
             try
             {
-                clientSocket = server.EndAccept(ar);
+                var clientSocket = server.EndAccept(ar);
                 Connected(this, new ConnectedEventArgs(clientSocket));
             }
             catch (ObjectDisposedException)

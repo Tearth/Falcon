@@ -27,7 +27,7 @@ namespace Tests.HandshakeTests
             var requestBytes = Encoding.UTF8.GetBytes(request);
             var result = responseGenerator.GetResponse(requestBytes);
             var stringResult = Encoding.UTF8.GetString(result);
-            
+
             Assert.Equal("HTTP/1.1 101 Switching Protocols\r\n" +
                          "Upgrade: websocket\r\n" +
                          "Connection: Upgrade\r\n" +

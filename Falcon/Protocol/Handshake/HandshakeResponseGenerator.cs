@@ -23,11 +23,15 @@ namespace Falcon.Protocol.Handshake
             var data = Encoding.UTF8.GetString(request);
 
             if (!data.Contains(EndSequence))
+            {
                 return new byte[0];
+            }
 
             var handshakeFields = _handshakeParser.ParseToDictionary(data);
-            if (!handshakeFields.Any(p => p.Key == WebSocketKeyName))
+            if (handshakeFields.All(p => p.Key != WebSocketKeyName))
+            {
                 return new byte[0];
+            }
 
             var key = handshakeFields[WebSocketKeyName];
             var responseKey = _handshakeKeyGenerator.Get(key);

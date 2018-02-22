@@ -60,7 +60,7 @@ namespace Tests.WebSocketClientTests
 
             var result = buffer.Add(new byte[] { 1, 2, 3 });
             buffer.Clear();
-            
+
             Assert.Equal(0, buffer.GetData().Length);
         }
     }

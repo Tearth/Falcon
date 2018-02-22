@@ -36,7 +36,7 @@ namespace Tests
 
         public void CloseConnection(Socket socket)
         {
-            
+
         }
 
         public void CloseConnection(Socket socket, Exception ex)

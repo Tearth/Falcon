@@ -38,8 +38,11 @@ namespace ExampleApp
             Console.Write("Received: ");
             Console.WriteLine(Encoding.UTF8.GetString(e.Data));
 
-            foreach (byte b in e.Data)
+            foreach (var b in e.Data)
+            {
                 Console.Write(b + " ");
+            }
+
             Console.WriteLine();
 
             webSocketServer.SendData(e.ClientID, e.Data);
@@ -56,7 +59,9 @@ namespace ExampleApp
             Console.WriteLine("Unexpected: " + e.Unexpected);
 
             if (e.Unexpected)
+            {
                 Console.WriteLine(e.Exception.ToString());
+            }
         }
 
         public void Run()

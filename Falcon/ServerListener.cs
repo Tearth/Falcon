@@ -13,7 +13,7 @@ namespace Falcon
     {
         Socket _socket;
         Task _loop;
-        
+
         ConnectingService _newConnectionService;
         ReceivingDataService _receiveDataService;
         SendingDataService _sendDataService;
@@ -32,7 +32,7 @@ namespace Falcon
         {
             _bufferSize = bufferSize;
             _loopEvent = new ManualResetEvent(false);
-            
+
             _newConnectionService = new ConnectingService();
             _receiveDataService = new ReceivingDataService();
             _sendDataService = new SendingDataService();
@@ -98,8 +98,8 @@ namespace Falcon
         {
             if (disposing)
             {
-                if(_loop != null) _loop.Dispose();
-                if(_socket != null) _socket.Dispose();
+                _loop?.Dispose();
+                _socket?.Dispose();
             }
         }
 
