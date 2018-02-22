@@ -9,23 +9,23 @@ using System.Threading.Tasks;
 
 namespace Falcon
 {
-    internal class ServerListener : IServerListener, IDisposable
+    public class ServerListener : IServerListener, IDisposable
     {
-        Socket _socket;
-        Task _loop;
+        private Socket _socket;
+        private Task _loop;
 
-        ConnectingService _newConnectionService;
-        ReceivingDataService _receiveDataService;
-        SendingDataService _sendDataService;
+        private ConnectingService _newConnectionService;
+        private ReceivingDataService _receiveDataService;
+        private SendingDataService _sendDataService;
 
-        uint _bufferSize;
-        static ManualResetEvent _loopEvent;
+        private uint _bufferSize;
+        private static ManualResetEvent _loopEvent;
 
         public event EventHandler<ConnectedEventArgs> ClientConnected;
         public event EventHandler<DataReceivedEventArgs> DataReceived;
         public event EventHandler<DataSentEventArgs> DataSent;
         public event EventHandler<DisconnectedEventArgs> ClientDisconnected;
-        
+
         public EServerState ServerState { get; private set; }
 
         public ServerListener(uint bufferSize)
@@ -103,7 +103,7 @@ namespace Falcon
             }
         }
 
-        void Loop()
+        private void Loop()
         {
             while (ServerState == EServerState.Working)
             {
@@ -113,7 +113,7 @@ namespace Falcon
             }
         }
 
-        void OnConnected(object sender, ConnectedEventArgs e)
+        private void OnConnected(object sender, ConnectedEventArgs e)
         {
             ClientConnected(this, new ConnectedEventArgs(e.Socket));
 
@@ -121,18 +121,18 @@ namespace Falcon
             _loopEvent.Set();
         }
 
-        void OnReceivedData(object sender, DataReceivedEventArgs e)
+        private void OnReceivedData(object sender, DataReceivedEventArgs e)
         {
             DataReceived(this, e);
             _receiveDataService.ReceiveData(e.Socket);
         }
 
-        void OnSentData(object sender, DataSentEventArgs e)
+        private void OnSentData(object sender, DataSentEventArgs e)
         {
             DataSent(this, e);
         }
 
-        void OnDisconnected(object sender, DisconnectedEventArgs e)
+        private void OnDisconnected(object sender, DisconnectedEventArgs e)
         {
             ClientDisconnected(this, e);
         }

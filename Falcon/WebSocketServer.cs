@@ -185,7 +185,7 @@ namespace Falcon
             }
         }
 
-        void OnConnected(object sender, ConnectedEventArgs e)
+        private void OnConnected(object sender, ConnectedEventArgs e)
         {
             var webSocketClient = new WebSocketClient(e.Socket, BufferSize);
             _webSocketClientsManager.Add(webSocketClient);
@@ -193,7 +193,7 @@ namespace Falcon
             WebSocketConnected?.Invoke(this, new WebSocketConnectedEventArgs(webSocketClient.ID));
         }
 
-        void OnDataReceived(object sender, DataReceivedEventArgs e)
+        private void OnDataReceived(object sender, DataReceivedEventArgs e)
         {
             var webSocketClient = _webSocketClientsManager.GetBySocket(e.Socket);
             if (webSocketClient == null)
@@ -217,7 +217,7 @@ namespace Falcon
             }
         }
 
-        void OnDataSent(object sender, DataSentEventArgs e)
+        private void OnDataSent(object sender, DataSentEventArgs e)
         {
             var webSocketClient = _webSocketClientsManager.GetBySocket(e.Socket);
             if (webSocketClient == null)
@@ -228,7 +228,7 @@ namespace Falcon
             WebSocketDataSent?.Invoke(this, new WebSocketDataSentEventArgs(webSocketClient.ID, e.BytesSent));
         }
 
-        void OnDisconnected(object sender, DisconnectedEventArgs e)
+        private void OnDisconnected(object sender, DisconnectedEventArgs e)
         {
             var webSocketClient = _webSocketClientsManager.GetBySocket(e.Socket);
             if (webSocketClient == null)
@@ -241,7 +241,7 @@ namespace Falcon
             WebSocketDisconnected?.Invoke(this, new WebSocketDisconnectedEventArgs(webSocketClient.ID, e.Exception));
         }
 
-        void DoHandshake(WebSocketClient client)
+        private void DoHandshake(WebSocketClient client)
         {
             var response = _handshakeResponseGenerator.GetResponse(client.Buffer.GetData());
             if (response.Length > 0)
@@ -253,7 +253,7 @@ namespace Falcon
             }
         }
 
-        void ProcessMessage(WebSocketClient client)
+        private void ProcessMessage(WebSocketClient client)
         {
             var frame = client.Buffer.GetData();
 

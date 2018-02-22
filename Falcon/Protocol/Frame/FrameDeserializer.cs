@@ -3,7 +3,7 @@ using System.Linq;
 
 namespace Falcon.Protocol.Frame
 {
-    internal class FrameDeserializer
+    public class FrameDeserializer
     {
         public WebSocketFrame GetFrame(byte[] data, out DeserializeResult result)
         {

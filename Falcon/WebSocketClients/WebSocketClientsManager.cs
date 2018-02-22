@@ -6,7 +6,7 @@ using System.Net.Sockets;
 
 namespace Falcon.WebSocketClients
 {
-    internal class WebSocketClientsManager : IWebSocketClientsManager
+    public class WebSocketClientsManager : IWebSocketClientsManager
     {
         IDictionary<string, WebSocketClient> _webSocketClients;
 

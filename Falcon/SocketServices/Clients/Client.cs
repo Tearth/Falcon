@@ -2,7 +2,7 @@
 
 namespace Falcon.SocketServices.Clients
 {
-    internal class Client
+    public class Client
     {
         public Socket Socket { get; private set; }
         public byte[] Buffer { get; private set; }

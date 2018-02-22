@@ -1,6 +1,6 @@
 ﻿namespace Falcon.Protocol.Frame
 {
-    internal class WebSocketFrame
+    public class WebSocketFrame
     {
         public bool FIN { get; set; }
         public byte OpCode { get; set; }

@@ -3,10 +3,10 @@ using System.Linq;
 
 namespace Falcon.WebSocketClients
 {
-    internal class Buffer
+    public class Buffer
     {
-        byte[] _buffer;
-        int _bufferPointer;
+        private byte[] _buffer;
+        private int _bufferPointer;
 
         public Buffer(uint bufferSize)
         {

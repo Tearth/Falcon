@@ -4,9 +4,9 @@ using System.Linq;
 
 namespace Falcon.Protocol.Handshake
 {
-    internal class HandshakeParser
+    public class HandshakeParser
     {
-        const string EndLineSequence = "\r\n";
+        private const string EndLineSequence = "\r\n";
 
         public IDictionary<string, string> ParseToDictionary(string request)
         {
@@ -26,7 +26,7 @@ namespace Falcon.Protocol.Handshake
             return requestFields;
         }
 
-        IList<string> SplitRequest(string request)
+        private IList<string> SplitRequest(string request)
         {
             return request.Split(EndLineSequence.ToArray(), StringSplitOptions.RemoveEmptyEntries).ToList();
         }

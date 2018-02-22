@@ -4,7 +4,7 @@ using System.Net.Sockets;
 
 namespace Falcon.SocketServices
 {
-    internal class SendingDataService
+    public class SendingDataService
     {
         public event EventHandler<DataSentEventArgs> SentData;
         public event EventHandler<DisconnectedEventArgs> Disconnected;
@@ -25,7 +25,7 @@ namespace Falcon.SocketServices
             }
         }
 
-        void EndSendData(IAsyncResult ar)
+        private void EndSendData(IAsyncResult ar)
         {
             var socket = (Socket)ar.AsyncState;
 

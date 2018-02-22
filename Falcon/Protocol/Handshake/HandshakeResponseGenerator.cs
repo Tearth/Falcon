@@ -4,13 +4,13 @@ using System.Text;
 
 namespace Falcon.Protocol.Handshake
 {
-    internal class HandshakeResponseGenerator : IHandshakeResponseGenerator
+    public class HandshakeResponseGenerator : IHandshakeResponseGenerator
     {
-        HandshakeParser _handshakeParser;
-        HandshakeKeyGenerator _handshakeKeyGenerator;
+        private HandshakeParser _handshakeParser;
+        private HandshakeKeyGenerator _handshakeKeyGenerator;
 
-        const string WebSocketKeyName = "Sec-WebSocket-Key";
-        const string EndSequence = "\r\n\r\n";
+        private const string WebSocketKeyName = "Sec-WebSocket-Key";
+        private const string EndSequence = "\r\n\r\n";
 
         public HandshakeResponseGenerator()
         {

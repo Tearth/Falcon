@@ -6,7 +6,7 @@ using System.Net.Sockets;
 
 namespace Falcon.SocketServices
 {
-    internal class ReceivingDataService
+    public class ReceivingDataService
     {
         public event EventHandler<DataReceivedEventArgs> ReceivedData;
         public event EventHandler<DisconnectedEventArgs> Disconnected;
@@ -35,7 +35,7 @@ namespace Falcon.SocketServices
             }
         }
 
-        void AcceptNewData(IAsyncResult ar)
+        private void AcceptNewData(IAsyncResult ar)
         {
             var client = (Client)ar.AsyncState;
 

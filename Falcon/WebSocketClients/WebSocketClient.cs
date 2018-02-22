@@ -5,7 +5,7 @@ using System.Net.Sockets;
 
 namespace Falcon.WebSocketClients
 {
-    internal class WebSocketClient
+    public class WebSocketClient
     {
         public string ID { get; private set; }
         public Socket Socket { get; private set; }

@@ -1,6 +1,6 @@
 ﻿namespace Falcon.Protocol.Frame
 {
-    internal class FramesManager : IFramesManager
+    public class FramesManager : IFramesManager
     {
         FrameSerializer _serializer;
         FrameDeserializer _deserializer;

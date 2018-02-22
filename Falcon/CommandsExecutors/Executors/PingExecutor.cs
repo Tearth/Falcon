@@ -2,7 +2,7 @@
 
 namespace Falcon.CommandsExecutors.Executors
 {
-    internal class PingExecutor : ICommandExecutor
+    public class PingExecutor : ICommandExecutor
     {
         public bool Do(WebSocketServer webSocketServer, string clientID, byte[] message)
         {
