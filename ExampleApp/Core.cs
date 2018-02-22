@@ -36,7 +36,7 @@ namespace ExampleApp
         private void WebSocketServer_DataReceived(object sender, WebSocketDataReceivedEventArgs e)
         {
             Console.Write("Received: ");
-            Console.WriteLine(ASCIIEncoding.UTF8.GetString(e.Data));
+            Console.WriteLine(Encoding.UTF8.GetString(e.Data));
 
             foreach (byte b in e.Data)
                 Console.Write(b + " ");

@@ -24,9 +24,9 @@ namespace Tests.HandshakeTests
                           "Sec-WebSocket-Version: 13\r\n" +
                           "\r\n";
 
-            var requestBytes = ASCIIEncoding.UTF8.GetBytes(request);
+            var requestBytes = Encoding.UTF8.GetBytes(request);
             var result = responseGenerator.GetResponse(requestBytes);
-            var stringResult = ASCIIEncoding.UTF8.GetString(result);
+            var stringResult = Encoding.UTF8.GetString(result);
             
             Assert.Equal("HTTP/1.1 101 Switching Protocols\r\n" +
                          "Upgrade: websocket\r\n" +
@@ -44,7 +44,7 @@ namespace Tests.HandshakeTests
                           "Upgrade: websocket\r\n" +
                           "Connection: Upgrade\r\n";
 
-            var requestBytes = ASCIIEncoding.UTF8.GetBytes(request);
+            var requestBytes = Encoding.UTF8.GetBytes(request);
             var result = responseGenerator.GetResponse(requestBytes);
 
             Assert.Equal(0, result.Length);
@@ -63,7 +63,7 @@ namespace Tests.HandshakeTests
                           "Sec-WebSocket-Protocol: chat, superchat\r\n" +
                           "Sec-WebSocket-Version: 13\r\n";
 
-            var requestBytes = ASCIIEncoding.UTF8.GetBytes(request);
+            var requestBytes = Encoding.UTF8.GetBytes(request);
             var result = responseGenerator.GetResponse(requestBytes);
 
             Assert.Equal(0, result.Length);

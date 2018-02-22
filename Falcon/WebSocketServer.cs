@@ -111,7 +111,7 @@ namespace Falcon
         /// </summary>
         public bool SendData(string clientID, string text)
         {
-            return SendData(clientID, ASCIIEncoding.UTF8.GetBytes(text), FrameType.Message);
+            return SendData(clientID, Encoding.UTF8.GetBytes(text), FrameType.Message);
         }
 
         /// <summary>

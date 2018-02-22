@@ -15,7 +15,7 @@ namespace Tests.FrameTests
         {
             var serializer = new FrameSerializer();
 
-            var exampleDataBytes = ASCIIEncoding.UTF8.GetBytes("Foo Bar");
+            var exampleDataBytes = Encoding.UTF8.GetBytes("Foo Bar");
             var frame = new WebSocketFrame(exampleDataBytes, false);
             frame.FIN = true;
             frame.OpCode = (byte)FrameType.Message;
@@ -31,7 +31,7 @@ namespace Tests.FrameTests
         {
             var serializer = new FrameSerializer();
 
-            var exampleDataBytes = ASCIIEncoding.UTF8.GetBytes("");
+            var exampleDataBytes = Encoding.UTF8.GetBytes("");
             var frame = new WebSocketFrame(exampleDataBytes, false);
             frame.FIN = false;
             frame.OpCode = (byte)FrameType.Message;
@@ -47,7 +47,7 @@ namespace Tests.FrameTests
         {
             var serializer = new FrameSerializer();
 
-            var exampleDataBytes = ASCIIEncoding.UTF8.GetBytes("Foo Bar");
+            var exampleDataBytes = Encoding.UTF8.GetBytes("Foo Bar");
             var frame = new WebSocketFrame(exampleDataBytes, false);
             frame.FIN = true;
             frame.OpCode = (byte)FrameType.Disconnect;
@@ -63,7 +63,7 @@ namespace Tests.FrameTests
         {
             var serializer = new FrameSerializer();
 
-            var exampleDataBytes = ASCIIEncoding.UTF8.GetBytes("Foo Bar");
+            var exampleDataBytes = Encoding.UTF8.GetBytes("Foo Bar");
             var frame = new WebSocketFrame(exampleDataBytes, false);
             frame.FIN = true;
             frame.OpCode = (byte)FrameType.Ping;
@@ -79,7 +79,7 @@ namespace Tests.FrameTests
         {
             var serializer = new FrameSerializer();
 
-            var exampleDataBytes = ASCIIEncoding.UTF8.GetBytes("Foo Bar");
+            var exampleDataBytes = Encoding.UTF8.GetBytes("Foo Bar");
             var frame = new WebSocketFrame(exampleDataBytes, false);
             frame.FIN = true;
             frame.OpCode = (byte)FrameType.Pong;

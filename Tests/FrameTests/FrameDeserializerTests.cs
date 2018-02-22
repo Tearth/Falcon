@@ -19,7 +19,7 @@ namespace Tests.FrameTests
             var result = DeserializeResult. None;
             var frame = deserializer.GetFrame(data, out result);
 
-            var message = ASCIIEncoding.UTF8.GetString(frame.GetMessage());
+            var message = Encoding.UTF8.GetString(frame.GetMessage());
             Assert.Equal("abcdef", message);
         }
 

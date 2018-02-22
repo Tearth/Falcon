@@ -20,7 +20,7 @@ namespace Falcon.Protocol.Handshake
 
         public byte[] GetResponse(byte[] request)
         {
-            var data = ASCIIEncoding.UTF8.GetString(request);
+            var data = Encoding.UTF8.GetString(request);
 
             if (!data.Contains(EndSequence))
                 return new byte[0];
@@ -39,7 +39,7 @@ namespace Falcon.Protocol.Handshake
                                          "{1}",
                                           responseKey, EndSequence);
 
-            return ASCIIEncoding.UTF8.GetBytes(response);
+            return Encoding.UTF8.GetBytes(response);
         }
     }
 }
