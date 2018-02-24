@@ -3,8 +3,16 @@ using System.Linq;
 
 namespace Falcon.Protocol.Frame
 {
+    /// <summary>
+    /// Represents a set of methods to serialize frames.
+    /// </summary>
     public class FrameSerializer
     {
+        /// <summary>
+        /// Serializes frame object into array of bytes.
+        /// </summary>
+        /// <param name="frame">The frame to serialize.</param>
+        /// <returns>The serialized array of bytes.</returns>
         public byte[] GetBytes(WebSocketFrame frame)
         {
             var bytes = new byte[frame.FrameLength];

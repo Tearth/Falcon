@@ -1,5 +1,11 @@
-﻿namespace Falcon.Protocol.Frame
+﻿using System.Diagnostics.CodeAnalysis;
+
+namespace Falcon.Protocol.Frame
 {
+    /// <summary>
+    /// Represents WebSocket frame types.
+    /// </summary>
+    [SuppressMessage("ReSharper", "MissingXmlDoc")]
     public enum FrameType : byte
     {
         None = 0x00,

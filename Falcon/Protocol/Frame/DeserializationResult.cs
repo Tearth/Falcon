@@ -2,6 +2,9 @@
 
 namespace Falcon.Protocol.Frame
 {
+    /// <summary>
+    /// Represents a deserialization results.
+    /// </summary>
     [SuppressMessage("ReSharper", "MissingXmlDoc")]
     public enum DeserializationResult
     {

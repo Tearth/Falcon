@@ -3,8 +3,17 @@ using System.Linq;
 
 namespace Falcon.Protocol.Frame
 {
+    /// <summary>
+    /// Represents a set of methods to deserialize frames.
+    /// </summary>
     public class FrameDeserializer
     {
+        /// <summary>
+        /// Deserializes frame from the specified bytes array.
+        /// </summary>
+        /// <param name="data">The bytes array to deserialize.</param>
+        /// <param name="result">The deserialization result.</param>
+        /// <returns>The frame object if deserialization has been done without errors, otherwise null.</returns>
         public WebSocketFrame GetFrame(byte[] data, out DeserializationResult result)
         {
             var frame = new WebSocketFrame(true);
