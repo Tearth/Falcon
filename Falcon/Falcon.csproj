@@ -90,7 +90,7 @@
     <Compile Include="Exceptions\ServerAlreadyWorkingException.cs" />
     <Compile Include="IServerListener.cs" />
     <Compile Include="IWebSocketServer.cs" />
-    <Compile Include="Protocol\Frame\DeserializeResult.cs" />
+    <Compile Include="Protocol\Frame\DeserializationResult.cs" />
     <Compile Include="Protocol\Frame\FrameType.cs" />
     <Compile Include="Protocol\Frame\FrameDeserializer.cs" />
     <Compile Include="Protocol\Frame\FrameSerializer.cs" />

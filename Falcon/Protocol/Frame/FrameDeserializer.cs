@@ -5,12 +5,12 @@ namespace Falcon.Protocol.Frame
 {
     public class FrameDeserializer
     {
-        public WebSocketFrame GetFrame(byte[] data, out DeserializeResult result)
+        public WebSocketFrame GetFrame(byte[] data, out DeserializationResult result)
         {
             var frame = new WebSocketFrame(true);
             if (data.Length < 2)
             {
-                result = DeserializeResult.InvalidHeader;
+                result = DeserializationResult.InvalidHeader;
                 return null;
             }
 
@@ -34,19 +34,19 @@ namespace Falcon.Protocol.Frame
             }
             else
             {
-                result = DeserializeResult.InvalidHeader;
+                result = DeserializationResult.InvalidHeader;
                 return null;
             }
 
             if (frame.HeaderLength + frame.PayloadLength > (ulong)data.Length)
             {
-                result = DeserializeResult.PartialMessage;
+                result = DeserializationResult.PartialMessage;
                 return null;
             }
 
             frame.Payload = data.Skip(frame.HeaderLength).ToArray();
 
-            result = frame.FIN ? DeserializeResult.SuccessWithFIN : DeserializeResult.SuccessWithoutFIN;
+            result = frame.FIN ? DeserializationResult.SuccessWithFIN : DeserializationResult.SuccessWithoutFIN;
             return frame;
         }
     }

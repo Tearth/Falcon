@@ -12,7 +12,7 @@ namespace Tests.FrameTests
             var deserializer = new FrameDeserializer();
 
             var data = new byte[] { 129, 134, 167, 225, 225, 210, 198, 131, 130, 182, 194, 135 };
-            var result = DeserializeResult. None;
+            var result = DeserializationResult. None;
             var frame = deserializer.GetFrame(data, out result);
 
             var message = Encoding.UTF8.GetString(frame.GetMessage());
@@ -27,7 +27,7 @@ namespace Tests.FrameTests
             var data = new byte[] { 129, 134, 167, 225, 225, 210, 198, 131, 130, 182, 194, 135 };
             deserializer.GetFrame(data, out var result);
 
-            Assert.Equal(result, DeserializeResult.SuccessWithFIN);
+            Assert.Equal(result, DeserializationResult.SuccessWithFIN);
         }
 
         [Fact]
@@ -38,7 +38,7 @@ namespace Tests.FrameTests
             var data = new byte[] { 1, 134, 167, 225, 225, 210, 198, 131, 130, 182, 194, 135 };
             deserializer.GetFrame(data, out var result);
 
-            Assert.Equal(result, DeserializeResult.SuccessWithoutFIN);
+            Assert.Equal(result, DeserializationResult.SuccessWithoutFIN);
         }
 
         [Fact]
@@ -49,7 +49,7 @@ namespace Tests.FrameTests
             var data = new byte[] { 1, 134, 167, 225, 225, 210, 198, 131, 130 };
             deserializer.GetFrame(data, out var result);
 
-            Assert.Equal(result, DeserializeResult.PartialMessage);
+            Assert.Equal(result, DeserializationResult.PartialMessage);
         }
 
         [Fact]
@@ -60,7 +60,7 @@ namespace Tests.FrameTests
             var data = new byte[] { 1, 134, 167, 225, 225 };
             deserializer.GetFrame(data, out var result);
 
-            Assert.Equal(result, DeserializeResult.InvalidHeader);
+            Assert.Equal(result, DeserializationResult.InvalidHeader);
         }
 
         [Fact]
@@ -71,7 +71,7 @@ namespace Tests.FrameTests
             var data = new byte[] { 1 };
             deserializer.GetFrame(data, out var result);
 
-            Assert.Equal(result, DeserializeResult.InvalidHeader);
+            Assert.Equal(result, DeserializationResult.InvalidHeader);
         }
     }
 }

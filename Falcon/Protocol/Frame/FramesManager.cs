@@ -22,10 +22,10 @@
             return _serializer.GetBytes(frame);
         }
 
-        public byte[] Deserialize(byte[] data, out DeserializeResult result, out FrameType type, out int parsedBytes)
+        public byte[] Deserialize(byte[] data, out DeserializationResult result, out FrameType type, out int parsedBytes)
         {
             var frame = _deserializer.GetFrame(data, out result);
-            if (result != DeserializeResult.SuccessWithFIN && result != DeserializeResult.SuccessWithoutFIN)
+            if (result != DeserializationResult.SuccessWithFIN && result != DeserializationResult.SuccessWithoutFIN)
             {
                 parsedBytes = 0;
                 type = FrameType.None;
