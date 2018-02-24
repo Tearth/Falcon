@@ -3,6 +3,9 @@ using System.Text;
 
 namespace Falcon.Protocol.Handshake
 {
+    /// <summary>
+    /// Represents a set of methods to generate response for HTTP handshake request.
+    /// </summary>
     public class HandshakeResponseGenerator : IHandshakeResponseGenerator
     {
         private HandshakeParser _handshakeParser;
@@ -11,12 +14,16 @@ namespace Falcon.Protocol.Handshake
         private const string WebSocketKeyName = "Sec-WebSocket-Key";
         private const string EndSequence = "\r\n\r\n";
 
+        /// <summary>
+        /// Initializes a new instance of the <see cref="HandshakeResponseGenerator"/> class.
+        /// </summary>
         public HandshakeResponseGenerator()
         {
             _handshakeParser = new HandshakeParser();
             _handshakeKeyGenerator = new HandshakeKeyGenerator();
         }
 
+        /// <inheritdoc />
         public byte[] GetResponse(byte[] request)
         {
             var data = Encoding.UTF8.GetString(request);
@@ -35,12 +42,11 @@ namespace Falcon.Protocol.Handshake
             var key = handshakeFields[WebSocketKeyName];
             var responseKey = _handshakeKeyGenerator.Get(key);
 
-            var response = string.Format("HTTP/1.1 101 Switching Protocols\r\n" +
-                                         "Upgrade: websocket\r\n" +
-                                         "Connection: Upgrade\r\n" +
-                                         "Sec-WebSocket-Accept: {0}" +
-                                         "{1}",
-                                          responseKey, EndSequence);
+            var response = $"HTTP/1.1 101 Switching Protocols\r\n" +
+                           $"Upgrade: websocket\r\n" +
+                           $"Connection: Upgrade\r\n" +
+                           $"Sec-WebSocket-Accept: {responseKey}" +
+                           $"{EndSequence}";
 
             return Encoding.UTF8.GetBytes(response);
         }

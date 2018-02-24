@@ -4,10 +4,18 @@ using System.Linq;
 
 namespace Falcon.Protocol.Handshake
 {
+    /// <summary>
+    /// Represents a set of methods to parse HTTP handshake requests.
+    /// </summary>
     public class HandshakeParser
     {
         private const string EndLineSequence = "\r\n";
 
+        /// <summary>
+        /// Splits HTTP handshake request into dictionary of records.
+        /// </summary>
+        /// <param name="request">The HTTP handshake request.</param>
+        /// <returns>The dictionary of records.</returns>
         public IDictionary<string, string> ParseToDictionary(string request)
         {
             var requestFields = new Dictionary<string, string>();
