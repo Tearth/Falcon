@@ -22,7 +22,7 @@ namespace Falcon
         /// <summary>
         /// Buffer size for each client. Default is 8192
         /// </summary>
-        public uint BufferSize { get; private set; }
+        public uint BufferSize { get; }
 
         /// <summary>
         /// Current state of server

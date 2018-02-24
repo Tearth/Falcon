@@ -5,9 +5,9 @@ namespace Falcon.SocketServices.EventArguments
 {
     public class DisconnectedEventArgs : EventArgs
     {
-        public Socket Socket { get; private set; }
+        public Socket Socket { get; }
         public bool Unexpected => Exception != null;
-        public Exception Exception { get; private set; }
+        public Exception Exception { get; }
 
         public DisconnectedEventArgs(Socket socket)
         {

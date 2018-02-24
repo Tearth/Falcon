@@ -4,7 +4,7 @@ namespace Falcon.WebSocketEventArguments
 {
     public class WebSocketConnectedEventArgs : EventArgs
     {
-        public string ClientID { get; private set; }
+        public string ClientID { get; }
 
         public WebSocketConnectedEventArgs(string clientID)
         {

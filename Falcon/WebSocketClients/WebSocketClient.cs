@@ -6,11 +6,11 @@ namespace Falcon.WebSocketClients
 {
     public class WebSocketClient
     {
-        public string ID { get; private set; }
-        public Socket Socket { get; private set; }
+        public string ID { get; }
+        public Socket Socket { get; }
         public bool HandshakeDone { get; set; }
-        public Buffer Buffer { get; private set; }
-        public DateTime JoinTime { get; private set; }
+        public Buffer Buffer { get; }
+        public DateTime JoinTime { get; }
 
         public WebSocketClient(Socket socket, uint bufferSize)
         {

@@ -4,8 +4,8 @@ namespace Falcon.SocketServices.Clients
 {
     public class Client
     {
-        public Socket Socket { get; private set; }
-        public byte[] Buffer { get; private set; }
+        public Socket Socket { get; }
+        public byte[] Buffer { get; }
 
         public Client(Socket socket, int bufferSize)
         {

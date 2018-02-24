@@ -5,8 +5,8 @@ namespace Falcon.SocketServices.EventArguments
 {
     public class DataReceivedEventArgs : EventArgs
     {
-        public Socket Socket { get; private set; }
-        public byte[] Data { get; private set; }
+        public Socket Socket { get; }
+        public byte[] Data { get; }
 
         public DataReceivedEventArgs(Socket socket, byte[] data)
         {

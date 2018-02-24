@@ -5,7 +5,7 @@ namespace Falcon.SocketServices.EventArguments
 {
     public class ConnectedEventArgs : EventArgs
     {
-        public Socket Socket { get; private set; }
+        public Socket Socket { get; }
 
         public ConnectedEventArgs(Socket socket)
         {

@@ -4,9 +4,9 @@ namespace Falcon.WebSocketEventArguments
 {
     public class WebSocketDisconnectedEventArgs : EventArgs
     {
-        public string ClientID { get; private set; }
+        public string ClientID { get; }
         public bool Unexpected => Exception != null;
-        public Exception Exception { get; private set; }
+        public Exception Exception { get; }
 
         public WebSocketDisconnectedEventArgs(string clientID)
         {

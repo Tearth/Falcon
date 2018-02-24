@@ -5,8 +5,8 @@ namespace Falcon.SocketServices.EventArguments
 {
     public class DataSentEventArgs : EventArgs
     {
-        public Socket Socket { get; private set; }
-        public int BytesSent { get; private set; }
+        public Socket Socket { get; }
+        public int BytesSent { get; }
 
         public DataSentEventArgs(Socket socket, int bytesSent)
         {
