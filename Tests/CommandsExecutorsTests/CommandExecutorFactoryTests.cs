@@ -1,9 +1,9 @@
-﻿using Falcon.CommandsExecutors;
-using Falcon.CommandsExecutors.Executors;
+﻿using Falcon.CommandExecutors;
+using Falcon.CommandExecutors.Executors;
 using Falcon.Protocol.Frame;
 using Xunit;
 
-namespace Tests.CommandsExecutorsTests
+namespace Tests.CommandExecutorsTests
 {
     public class CommandExecutorFactoryTests
     {

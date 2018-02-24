@@ -1,4 +1,4 @@
-﻿namespace Falcon.CommandsExecutors.Executors
+﻿namespace Falcon.CommandExecutors.Executors
 {
     public class DisconnectExecutor : ICommandExecutor
     {

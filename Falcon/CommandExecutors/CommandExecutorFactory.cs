@@ -1,7 +1,7 @@
-﻿using Falcon.CommandsExecutors.Executors;
+﻿using Falcon.CommandExecutors.Executors;
 using Falcon.Protocol.Frame;
 
-namespace Falcon.CommandsExecutors
+namespace Falcon.CommandExecutors
 {
     public class CommandExecutorFactory : ICommandExecutorFactory
     {

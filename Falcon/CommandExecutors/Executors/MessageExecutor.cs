@@ -1,4 +1,4 @@
-﻿namespace Falcon.CommandsExecutors.Executors
+﻿namespace Falcon.CommandExecutors.Executors
 {
     public class MessageExecutor : ICommandExecutor
     {

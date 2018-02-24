@@ -80,13 +80,13 @@
     <Reference Include="System.Net.Http" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="CommandsExecutors\CommandExecutorFactory.cs" />
-    <Compile Include="CommandsExecutors\Executors\DisconnectExecutor.cs" />
-    <Compile Include="CommandsExecutors\Executors\ICommandExecutor.cs" />
-    <Compile Include="CommandsExecutors\Executors\MessageExecutor.cs" />
-    <Compile Include="CommandsExecutors\Executors\PingExecutor.cs" />
-    <Compile Include="CommandsExecutors\Executors\PongExecutor.cs" />
-    <Compile Include="CommandsExecutors\ICommandExecutorFactory.cs" />
+    <Compile Include="CommandExecutors\CommandExecutorFactory.cs" />
+    <Compile Include="CommandExecutors\Executors\DisconnectExecutor.cs" />
+    <Compile Include="CommandExecutors\Executors\ICommandExecutor.cs" />
+    <Compile Include="CommandExecutors\Executors\MessageExecutor.cs" />
+    <Compile Include="CommandExecutors\Executors\PingExecutor.cs" />
+    <Compile Include="CommandExecutors\Executors\PongExecutor.cs" />
+    <Compile Include="CommandExecutors\ICommandExecutorFactory.cs" />
     <Compile Include="EServerState.cs" />
     <Compile Include="Exceptions\BufferOverflowException.cs" />
     <Compile Include="Exceptions\ServerAlreadyClosedException.cs" />

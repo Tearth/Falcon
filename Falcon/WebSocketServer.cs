@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Net;
 using System.Text;
-using Falcon.CommandsExecutors;
+using Falcon.CommandExecutors;
 using Falcon.Exceptions;
 using Falcon.Protocol.Frame;
 using Falcon.Protocol.Handshake;

@@ -1,6 +1,6 @@
 ﻿using Falcon.Protocol.Frame;
 
-namespace Falcon.CommandsExecutors.Executors
+namespace Falcon.CommandExecutors.Executors
 {
     public class PingExecutor : ICommandExecutor
     {
