@@ -282,9 +282,7 @@ namespace Falcon
         private void ProcessMessage(WebSocketClient client)
         {
             var frame = client.Buffer.GetData();
-
-            var deserializeResult = DeserializationResult.None;
-            var message = _framesManager.Deserialize(frame, out deserializeResult, out var frameType, out var parsedBytes);
+            var message = _framesManager.Deserialize(frame, out var deserializeResult, out var frameType, out var parsedBytes);
 
             if (parsedBytes > 0)
             {
