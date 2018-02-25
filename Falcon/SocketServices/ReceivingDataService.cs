@@ -6,16 +6,35 @@ using Falcon.SocketServices.EventArguments;
 
 namespace Falcon.SocketServices
 {
+    /// <summary>
+    /// Represents a set of methods to manage data received from clients.
+    /// </summary>
     public class ReceivingDataService
     {
+        /// <summary>
+        /// The event triggered when new data has been received.
+        /// </summary>
         public event EventHandler<DataReceivedEventArgs> ReceivedData;
+
+        /// <summary>
+        /// The event triggered when a client has disconnected.
+        /// </summary>
         public event EventHandler<DisconnectedEventArgs> Disconnected;
 
-        public void ReceiveData(Socket socket)
+        /// <summary>
+        /// Begins receiving data with the specified buffer size.
+        /// </summary>
+        /// <param name="socket">The socket to listening.</param>
+        /// <param name="bufferSize">The buffer size.</param>
+        public void ReceiveData(Socket socket, uint bufferSize)
         {
-            ReceiveData(new Client(socket, 1000));
+            ReceiveData(new Client(socket, bufferSize));
         }
 
+        /// <summary>
+        /// Begins receiving data with the specified buffer size.
+        /// </summary>
+        /// <param name="client">The client to listening.</param>
         public void ReceiveData(Client client)
         {
             var clientSocket = client.Socket;

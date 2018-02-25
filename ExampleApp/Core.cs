@@ -12,7 +12,7 @@ namespace ExampleApp
 
         public Core()
         {
-            webSocketServer = new WebSocketServer();
+            webSocketServer = new WebSocketServer(8192);
 
             webSocketServer.WebSocketConnected += WebSocketServer_Connected;
             webSocketServer.WebSocketDataReceived += WebSocketServer_DataReceived;

@@ -42,11 +42,11 @@ namespace Falcon.Protocol.Handshake
             var key = handshakeFields[WebSocketKeyName];
             var responseKey = _handshakeKeyGenerator.Get(key);
 
-            var response = $"HTTP/1.1 101 Switching Protocols\r\n" +
-                           $"Upgrade: websocket\r\n" +
-                           $"Connection: Upgrade\r\n" +
-                           $"Sec-WebSocket-Accept: {responseKey}" +
-                           $"{EndSequence}";
+            var response = "HTTP/1.1 101 Switching Protocols\r\n" +
+                           "Upgrade: websocket\r\n" +
+                           "Connection: Upgrade\r\n" +
+                          $"Sec-WebSocket-Accept: {responseKey}" +
+                          $"{EndSequence}";
 
             return Encoding.UTF8.GetBytes(response);
         }

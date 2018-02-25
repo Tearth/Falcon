@@ -116,14 +116,14 @@ namespace Falcon
         {
             ClientConnected?.Invoke(this, new ConnectedEventArgs(e.Socket));
 
-            _receiveDataService.ReceiveData(e.Socket);
+            _receiveDataService.ReceiveData(e.Socket, _bufferSize);
             _loopEvent.Set();
         }
 
         private void OnReceivedData(object sender, DataReceivedEventArgs e)
         {
             DataReceived?.Invoke(this, e);
-            _receiveDataService.ReceiveData(e.Socket);
+            _receiveDataService.ReceiveData(e.Socket, _bufferSize);
         }
 
         private void OnSentData(object sender, DataSentEventArgs e)

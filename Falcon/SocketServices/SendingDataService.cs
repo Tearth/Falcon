@@ -4,11 +4,26 @@ using Falcon.SocketServices.EventArguments;
 
 namespace Falcon.SocketServices
 {
+    /// <summary>
+    /// Represents a set of methods to send data to clients.
+    /// </summary>
     public class SendingDataService
     {
+        /// <summary>
+        /// The event triggered when a data has been sent to the client.
+        /// </summary>
         public event EventHandler<DataSentEventArgs> SentData;
+
+        /// <summary>
+        /// The event triggered when a client has disconnected due to exception.
+        /// </summary>
         public event EventHandler<DisconnectedEventArgs> Disconnected;
 
+        /// <summary>
+        /// Begins sending data to the specified socket.
+        /// </summary>
+        /// <param name="socket">The socket which will receive the data.</param>
+        /// <param name="data">The data to send.</param>
         public void SendData(Socket socket, byte[] data)
         {
             try
