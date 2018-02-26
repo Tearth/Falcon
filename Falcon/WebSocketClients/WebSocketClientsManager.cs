@@ -12,6 +12,9 @@ namespace Falcon.WebSocketClients
     {
         private IDictionary<string, WebSocketClient> _webSocketClients;
 
+        /// <summary>
+        /// Initializes a new instance of the <see cref="WebSocketClientsManager"/> class.
+        /// </summary>
         public WebSocketClientsManager()
         {
             _webSocketClients = new ConcurrentDictionary<string, WebSocketClient>();
