@@ -9,15 +9,6 @@ namespace Tests
     public class WebSocketServerTests
     {
         [Fact]
-        public void Start_NullAddress_ArgumentNullException()
-        {
-            var fakeServerListener = new FakeServerListener();
-            var webSocketServer = new WebSocketServer(1024, fakeServerListener);
-
-            Assert.Throws<ArgumentNullException>("address", () => webSocketServer.Start(null, 12345));
-        }
-
-        [Fact]
         public void Start_OneCall_NoException()
         {
             var fakeServerListener = new FakeServerListener();
@@ -61,6 +52,27 @@ namespace Tests
             webSocketServer.Stop();
 
             Assert.Throws<ServerAlreadyClosedException>(() => webSocketServer.Stop());
+        }
+
+        [Fact]
+        public void Send_ClientIDNotExists_ReturnsFalse()
+        {
+            var fakeServerListener = new FakeServerListener();
+            var webSocketServer = new WebSocketServer(1024, fakeServerListener);
+
+            webSocketServer.Start(IPAddress.Any, 12345);
+            var result = webSocketServer.SendData("strange-id", new byte[] {0, 1, 2});
+
+            Assert.False(result);
+        }
+
+        [Fact]
+        public void Send_ServerAlreadyClosed_ServerAlreadyClosedException()
+        {
+            var fakeServerListener = new FakeServerListener();
+            var webSocketServer = new WebSocketServer(1024, fakeServerListener);
+
+            Assert.Throws<ServerAlreadyClosedException>(() => webSocketServer.SendData("strange-id", new byte[] { 0, 1, 2 }));
         }
     }
 }
