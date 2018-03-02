@@ -291,3 +291,5 @@ __pycache__/
 TestApp
 TestClientApp
 /Falcon/Settings.StyleCop
+/cloc.exe
+/cloc.bat
