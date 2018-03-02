@@ -8,6 +8,9 @@ using Falcon.SocketServices.EventArguments;
 
 namespace Falcon
 {
+    /// <summary>
+    /// Represents a set of methods to manage server socket.
+    /// </summary>
     public class ServerListener : IServerListener, IDisposable
     {
         private Socket _socket;
@@ -20,13 +23,25 @@ namespace Falcon
         private uint _bufferSize;
         private static ManualResetEvent _loopEvent;
 
+        /// <inheritdoc />
         public event EventHandler<ConnectedEventArgs> ClientConnected;
+
+        /// <inheritdoc />
         public event EventHandler<DataReceivedEventArgs> DataReceived;
+
+        /// <inheritdoc />
         public event EventHandler<DataSentEventArgs> DataSent;
+
+        /// <inheritdoc />
         public event EventHandler<DisconnectedEventArgs> ClientDisconnected;
 
+        /// <inheritdoc />
         public EServerState ServerState { get; private set; }
 
+        /// <summary>
+        /// Initializes a new instance of the <see cref="ServerListener"/> class.
+        /// </summary>
+        /// <param name="bufferSize">The buffer size for each client.</param>
         public ServerListener(uint bufferSize)
         {
             _bufferSize = bufferSize;
@@ -48,6 +63,7 @@ namespace Falcon
             ServerState = EServerState.Closed;
         }
 
+        /// <inheritdoc />
         public void Start(IPEndPoint endpoint)
         {
             _socket = new Socket(AddressFamily.InterNetwork, SocketType.Stream, ProtocolType.Tcp);
@@ -61,6 +77,7 @@ namespace Falcon
             _loop.Start();
         }
 
+        /// <inheritdoc />
         public void Stop()
         {
             ServerState = EServerState.Closed;
@@ -69,16 +86,19 @@ namespace Falcon
             _socket.Close();
         }
 
+        /// <inheritdoc />
         public void Send(Socket socket, byte[] data)
         {
             _sendDataService.SendData(socket, data);
         }
 
+        /// <inheritdoc />
         public void CloseConnection(Socket socket)
         {
             CloseConnection(socket, null);
         }
 
+        /// <inheritdoc />
         public void CloseConnection(Socket socket, Exception ex)
         {
             socket.Shutdown(SocketShutdown.Both);
@@ -87,19 +107,13 @@ namespace Falcon
             OnDisconnected(this, new DisconnectedEventArgs(socket, ex));
         }
 
+        /// <inheritdoc />
         public void Dispose()
         {
-            Dispose(true);
-            GC.SuppressFinalize(this);
-        }
+            _loop?.Dispose();
+            _socket?.Dispose();
 
-        protected virtual void Dispose(bool disposing)
-        {
-            if (disposing)
-            {
-                _loop?.Dispose();
-                _socket?.Dispose();
-            }
+            GC.SuppressFinalize(this);
         }
 
         private void Loop()

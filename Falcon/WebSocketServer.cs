@@ -11,13 +11,16 @@ using Falcon.WebSocketEventArguments;
 
 namespace Falcon
 {
+    /// <summary>
+    /// Main class of the library. Represents a set of methods to manage WebSocket server.
+    /// </summary>
     public class WebSocketServer : IWebSocketServer, IDisposable
     {
-        IServerListener _server;
-        IWebSocketClientsManager _webSocketClientsManager;
-        IHandshakeResponseGenerator _handshakeResponseGenerator;
-        IFramesManager _framesManager;
-        ICommandExecutorFactory _commandsExecutorFactory;
+        private IServerListener _server;
+        private IWebSocketClientsManager _webSocketClientsManager;
+        private IHandshakeResponseGenerator _handshakeResponseGenerator;
+        private IFramesManager _framesManager;
+        private ICommandExecutorFactory _commandsExecutorFactory;
 
         /// <summary>
         /// Buffer size for each client. Default is 8192
@@ -29,36 +32,40 @@ namespace Falcon
         /// </summary>
         public EServerState ServerState => _server.ServerState;
 
-        /// <summary>
-        /// Event triggered when a new client has connected to the server
-        /// </summary>
+        /// <inheritdoc />
         public event EventHandler<WebSocketConnectedEventArgs> WebSocketConnected;
 
-        /// <summary>
-        /// Event triggered when a new data has received from connected client
-        /// </summary>
+        /// <inheritdoc />
         public event EventHandler<WebSocketDataReceivedEventArgs> WebSocketDataReceived;
 
-        /// <summary>
-        /// Event triggered when data has been succesfully sent
-        /// </summary>
+        /// <inheritdoc />
         public event EventHandler<WebSocketDataSentEventArgs> WebSocketDataSent;
 
-        /// <summary>
-        /// Event triggered when the client has disconnected from the server
-        /// </summary>
+        /// <inheritdoc />
         public event EventHandler<WebSocketDisconnectedEventArgs> WebSocketDisconnected;
 
+        /// <summary>
+        /// Initializes a new instance of the <see cref="WebSocketServer"/> class.
+        /// </summary>
         public WebSocketServer() : this(8192, new ServerListener(8192))
         {
 
         }
 
+        /// <summary>
+        /// Initializes a new instance of the <see cref="WebSocketServer"/> class.
+        /// </summary>
+        /// <param name="bufferSize">The buffer size for each client.</param>
         public WebSocketServer(uint bufferSize) : this(bufferSize, new ServerListener(bufferSize))
         {
 
         }
 
+        /// <summary>
+        /// Initializes a new instance of the <see cref="WebSocketServer"/> class.
+        /// </summary>
+        /// <param name="bufferSize">The buffer size for each client.</param>
+        /// <param name="serverListener">The server listener custom implementation.</param>
         public WebSocketServer(uint bufferSize, IServerListener serverListener)
         {
             BufferSize = bufferSize;
@@ -75,9 +82,7 @@ namespace Falcon
             _server.ClientDisconnected += OnDisconnected;
         }
 
-        /// <summary>
-        /// Opens WebSocket server with specified address and port.
-        /// </summary>
+        /// <inheritdoc />
         public void Start(IPAddress address, ushort port)
         {
             if (ServerState != EServerState.Closed)
@@ -89,9 +94,7 @@ namespace Falcon
             _server.Start(endpoint);
         }
 
-        /// <summary>
-        /// Closes WebSocket server
-        /// </summary>
+        /// <inheritdoc />
         public void Stop()
         {
             if (ServerState != EServerState.Working)
@@ -102,33 +105,24 @@ namespace Falcon
             _server.Stop();
         }
 
-        /// <summary>
-        /// Sends data (as WebSocket frame) to connected client with the specified id.
-        /// Returns false if clientID not exists.
-        /// </summary>
+        /// <inheritdoc />
         public bool SendData(string clientID, byte[] data)
         {
             return SendData(clientID, data, FrameType.Message);
         }
 
-        /// <summary>
-        /// Sends text (as WebSocket frame) to connected client with the specified id.
-        /// Returns false if clientID not exists.
-        /// </summary>
+        /// <inheritdoc />
         public bool SendData(string clientID, string text)
         {
             return SendData(clientID, Encoding.UTF8.GetBytes(text), FrameType.Message);
         }
 
-        /// <summary>
-        /// Sends data (as WebSocket frame with specified type) to connected client with the specified id.
-        /// Returns false if clientID not exists.
-        /// </summary>
+        /// <inheritdoc />
         public bool SendData(string clientID, byte[] data, FrameType type)
         {
             if (ServerState != EServerState.Working)
             {
-                throw new ServerAlreadyWorkingException();
+                throw new ServerAlreadyClosedException();
             }
 
             var webSocketClient = _webSocketClientsManager.GetByID(clientID);
@@ -143,29 +137,26 @@ namespace Falcon
             return true;
         }
 
-        /// <summary>
-        /// Sends raw data (without creating WebSocket frame) to connected client with the specified id.
-        /// Returns false if clientID not exists.
-        /// </summary>
-        public void SendRawData(string clientID, byte[] data)
+        /// <inheritdoc />
+        public bool SendRawData(string clientID, byte[] data)
         {
             if (ServerState != EServerState.Working)
             {
-                throw new ServerAlreadyWorkingException();
+                throw new ServerAlreadyClosedException();
             }
 
             var webSocketClient = _webSocketClientsManager.GetByID(clientID);
             if (webSocketClient == null)
             {
-                return;
+                return false;
             }
 
             _server.Send(webSocketClient.Socket, data);
+
+            return true;
         }
 
-        /// <summary>
-        /// Returns information about client with specified id. If not exists, returns null.
-        /// </summary>
+        /// <inheritdoc />
         public ClientInfo GetClientInfo(string clientID)
         {
             if (ServerState != EServerState.Working)
@@ -177,14 +168,12 @@ namespace Falcon
             return webSocketClient?.GetInfo();
         }
 
-        /// <summary>
-        /// Disconnects client with specified id.
-        /// </summary>
+        /// <inheritdoc />
         public void DisconnectClient(string clientID)
         {
             if (ServerState != EServerState.Working)
             {
-                throw new ServerAlreadyWorkingException();
+                throw new ServerAlreadyClosedException();
             }
 
             var webSocketClient = _webSocketClientsManager.GetByID(clientID);
@@ -197,18 +186,12 @@ namespace Falcon
             _webSocketClientsManager.Remove(webSocketClient);
         }
 
+        /// <inheritdoc />
         public void Dispose()
         {
-            Dispose(true);
-            GC.SuppressFinalize(this);
-        }
+            ((IDisposable)_server)?.Dispose();
 
-        protected virtual void Dispose(bool disposing)
-        {
-            if (disposing)
-            {
-                ((IDisposable)_server)?.Dispose();
-            }
+            GC.SuppressFinalize(this);
         }
 
         private void OnConnected(object sender, ConnectedEventArgs e)
