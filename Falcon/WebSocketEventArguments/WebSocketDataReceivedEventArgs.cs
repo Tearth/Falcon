@@ -10,7 +10,7 @@ namespace Falcon.WebSocketEventArguments
         /// <summary>
         /// Gets the client ID (GUID).
         /// </summary>
-        public string ClientID { get; }
+        public string ClientId { get; }
 
         /// <summary>
         /// Gets the data received from the client.
@@ -20,11 +20,11 @@ namespace Falcon.WebSocketEventArguments
         /// <summary>
         /// Initializes a new instance of the <see cref="WebSocketDataReceivedEventArgs"/> class.
         /// </summary>
-        /// <param name="clientID">The client ID which sent data.</param>
+        /// <param name="clientId">The client ID which sent data.</param>
         /// <param name="data">The received data.</param>
-        public WebSocketDataReceivedEventArgs(string clientID, byte[] data)
+        public WebSocketDataReceivedEventArgs(string clientId, byte[] data)
         {
-            ClientID = clientID;
+            ClientId = clientId;
             Data = data;
         }
     }

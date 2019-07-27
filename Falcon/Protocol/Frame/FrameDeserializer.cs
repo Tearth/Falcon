@@ -23,7 +23,7 @@ namespace Falcon.Protocol.Frame
                 return null;
             }
 
-            frame.FIN = Convert.ToBoolean(data[0] >> 7);
+            frame.Fin = Convert.ToBoolean(data[0] >> 7);
             frame.OpCode = Convert.ToByte(data[0] & 15);
             frame.PayloadLengthSignature = Convert.ToByte(data[1] & 127);
 
@@ -55,7 +55,7 @@ namespace Falcon.Protocol.Frame
 
             frame.Payload = data.Skip(frame.HeaderLength).ToArray();
 
-            result = frame.FIN ? DeserializationResult.SuccessWithFIN : DeserializationResult.SuccessWithoutFIN;
+            result = frame.Fin ? DeserializationResult.SuccessWithFin : DeserializationResult.SuccessWithoutFin;
             return frame;
         }
     }

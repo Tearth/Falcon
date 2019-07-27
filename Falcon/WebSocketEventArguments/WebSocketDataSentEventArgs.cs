@@ -10,7 +10,7 @@ namespace Falcon.WebSocketEventArguments
         /// <summary>
         /// Gets the client ID (GUID).
         /// </summary>
-        public string ClientID { get; }
+        public string ClientId { get; }
 
         /// <summary>
         /// Gets the sent bytes count.
@@ -20,11 +20,11 @@ namespace Falcon.WebSocketEventArguments
         /// <summary>
         /// Initializes a new instance of the <see cref="WebSocketDataSentEventArgs"/> class.
         /// </summary>
-        /// <param name="clientID">The client ID which will receive sent data.</param>
+        /// <param name="clientId">The client ID which will receive sent data.</param>
         /// <param name="sentBytes">The sent bytes count.</param>
-        public WebSocketDataSentEventArgs(string clientID, int sentBytes)
+        public WebSocketDataSentEventArgs(string clientId, int sentBytes)
         {
-            ClientID = clientID;
+            ClientId = clientId;
             SentBytes = sentBytes;
         }
     }

@@ -15,7 +15,7 @@ namespace Tests.FrameTests
             var exampleDataBytes = Encoding.UTF8.GetBytes("Foo Bar");
             var frame = new WebSocketFrame(exampleDataBytes, false)
             {
-                FIN = true,
+                Fin = true,
                 OpCode = (byte)FrameType.Message
             };
 
@@ -33,7 +33,7 @@ namespace Tests.FrameTests
             var exampleDataBytes = Encoding.UTF8.GetBytes("");
             var frame = new WebSocketFrame(exampleDataBytes, false)
             {
-                FIN = false,
+                Fin = false,
                 OpCode = (byte)FrameType.Message
             };
 
@@ -51,7 +51,7 @@ namespace Tests.FrameTests
             var exampleDataBytes = Encoding.UTF8.GetBytes("Foo Bar");
             var frame = new WebSocketFrame(exampleDataBytes, false)
             {
-                FIN = true,
+                Fin = true,
                 OpCode = (byte)FrameType.Disconnect
             };
 
@@ -69,7 +69,7 @@ namespace Tests.FrameTests
             var exampleDataBytes = Encoding.UTF8.GetBytes("Foo Bar");
             var frame = new WebSocketFrame(exampleDataBytes, false)
             {
-                FIN = true,
+                Fin = true,
                 OpCode = (byte)FrameType.Ping
             };
 
@@ -87,7 +87,7 @@ namespace Tests.FrameTests
             var exampleDataBytes = Encoding.UTF8.GetBytes("Foo Bar");
             var frame = new WebSocketFrame(exampleDataBytes, false)
             {
-                FIN = true,
+                Fin = true,
                 OpCode = (byte)FrameType.Pong
             };
 

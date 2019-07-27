@@ -24,7 +24,7 @@ namespace Falcon.WebSocketClients
         /// </summary>
         /// <param name="id">The client ID.</param>
         /// <returns>The client with the specified ID or null if cannot be found.</returns>
-        WebSocketClient GetByID(string id);
+        WebSocketClient GetById(string id);
 
         /// <summary>
         /// Gets the client with the specified socket.

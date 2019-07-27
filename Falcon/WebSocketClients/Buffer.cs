@@ -8,7 +8,7 @@ namespace Falcon.WebSocketClients
     /// </summary>
     public class Buffer
     {
-        private byte[] _buffer;
+        private readonly byte[] _buffer;
         private int _bufferPointer;
 
         /// <summary>

@@ -8,8 +8,8 @@ namespace Falcon.Protocol.Handshake
     /// </summary>
     public class HandshakeResponseGenerator : IHandshakeResponseGenerator
     {
-        private HandshakeParser _handshakeParser;
-        private HandshakeKeyGenerator _handshakeKeyGenerator;
+        private readonly HandshakeParser _handshakeParser;
+        private readonly HandshakeKeyGenerator _handshakeKeyGenerator;
 
         private const string WebSocketKeyName = "Sec-WebSocket-Key";
         private const string EndSequence = "\r\n\r\n";

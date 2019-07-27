@@ -12,7 +12,7 @@ namespace Falcon.WebSocketClients
         /// <summary>
         /// Gets the client ID (GUID).
         /// </summary>
-        public string ID { get; }
+        public string Id { get; }
 
         /// <summary>
         /// Gets the client socket.
@@ -39,7 +39,7 @@ namespace Falcon.WebSocketClients
         /// </summary>
         public WebSocketClient(Socket socket, uint bufferSize)
         {
-            ID = Guid.NewGuid().ToString();
+            Id = Guid.NewGuid().ToString();
             Socket = socket;
             Buffer = new Buffer(bufferSize);
             JoinTime = DateTime.Now;
@@ -54,8 +54,8 @@ namespace Falcon.WebSocketClients
             var remoteEndpoint = (IPEndPoint)Socket.RemoteEndPoint;
             return new ClientInfo
             {
-                ClientID = ID,
-                IP = remoteEndpoint.Address,
+                ClientId = Id,
+                Ip = remoteEndpoint.Address,
                 Port = remoteEndpoint.Port,
                 JoinTime = JoinTime
             };

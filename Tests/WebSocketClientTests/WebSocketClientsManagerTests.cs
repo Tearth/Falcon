@@ -13,7 +13,7 @@ namespace Tests.WebSocketClientTests
 
             clientsManager.Add(client);
 
-            Assert.NotNull(clientsManager.GetByID(client.ID));
+            Assert.NotNull(clientsManager.GetById(client.Id));
         }
 
         [Fact]
@@ -25,7 +25,7 @@ namespace Tests.WebSocketClientTests
             clientsManager.Add(client);
             clientsManager.Remove(client);
 
-            Assert.Null(clientsManager.GetByID(client.ID));
+            Assert.Null(clientsManager.GetById(client.Id));
         }
 
         [Fact]
@@ -36,7 +36,7 @@ namespace Tests.WebSocketClientTests
 
             clientsManager.Add(client);
 
-            Assert.True(clientsManager.Exists(client.ID));
+            Assert.True(clientsManager.Exists(client.Id));
         }
 
         [Fact]
@@ -45,7 +45,7 @@ namespace Tests.WebSocketClientTests
             var clientsManager = new WebSocketClientsManager();
             var client = new WebSocketClient(null, 16);
 
-            Assert.False(clientsManager.Exists(client.ID));
+            Assert.False(clientsManager.Exists(client.Id));
         }
     }
 }

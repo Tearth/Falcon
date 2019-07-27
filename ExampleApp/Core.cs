@@ -8,25 +8,25 @@ namespace ExampleApp
 {
     public class Core
     {
-        WebSocketServer webSocketServer;
+        readonly WebSocketServer _webSocketServer;
 
         public Core()
         {
-            webSocketServer = new WebSocketServer(8192);
+            _webSocketServer = new WebSocketServer(8192);
 
-            webSocketServer.WebSocketConnected += WebSocketServer_Connected;
-            webSocketServer.WebSocketDataReceived += WebSocketServer_DataReceived;
-            webSocketServer.WebSocketDataSent += WebSocketServer_DataSent;
-            webSocketServer.WebSocketDisconnected += WebSocketServer_Disconnected;
+            _webSocketServer.WebSocketConnected += WebSocketServer_Connected;
+            _webSocketServer.WebSocketDataReceived += WebSocketServer_DataReceived;
+            _webSocketServer.WebSocketDataSent += WebSocketServer_DataSent;
+            _webSocketServer.WebSocketDisconnected += WebSocketServer_Disconnected;
         }
 
         private void WebSocketServer_Connected(object sender, WebSocketConnectedEventArgs e)
         {
-            var clientInfo = webSocketServer.GetClientInfo(e.ClientID);
+            var clientInfo = _webSocketServer.GetClientInfo(e.ClientId);
 
             Console.WriteLine("New client connected!");
-            Console.WriteLine("  ID: " + e.ClientID);
-            Console.WriteLine("  IP: " + clientInfo.IP);
+            Console.WriteLine("  ID: " + e.ClientId);
+            Console.WriteLine("  IP: " + clientInfo.Ip);
             Console.WriteLine("  Port: " + clientInfo.Port);
         }
 
@@ -42,7 +42,7 @@ namespace ExampleApp
 
             Console.WriteLine();
 
-            webSocketServer.SendData(e.ClientID, e.Data);
+            _webSocketServer.SendData(e.ClientId, e.Data);
         }
 
         private void WebSocketServer_DataSent(object sender, WebSocketDataSentEventArgs e)
@@ -52,7 +52,7 @@ namespace ExampleApp
 
         private void WebSocketServer_Disconnected(object sender, WebSocketDisconnectedEventArgs e)
         {
-            Console.WriteLine("Client disconnected. ID: " + e.ClientID);
+            Console.WriteLine("Client disconnected. ID: " + e.ClientId);
             Console.WriteLine("Unexpected: " + e.Unexpected);
 
             if (e.Unexpected)
@@ -64,7 +64,7 @@ namespace ExampleApp
         public void Run()
         {
             Console.WriteLine("Starting WebSocket server...");
-            webSocketServer.Start(IPAddress.Any, 7444);
+            _webSocketServer.Start(IPAddress.Any, 7444);
 
             Console.Read();
         }

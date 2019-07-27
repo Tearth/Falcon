@@ -5,8 +5,8 @@
     /// </summary>
     public class FramesManager : IFramesManager
     {
-        private FrameSerializer _serializer;
-        private FrameDeserializer _deserializer;
+        private readonly FrameSerializer _serializer;
+        private readonly FrameDeserializer _deserializer;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="FramesManager"/> class.
@@ -23,7 +23,7 @@
             var frame = new WebSocketFrame(data, false)
             {
                 OpCode = (byte)type,
-                FIN = true
+                Fin = true
             };
 
             return _serializer.GetBytes(frame);
@@ -33,7 +33,7 @@
         public byte[] Deserialize(byte[] data, out DeserializationResult result, out FrameType type, out int parsedBytes)
         {
             var frame = _deserializer.GetFrame(data, out result);
-            if (result != DeserializationResult.SuccessWithFIN && result != DeserializationResult.SuccessWithoutFIN)
+            if (result != DeserializationResult.SuccessWithFin && result != DeserializationResult.SuccessWithoutFin)
             {
                 parsedBytes = 0;
                 type = FrameType.None;

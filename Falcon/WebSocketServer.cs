@@ -16,11 +16,11 @@ namespace Falcon
     /// </summary>
     public class WebSocketServer : IWebSocketServer, IDisposable
     {
-        private IServerListener _server;
-        private IWebSocketClientsManager _webSocketClientsManager;
-        private IHandshakeResponseGenerator _handshakeResponseGenerator;
-        private IFramesManager _framesManager;
-        private ICommandExecutorFactory _commandsExecutorFactory;
+        private readonly IServerListener _server;
+        private readonly IWebSocketClientsManager _webSocketClientsManager;
+        private readonly IHandshakeResponseGenerator _handshakeResponseGenerator;
+        private readonly IFramesManager _framesManager;
+        private readonly ICommandExecutorFactory _commandsExecutorFactory;
 
         /// <summary>
         /// Buffer size for each client. Default is 8192
@@ -106,26 +106,26 @@ namespace Falcon
         }
 
         /// <inheritdoc />
-        public bool SendData(string clientID, byte[] data)
+        public bool SendData(string clientId, byte[] data)
         {
-            return SendData(clientID, data, FrameType.Message);
+            return SendData(clientId, data, FrameType.Message);
         }
 
         /// <inheritdoc />
-        public bool SendData(string clientID, string text)
+        public bool SendData(string clientId, string text)
         {
-            return SendData(clientID, Encoding.UTF8.GetBytes(text), FrameType.Message);
+            return SendData(clientId, Encoding.UTF8.GetBytes(text), FrameType.Message);
         }
 
         /// <inheritdoc />
-        public bool SendData(string clientID, byte[] data, FrameType type)
+        public bool SendData(string clientId, byte[] data, FrameType type)
         {
             if (ServerState != EServerState.Working)
             {
                 throw new ServerAlreadyClosedException();
             }
 
-            var webSocketClient = _webSocketClientsManager.GetByID(clientID);
+            var webSocketClient = _webSocketClientsManager.GetById(clientId);
             if (webSocketClient == null)
             {
                 return false;
@@ -138,14 +138,14 @@ namespace Falcon
         }
 
         /// <inheritdoc />
-        public bool SendRawData(string clientID, byte[] data)
+        public bool SendRawData(string clientId, byte[] data)
         {
             if (ServerState != EServerState.Working)
             {
                 throw new ServerAlreadyClosedException();
             }
 
-            var webSocketClient = _webSocketClientsManager.GetByID(clientID);
+            var webSocketClient = _webSocketClientsManager.GetById(clientId);
             if (webSocketClient == null)
             {
                 return false;
@@ -157,26 +157,26 @@ namespace Falcon
         }
 
         /// <inheritdoc />
-        public ClientInfo GetClientInfo(string clientID)
+        public ClientInfo GetClientInfo(string clientId)
         {
             if (ServerState != EServerState.Working)
             {
                 throw new ServerAlreadyWorkingException();
             }
 
-            var webSocketClient = _webSocketClientsManager.GetByID(clientID);
+            var webSocketClient = _webSocketClientsManager.GetById(clientId);
             return webSocketClient?.GetInfo();
         }
 
         /// <inheritdoc />
-        public void DisconnectClient(string clientID)
+        public void DisconnectClient(string clientId)
         {
             if (ServerState != EServerState.Working)
             {
                 throw new ServerAlreadyClosedException();
             }
 
-            var webSocketClient = _webSocketClientsManager.GetByID(clientID);
+            var webSocketClient = _webSocketClientsManager.GetById(clientId);
             if (webSocketClient == null)
             {
                 return;
@@ -199,7 +199,7 @@ namespace Falcon
             var webSocketClient = new WebSocketClient(e.Socket, BufferSize);
             _webSocketClientsManager.Add(webSocketClient);
 
-            WebSocketConnected?.Invoke(this, new WebSocketConnectedEventArgs(webSocketClient.ID));
+            WebSocketConnected?.Invoke(this, new WebSocketConnectedEventArgs(webSocketClient.Id));
         }
 
         private void OnDataReceived(object sender, DataReceivedEventArgs e)
@@ -234,7 +234,7 @@ namespace Falcon
                 return;
             }
 
-            WebSocketDataSent?.Invoke(this, new WebSocketDataSentEventArgs(webSocketClient.ID, e.BytesSent));
+            WebSocketDataSent?.Invoke(this, new WebSocketDataSentEventArgs(webSocketClient.Id, e.BytesSent));
         }
 
         private void OnDisconnected(object sender, DisconnectedEventArgs e)
@@ -247,7 +247,7 @@ namespace Falcon
 
             _webSocketClientsManager.Remove(webSocketClient);
 
-            WebSocketDisconnected?.Invoke(this, new WebSocketDisconnectedEventArgs(webSocketClient.ID, e.Exception));
+            WebSocketDisconnected?.Invoke(this, new WebSocketDisconnectedEventArgs(webSocketClient.Id, e.Exception));
         }
 
         private void DoHandshake(WebSocketClient client)
@@ -255,7 +255,7 @@ namespace Falcon
             var response = _handshakeResponseGenerator.GetResponse(client.Buffer.GetData());
             if (response.Length > 0)
             {
-                SendRawData(client.ID, response);
+                SendRawData(client.Id, response);
 
                 client.HandshakeDone = true;
                 client.Buffer.Clear();
@@ -265,15 +265,15 @@ namespace Falcon
         private void ProcessMessage(WebSocketClient client)
         {
             var frame = client.Buffer.GetData();
-            var message = _framesManager.Deserialize(frame, out var deserializeResult, out var frameType, out var parsedBytes);
+            var message = _framesManager.Deserialize(frame, out _, out var frameType, out var parsedBytes);
 
             if (parsedBytes > 0)
             {
                 var commandExecutor = _commandsExecutorFactory.Create(frameType);
 
-                if (commandExecutor.Do(this, client.ID, message))
+                if (commandExecutor.Do(this, client.Id, message))
                 {
-                    WebSocketDataReceived?.Invoke(this, new WebSocketDataReceivedEventArgs(client.ID, message));
+                    WebSocketDataReceived?.Invoke(this, new WebSocketDataReceivedEventArgs(client.Id, message));
                 }
 
                 client.Buffer.Remove(parsedBytes);

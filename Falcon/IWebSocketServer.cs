@@ -59,51 +59,51 @@ namespace Falcon
         /// <summary>
         /// Sends a data to the client with the specified id.
         /// </summary>
-        /// <param name="clientID">The client ID.</param>
+        /// <param name="clientId">The client ID.</param>
         /// <param name="data">The data to send.</param>
         /// <exception cref="ServerAlreadyClosedException">Thrown when the server is already closed.</exception>
         /// <returns>True if the client ID has been found and data has been sent, otherwise false.</returns>
-        bool SendData(string clientID, byte[] data);
+        bool SendData(string clientId, byte[] data);
 
         /// <summary>
         /// Sends a data to the client with the specified id.
         /// </summary>
-        /// <param name="clientID">The client ID.</param>
+        /// <param name="clientId">The client ID.</param>
         /// <param name="text">The text to send.</param>
         /// <exception cref="ServerAlreadyClosedException">Thrown when the server is already closed.</exception>
         /// <returns>True if the client ID has been found and data has been sent, otherwise false.</returns>
-        bool SendData(string clientID, string text);
+        bool SendData(string clientId, string text);
 
         /// <summary>
         /// Sends a data to the client with the specified id.
         /// </summary>
-        /// <param name="clientID">The client ID.</param>
+        /// <param name="clientId">The client ID.</param>
         /// <param name="data">The data to send.</param>
         /// <param name="type">The WebSocket frame type.</param>
         /// <exception cref="ServerAlreadyClosedException">Thrown when the server is already closed.</exception>
         /// <returns>True if the client ID has been found and data has been sent, otherwise false.</returns>
-        bool SendData(string clientID, byte[] data, FrameType type);
+        bool SendData(string clientId, byte[] data, FrameType type);
 
         /// <summary>
         /// Sends a raw data (without packing to WebSocket frame) to the client with the specified ID.
         /// </summary>
-        /// <param name="clientID">The client ID.</param>
+        /// <param name="clientId">The client ID.</param>
         /// <param name="data">The data to send.</param>
         /// <exception cref="ServerAlreadyClosedException">Thrown when the server is already closed.</exception>
         /// <returns>True if the client ID has been found and data has been sent, otherwise false.</returns>
-        bool SendRawData(string clientID, byte[] data);
+        bool SendRawData(string clientId, byte[] data);
 
         /// <summary>
         /// Gets the client information.
         /// </summary>
-        /// <param name="clientID">The client ID.</param>
+        /// <param name="clientId">The client ID.</param>
         /// <returns>The client information if the specified ID exists, otherwise null.</returns>
-        ClientInfo GetClientInfo(string clientID);
+        ClientInfo GetClientInfo(string clientId);
 
         /// <summary>
         /// Disconnects a client with the specified ID.
         /// </summary>
-        /// <param name="clientID">The client ID.</param>
-        void DisconnectClient(string clientID);
+        /// <param name="clientId">The client ID.</param>
+        void DisconnectClient(string clientId);
     }
 }

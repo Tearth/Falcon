@@ -10,15 +10,15 @@ namespace Falcon.WebSocketEventArguments
         /// <summary>
         /// Gets the new client ID (GUID).
         /// </summary>
-        public string ClientID { get; }
+        public string ClientId { get; }
 
         /// <summary>
         /// Initializes a new instance of the <see cref="WebSocketConnectedEventArgs"/> class.
         /// </summary>
-        /// <param name="clientID">The new client ID (GUID).</param>
-        public WebSocketConnectedEventArgs(string clientID)
+        /// <param name="clientId">The new client ID (GUID).</param>
+        public WebSocketConnectedEventArgs(string clientId)
         {
-            ClientID = clientID;
+            ClientId = clientId;
         }
     }
 }

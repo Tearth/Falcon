@@ -10,7 +10,7 @@ namespace Falcon.WebSocketClients
     /// </summary>
     public class WebSocketClientsManager : IWebSocketClientsManager
     {
-        private IDictionary<string, WebSocketClient> _webSocketClients;
+        private readonly IDictionary<string, WebSocketClient> _webSocketClients;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="WebSocketClientsManager"/> class.
@@ -23,17 +23,17 @@ namespace Falcon.WebSocketClients
         /// <inheritdoc />
         public void Add(WebSocketClient client)
         {
-            _webSocketClients.Add(client.ID, client);
+            _webSocketClients.Add(client.Id, client);
         }
 
         /// <inheritdoc />
         public void Remove(WebSocketClient client)
         {
-            _webSocketClients.Remove(client.ID);
+            _webSocketClients.Remove(client.Id);
         }
 
         /// <inheritdoc />
-        public WebSocketClient GetByID(string id)
+        public WebSocketClient GetById(string id)
         {
             return !Exists(id) ? null : _webSocketClients[id];
         }

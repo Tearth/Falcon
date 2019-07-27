@@ -11,7 +11,7 @@ namespace Falcon.Protocol.Frame
         None,
         InvalidHeader,
         PartialMessage,
-        SuccessWithFIN,
-        SuccessWithoutFIN
+        SuccessWithFin,
+        SuccessWithoutFin
     }
 }

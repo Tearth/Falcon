@@ -27,7 +27,7 @@ namespace Tests.FrameTests
             var data = new byte[] { 129, 134, 167, 225, 225, 210, 198, 131, 130, 182, 194, 135 };
             deserializer.GetFrame(data, out var result);
 
-            Assert.Equal(result, DeserializationResult.SuccessWithFIN);
+            Assert.Equal(result, DeserializationResult.SuccessWithFin);
         }
 
         [Fact]
@@ -38,7 +38,7 @@ namespace Tests.FrameTests
             var data = new byte[] { 1, 134, 167, 225, 225, 210, 198, 131, 130, 182, 194, 135 };
             deserializer.GetFrame(data, out var result);
 
-            Assert.Equal(result, DeserializationResult.SuccessWithoutFIN);
+            Assert.Equal(result, DeserializationResult.SuccessWithoutFin);
         }
 
         [Fact]

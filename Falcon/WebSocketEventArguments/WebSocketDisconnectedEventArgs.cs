@@ -10,7 +10,7 @@ namespace Falcon.WebSocketEventArguments
         /// <summary>
         /// Gets the client ID which has disconnected.
         /// </summary>
-        public string ClientID { get; }
+        public string ClientId { get; }
 
         /// <summary>
         /// Gets the flag indicates whether the disconnection was unexpected (with some exception) or not.
@@ -25,18 +25,18 @@ namespace Falcon.WebSocketEventArguments
         /// <summary>
         /// Initializes a new instance of the <see cref="WebSocketDisconnectedEventArgs"/> class.
         /// </summary>
-        /// <param name="clientID">The client ID which has disconnected.</param>
-        public WebSocketDisconnectedEventArgs(string clientID)
+        /// <param name="clientId">The client ID which has disconnected.</param>
+        public WebSocketDisconnectedEventArgs(string clientId)
         {
-            ClientID = clientID;
+            ClientId = clientId;
         }
 
         /// <summary>
         /// Initializes a new instance of the <see cref="WebSocketDisconnectedEventArgs"/> class.
         /// </summary>
-        /// <param name="clientID">The client ID which has disconnected.</param>
+        /// <param name="clientId">The client ID which has disconnected.</param>
         /// <param name="exception">The exception which has been thrown.</param>
-        public WebSocketDisconnectedEventArgs(string clientID, Exception exception) : this(clientID)
+        public WebSocketDisconnectedEventArgs(string clientId, Exception exception) : this(clientId)
         {
             Exception = exception;
         }

@@ -17,7 +17,7 @@ namespace Falcon.Protocol.Frame
         {
             var bytes = new byte[frame.FrameLength];
 
-            bytes[0] = (byte)((Convert.ToByte(frame.FIN) << 7) + frame.OpCode);
+            bytes[0] = (byte)((Convert.ToByte(frame.Fin) << 7) + frame.OpCode);
             bytes[1] = frame.PayloadLengthSignature;
 
             var lengthBytes = BitConverter.GetBytes((ulong)frame.Payload.Length);

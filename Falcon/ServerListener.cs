@@ -16,11 +16,11 @@ namespace Falcon
         private Socket _socket;
         private Task _loop;
 
-        private ConnectingService _newConnectionService;
-        private ReceivingDataService _receiveDataService;
-        private SendingDataService _sendDataService;
+        private readonly ConnectingService _newConnectionService;
+        private readonly ReceivingDataService _receiveDataService;
+        private readonly SendingDataService _sendDataService;
 
-        private uint _bufferSize;
+        private readonly uint _bufferSize;
         private static ManualResetEvent _loopEvent;
 
         /// <inheritdoc />

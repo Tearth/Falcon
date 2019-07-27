@@ -8,7 +8,7 @@
         /// <summary>
         /// Gets or sets the FIN bit (indicates whether the frame is the last from the sequence or not).
         /// </summary>
-        public bool FIN { get; set; }
+        public bool Fin { get; set; }
 
         /// <summary>
         /// Gets or sets the operation code (see more in <see cref="FrameType"/>).

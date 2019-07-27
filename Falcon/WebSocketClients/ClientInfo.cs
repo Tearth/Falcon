@@ -11,12 +11,12 @@ namespace Falcon.WebSocketClients
         /// <summary>
         /// Gets or sets the client ID (GUID).
         /// </summary>
-        public string ClientID { get; set; }
+        public string ClientId { get; set; }
 
         /// <summary>
         /// Gets or sets the client IP.
         /// </summary>
-        public IPAddress IP { get; set; }
+        public IPAddress Ip { get; set; }
 
         /// <summary>
         /// Gets or sets the client port.
